@@ -1,0 +1,33 @@
+authorities:
+- id: 209
+  name: Dundee City
+  region: Scotland
+  scheme: FHIS
+- id: 199
+  name: Angus
+  region: Scotland
+  scheme: FHIS
+- id: 223
+  name: Perth and Kinross
+  region: Scotland
+  scheme: FHIS
+- id: 95
+  name: City of London Corporation
+  region: London
+  scheme: FHRS
+- id: 120
+  name: Westminster
+  region: London
+  scheme: FHRS
+- id: 93
+  name: Camden
+  region: London
+  scheme: FHRS
+- id: 117
+  name: Tower Hamlets
+  region: London
+  scheme: FHRS
+- id: 115
+  name: Southwark
+  region: London
+  scheme: FHRS

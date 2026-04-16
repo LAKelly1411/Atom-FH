@@ -1,0 +1,62 @@
+# Alert rule definitions for PA ATOMIC Food Hygiene prototype
+#
+# Each rule fires a dedicated alert email when its condition is met.
+# Subject lines use the format: PA Atomic Alert: [rule_name] — [summary]
+#
+# Rule types:
+#   zero_rating    - any premises in target area gets rating 0 (or "Improvement Required" in Scotland)
+#   threshold      - any premises drops by N or more rating points (FHRS only)
+#   watchlist      - specific FHRS IDs to monitor
+#   business_type  - specific business types (school kitchens, hospitals, care homes)
+
+rules:
+
+  - name: "Zero Rating — London"
+    type: zero_rating
+    description: "Any 0-rated premises across monitored London boroughs"
+    regions: [London]
+    recipient: "test@example.com"
+    active: true
+
+  - name: "Zero Rating — Scotland"
+    type: zero_rating
+    description: "Any 'Improvement Required' rating in monitored Scottish councils"
+    regions: [Scotland]
+    recipient: "test@example.com"
+    active: true
+
+  - name: "Significant Drop — London"
+    type: threshold
+    description: "Premises dropping 2 or more stars in London"
+    regions: [London]
+    min_drop: 2
+    recipient: "test@example.com"
+    active: true
+
+  - name: "Significant Drop — Dundee"
+    type: threshold
+    description: "Premises dropping 2 or more stars in Dundee"
+    authorities: ["Dundee City"]
+    min_drop: 2
+    recipient: "test@example.com"
+    active: true
+
+  - name: "Vulnerable Premises"
+    type: business_type
+    description: "School kitchens, hospital caterers or care homes receiving any new rating"
+    business_type_keywords:
+      - "School"
+      - "Hospital"
+      - "Care Home"
+      - "Nursing Home"
+      - "Children"
+    regions: [London, Scotland]
+    recipient: "test@example.com"
+    active: true
+
+  - name: "Watchlist"
+    type: watchlist
+    description: "Notable premises to monitor closely"
+    fhrs_ids: []   # populate with specific FHRS IDs, e.g. [123456, 789012]
+    recipient: "test@example.com"
+    active: false

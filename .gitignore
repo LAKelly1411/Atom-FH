@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+*.env
+
+# Large output files — regenerated each run, not worth storing in git
+output/change_log_*.json
+
+# Editor
+.vscode/
+*.swp

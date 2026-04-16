@@ -1,0 +1,81 @@
+name: PA ATOMIC — Daily Food Hygiene Pipeline
+
+on:
+  schedule:
+    # 06:30 UTC every day — FSA data typically updates overnight
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+    inputs:
+      date_override:
+        description: 'Run for a specific date (YYYY-MM-DD). Leave blank for today.'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run — skip email sending'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # Required so the job can commit data back to the repo
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so git push works cleanly
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SMTP_HOST:         ${{ secrets.SMTP_HOST }}
+          SMTP_PORT:         ${{ secrets.SMTP_PORT }}
+          SMTP_USER:         ${{ secrets.SMTP_USER }}
+          SMTP_PASS:         ${{ secrets.SMTP_PASS }}
+          SMTP_FROM:         ${{ secrets.SMTP_FROM }}
+          DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
+        run: |
+          ARGS=""
+          [ -n "${{ github.event.inputs.date_override }}" ] && ARGS="$ARGS --date ${{ github.event.inputs.date_override }}"
+          [ "${{ github.event.inputs.dry_run }}" = "true" ]  && ARGS="$ARGS --dry-run"
+          python run.py $ARGS --verbose
+
+      - name: Commit data and digest back to repo
+        run: |
+          git config user.name  "PA ATOMIC Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage the database and today's digest
+          git add data/fhrs.db
+          git add output/digest_*.html
+
+          # Only commit if there's actually something new
+          if git diff --staged --quiet; then
+            echo "Nothing changed — no commit needed."
+          else
+            git commit -m "chore: daily pipeline $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Upload digest as artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-${{ github.run_id }}
+          path: output/digest_*.html
+          retention-days: 90
