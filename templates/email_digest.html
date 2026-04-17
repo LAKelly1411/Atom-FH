@@ -12,17 +12,14 @@
     body {
       background-color: #f0eef8;
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 15px;
-      color: #1a1a1a;
+      font-size: 15px; color: #1a1a1a;
     }
-
-    .page-wrapper { max-width: 780px; margin: 0 auto; padding: 0 0 40px; }
+    .page-wrapper { max-width: 820px; margin: 0 auto; padding: 0 0 40px; }
 
     /* ── Header ── */
     .site-header {
       background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
-      padding: 28px 32px 22px;
-      color: #fff;
+      padding: 28px 32px 22px; color: #fff;
     }
     .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
     .atomic-badge {
@@ -32,29 +29,23 @@
     }
     .header-sub { color: rgba(255,255,255,0.75); font-size: 13px; }
     .site-header h1 { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 5px; }
-    .site-header .coverage { font-size: 13px; color: rgba(255,255,255,0.65); }
-    .site-header .coverage strong { color: #ffcb47; }
+    .coverage { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .coverage strong { color: #ffcb47; }
 
     /* ── Status bar ── */
-    .status-bar {
-      padding: 10px 32px;
-      font-size: 13px; font-weight: 600;
-    }
+    .status-bar { padding: 10px 32px; font-size: 13px; font-weight: 600; }
     .status-bar.has-news { background: #ffcb47; color: #1a1a1a; }
     .status-bar.no-news  { background: #e8f5e9; color: #2e7d32; }
     .status-bar.all-data { background: #6352b9; color: #fff; }
 
     /* ── Filter bar ── */
     .filter-bar {
-      background: #fff;
-      border-bottom: 1px solid #ddd9f0;
+      background: #fff; border-bottom: 1px solid #ddd9f0;
       padding: 12px 32px;
       position: sticky; top: 0; z-index: 10;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
-    .filter-row {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    }
+    .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .filter-row + .filter-row { margin-top: 8px; }
     .filter-label {
       font-size: 11px; font-weight: 700; color: #3d3677;
@@ -62,10 +53,9 @@
       white-space: nowrap; min-width: 60px;
     }
 
-    /* Generic pill button */
+    /* Pill button */
     .pill {
-      appearance: none;
-      border: 1.5px solid #c9c2e8; border-radius: 20px;
+      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 20px;
       background: #fff; color: #6352b9;
       font-size: 12px; font-weight: 600;
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -76,31 +66,45 @@
     .pill:hover { border-color: #6352b9; }
     .pill.active { background: #6352b9; color: #fff; border-color: #6352b9; }
 
-    /* View toggle */
-    .pill.view-today.active  { background: #3d3677; border-color: #3d3677; }
-    .pill.view-all.active    { background: #3d3677; border-color: #3d3677; }
+    .pill.view-today.active, .pill.view-all.active { background: #3d3677; border-color: #3d3677; }
+    .pill.date-today.active  { background: #3d3677; border-color: #3d3677; }
+    .pill.date-7d.active     { background: #3d3677; border-color: #3d3677; }
+    .pill.date-30d.active    { background: #3d3677; border-color: #3d3677; }
+    .pill.date-all.active    { background: #3d3677; border-color: #3d3677; }
+    .pill.date-custom.active { background: #3d3677; border-color: #3d3677; }
 
-    /* Category pills */
-    .pill.cat-critical.active  { background: #c0392b; border-color: #c0392b; }
-    .pill.cat-drops.active     { background: #ffa631; border-color: #ffa631; color: #1a1a1a; }
-    .pill.cat-ratings.active   { background: #6352b9; border-color: #6352b9; }
-    .pill.cat-improved.active  { background: #27ae60; border-color: #27ae60; }
-    .pill.cat-new.active       { background: #2c3e50; border-color: #2c3e50; }
+    .pill.cat-critical.active { background: #c0392b; border-color: #c0392b; }
+    .pill.cat-drops.active    { background: #ffa631; border-color: #ffa631; color: #1a1a1a; }
+    .pill.cat-ratings.active  { background: #6352b9; border-color: #6352b9; }
+    .pill.cat-improved.active { background: #27ae60; border-color: #27ae60; }
+    .pill.cat-new.active      { background: #2c3e50; border-color: #2c3e50; }
 
-    /* Rating pills */
-    .pill.rating-fail.active   { background: #c0392b; border-color: #c0392b; }
-    .pill.rating-0.active      { background: #c0392b; border-color: #c0392b; }
-    .pill.rating-1.active      { background: #e67e22; border-color: #e67e22; }
-    .pill.rating-2.active      { background: #e67e22; border-color: #e67e22; }
-    .pill.rating-3.active      { background: #f39c12; border-color: #f39c12; color: #1a1a1a; }
-    .pill.rating-4.active      { background: #27ae60; border-color: #27ae60; }
-    .pill.rating-5.active      { background: #1a7a4a; border-color: #1a7a4a; }
-    .pill.rating-pass.active   { background: #1a7a4a; border-color: #1a7a4a; }
+    .pill.rating-fail.active  { background: #c0392b; border-color: #c0392b; }
+    .pill.rating-0.active     { background: #c0392b; border-color: #c0392b; }
+    .pill.rating-1.active     { background: #e67e22; border-color: #e67e22; }
+    .pill.rating-2.active     { background: #e67e22; border-color: #e67e22; }
+    .pill.rating-3.active     { background: #f39c12; border-color: #f39c12; color: #1a1a1a; }
+    .pill.rating-4.active     { background: #27ae60; border-color: #27ae60; }
+    .pill.rating-5.active     { background: #1a7a4a; border-color: #1a7a4a; }
+    .pill.rating-pass.active  { background: #1a7a4a; border-color: #1a7a4a; }
+
+    /* Date inputs for custom range */
+    .date-inputs {
+      display: none; align-items: center; gap: 6px;
+      flex-wrap: wrap; margin-top: 6px;
+    }
+    .date-inputs.visible { display: flex; }
+    .date-input {
+      border: 1.5px solid #c9c2e8; border-radius: 5px;
+      padding: 4px 8px; font-size: 12px; font-family: inherit;
+      color: #1a1a1a; outline: none; cursor: pointer;
+    }
+    .date-input:focus { border-color: #6352b9; }
+    .date-range-sep { font-size: 12px; color: #888; }
 
     /* LA dropdown */
     .filter-select {
-      flex: 1; min-width: 160px;
-      appearance: none; -webkit-appearance: none;
+      flex: 1; min-width: 160px; appearance: none; -webkit-appearance: none;
       background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236352b9' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
       border: 1.5px solid #c9c2e8; border-radius: 5px;
       padding: 6px 28px 6px 10px; font-size: 13px;
@@ -110,19 +114,16 @@
     .filter-select:focus { border-color: #6352b9; }
     .filter-count { font-size: 12px; color: #888; white-space: nowrap; }
 
-    /* ── Main body ── */
+    /* ── Body ── */
     .body-wrap { background: #fff; }
 
     /* ── Sections ── */
     .section { padding: 22px 32px; border-bottom: 1px solid #f0f0f0; }
     .section:last-child { border-bottom: none; }
-    .section-head {
-      display: flex; align-items: center; margin-bottom: 14px; gap: 10px;
-    }
+    .section-head { display: flex; align-items: center; margin-bottom: 14px; gap: 10px; }
     .section-badge {
       font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
-      white-space: nowrap;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap;
     }
     .section-title { font-size: 15px; font-weight: 700; color: #1a1a1a; }
     .section-count { margin-left: auto; font-size: 20px; font-weight: 700; }
@@ -141,29 +142,28 @@
     .est-card.card-snap     { border-left: 4px solid #c9c2e8; }
 
     .card-inner { padding: 13px 16px; }
-
-    .card-name { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 0 0 2px; }
-    .card-meta { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px; }
+    .card-name  { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 0 0 2px; }
+    .card-meta  { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px; }
     .card-address { font-size: 12px; color: #555; margin: 0 0 8px; line-height: 1.4; }
+    .card-prev  { font-size: 11px; color: #888; margin: 5px 0 0; }
 
     .rating-chip {
       display: inline-block; padding: 3px 10px; border-radius: 12px;
       font-size: 12px; font-weight: 700;
     }
 
-    .card-prev {
-      font-size: 11px; color: #888; margin: 5px 0 0;
-      line-height: 1.4;
-    }
-
-    .scores-row {
-      display: flex; gap: 10px; flex-wrap: wrap; margin: 7px 0 5px;
-    }
+    /* ── Score chips ── */
+    .scores-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 7px 0 6px; }
     .score-chip {
-      font-size: 11px; color: #555;
-      background: #f0eef8; border-radius: 4px;
-      padding: 2px 7px; white-space: nowrap;
+      display: inline-flex; flex-direction: column; align-items: center;
+      border-radius: 5px; padding: 4px 10px; font-size: 11px;
+      font-weight: 700; min-width: 80px; text-align: center;
+      border: 1px solid rgba(0,0,0,0.08);
     }
+    .score-chip .sc-label { font-size: 9px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.75; margin-bottom: 2px; }
+    .score-chip .sc-val   { font-size: 14px; font-weight: 800; line-height: 1; }
+    .score-chip .sc-max   { font-size: 9px; opacity: 0.65; margin-top: 1px; }
+    .score-chip .sc-desc  { font-size: 9px; font-weight: 600; margin-top: 3px; opacity: 0.85; }
 
     .pending-badge {
       display: inline-block; background: #fff3cd; color: #856404;
@@ -171,38 +171,32 @@
       font-size: 10px; font-weight: 700; padding: 1px 6px;
       margin-left: 6px; vertical-align: middle; text-transform: uppercase;
     }
-
     .fsa-link { font-size: 11px; color: #6352b9; font-weight: 600; text-decoration: underline; }
 
+    /* ── Date badge on card (multi-day view) ── */
+    .card-date-badge {
+      display: inline-block; background: #f0eef8; color: #6352b9;
+      border-radius: 4px; font-size: 10px; font-weight: 700;
+      padding: 1px 7px; margin-left: 8px; vertical-align: middle;
+    }
+
     /* ── First-run banner ── */
-    .first-run-banner {
-      background: #d6dcff; border-left: 4px solid #6352b9;
-      padding: 14px 32px;
-    }
+    .first-run-banner { background: #d6dcff; border-left: 4px solid #6352b9; padding: 14px 32px; }
 
-    /* ── No-changes panel ── */
-    .no-changes { padding: 40px 32px; text-align: center; }
+    /* ── No-changes / No-results ── */
+    .no-changes   { padding: 40px 32px; text-align: center; }
+    .no-results   { padding: 28px 32px; text-align: center; }
 
-    /* ── No-filter-results ── */
-    .no-filter-results { padding: 28px 32px; text-align: center; }
-
-    /* ── All-data separator ── */
-    .all-data-header {
-      padding: 16px 32px 10px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .all-data-header .count-label {
-      font-size: 12px; color: #888; margin-left: auto;
-    }
+    /* ── All-data header ── */
+    .all-data-header { padding: 16px 32px 10px; display: flex; align-items: center; gap: 12px; }
+    .all-data-header .count-label { font-size: 12px; color: #888; margin-left: auto; }
 
     /* ── Footer ── */
-    .site-footer {
-      background: #2c2c2c; padding: 22px 32px; text-align: center;
-    }
+    .site-footer { background: #2c2c2c; padding: 22px 32px; text-align: center; }
 
     @media (max-width: 600px) {
-      .site-header, .filter-bar, .section, .site-footer, .first-run-banner,
-      .all-data-header { padding-left: 16px !important; padding-right: 16px !important; }
+      .site-header, .filter-bar, .section, .site-footer,
+      .first-run-banner, .all-data-header { padding-left: 16px !important; padding-right: 16px !important; }
     }
   </style>
 </head>
@@ -219,13 +213,12 @@
     <p class="coverage">Coverage: <strong>{{ coverage }}</strong></p>
   </div>
 
-  <!-- STATUS BAR (JS will swap classes) -->
+  <!-- STATUS BAR -->
   <div class="status-bar {% if has_news %}has-news{% else %}no-news{% endif %}" id="status-bar">
-    {% if has_news %}
-      <span id="status-msg">{{ total_changes }} change{% if total_changes != 1 %}s{% endif %} detected today</span>
-    {% else %}
-      No changes detected — pipeline confirmed running
-    {% endif %}
+    <span id="status-msg">
+      {% if has_news %}{{ total_changes }} change{% if total_changes != 1 %}s{% endif %} detected today
+      {% else %}No changes detected — pipeline confirmed running{% endif %}
+    </span>
   </div>
 
   <!-- FILTER BAR -->
@@ -234,46 +227,71 @@
     <!-- Row 0: View toggle -->
     <div class="filter-row">
       <span class="filter-label">View</span>
-      <button class="pill view-today active" data-view="today" onclick="setView('today')">Today's changes</button>
+      <button class="pill view-today active" data-view="today" onclick="setView('today')">Changes</button>
       <button class="pill view-all"          data-view="all"   onclick="setView('all')">All data ({{ total_establishments }})</button>
     </div>
 
-    <!-- Row 1: Category (hidden in all-data view) -->
+    <!-- Row 1: Date range (only in Changes view) -->
+    <div class="filter-row" id="date-row">
+      <span class="filter-label">Period</span>
+      <button class="pill date-today active" data-date="today"  onclick="setDateRange('today')">Today</button>
+      <button class="pill date-7d"           data-date="7d"     onclick="setDateRange('7d')">Last 7 days</button>
+      <button class="pill date-30d"          data-date="30d"    onclick="setDateRange('30d')">Last 30 days</button>
+      <button class="pill date-all"          data-date="all"    onclick="setDateRange('all')">All available</button>
+      <button class="pill date-custom"       data-date="custom" onclick="setDateRange('custom')">Custom range</button>
+    </div>
+    <!-- Custom date inputs (hidden until "Custom range" selected) -->
+    <div class="date-inputs" id="custom-date-inputs">
+      <span class="filter-label" style="min-width:0;"></span>
+      <input type="date" class="date-input" id="date-from"
+             value="{{ window_dates[0] if window_dates else run_date }}"
+             min="{{ window_dates[0] if window_dates else run_date }}"
+             max="{{ run_date }}"
+             onchange="applyFilters()">
+      <span class="date-range-sep">to</span>
+      <input type="date" class="date-input" id="date-to"
+             value="{{ run_date }}"
+             min="{{ window_dates[0] if window_dates else run_date }}"
+             max="{{ run_date }}"
+             onchange="applyFilters()">
+    </div>
+
+    <!-- Row 2: Category (Changes view only) -->
     <div class="filter-row" id="category-row">
       <span class="filter-label">Show</span>
       <button class="pill active" data-cat="all" onclick="setCategory('all')">All</button>
-      {% if section_totals.zero_rated %}
+      {% if window_section_totals.zero_rated %}
       <button class="pill cat-critical" data-cat="critical" onclick="setCategory('critical')">Zero-rated / Fail</button>
       {% endif %}
-      {% if section_totals.significant_drops %}
+      {% if window_section_totals.significant_drops %}
       <button class="pill cat-drops" data-cat="drops" onclick="setCategory('drops')">Drops</button>
       {% endif %}
-      {% if section_totals.new_inspections %}
+      {% if window_section_totals.new_inspections %}
       <button class="pill cat-ratings" data-cat="ratings" onclick="setCategory('ratings')">New ratings</button>
       {% endif %}
-      {% if section_totals.improvements %}
+      {% if window_section_totals.improvements %}
       <button class="pill cat-improved" data-cat="improved" onclick="setCategory('improved')">Improvements</button>
       {% endif %}
-      {% if section_totals.new_establishments %}
+      {% if window_section_totals.new_establishments %}
       <button class="pill cat-new" data-cat="new" onclick="setCategory('new')">New listings</button>
       {% endif %}
     </div>
 
-    <!-- Row 2: Rating filter -->
+    <!-- Row 3: Rating filter -->
     <div class="filter-row">
       <span class="filter-label">Rating</span>
       <button class="pill active" data-rating="" onclick="setRating('')">All</button>
-      <button class="pill rating-pass" data-rating="Pass" onclick="setRating('Pass')">Pass</button>
+      <button class="pill rating-pass" data-rating="Pass"                 onclick="setRating('Pass')">Pass</button>
       <button class="pill rating-fail" data-rating="Improvement Required" onclick="setRating('Improvement Required')">Improvement Required</button>
-      <button class="pill rating-5" data-rating="5" onclick="setRating('5')">★★★★★</button>
-      <button class="pill rating-4" data-rating="4" onclick="setRating('4')">★★★★</button>
-      <button class="pill rating-3" data-rating="3" onclick="setRating('3')">★★★</button>
-      <button class="pill rating-2" data-rating="2" onclick="setRating('2')">★★</button>
-      <button class="pill rating-1" data-rating="1" onclick="setRating('1')">★</button>
-      <button class="pill rating-0" data-rating="0" onclick="setRating('0')">0</button>
+      <button class="pill rating-5"    data-rating="5"                    onclick="setRating('5')">★★★★★</button>
+      <button class="pill rating-4"    data-rating="4"                    onclick="setRating('4')">★★★★</button>
+      <button class="pill rating-3"    data-rating="3"                    onclick="setRating('3')">★★★</button>
+      <button class="pill rating-2"    data-rating="2"                    onclick="setRating('2')">★★</button>
+      <button class="pill rating-1"    data-rating="1"                    onclick="setRating('1')">★</button>
+      <button class="pill rating-0"    data-rating="0"                    onclick="setRating('0')">0</button>
     </div>
 
-    <!-- Row 3: Authority -->
+    <!-- Row 4: Authority -->
     <div class="filter-row">
       <span class="filter-label">Authority</span>
       <select class="filter-select" id="la-filter" onchange="filterByLA(this.value)">
@@ -290,7 +308,7 @@
   <!-- BODY -->
   <div class="body-wrap">
 
-    <!-- ══ TODAY'S CHANGES VIEW ══ -->
+    <!-- ══ CHANGES VIEW ══ -->
     <div id="view-today">
 
       {% if is_first_run %}
@@ -312,47 +330,114 @@
           establishments since the previous pull.<br><br>Silence means silence.
         </p>
       </div>
+      {% endif %}
 
-      {% else %}
+      {# ── Macro: score chips ── #}
+      {%- macro score_chip(label, val, colour, max_val, desc) -%}
+      {% if val is not none %}
+      <div class="score-chip" style="background:{{ colour }}18;color:{{ colour }};border-color:{{ colour }}33;">
+        <span class="sc-label">{{ label }}</span>
+        <span class="sc-val">{{ val }}</span>
+        <span class="sc-max">out of {{ max_val }}</span>
+        <span class="sc-desc">{{ desc }}</span>
+      </div>
+      {% endif %}
+      {%- endmacro -%}
 
-      {# ── ZERO RATED / IMPROVEMENT REQUIRED ── #}
-      {% if section_totals.zero_rated %}
+      {# ── Macro: render a single change card ── #}
+      {%- macro change_card(c, card_class, chip_bg, show_drop=false, show_date_badge=false) -%}
+      <div class="est-card {{ card_class }}"
+           data-la="{{ c.local_authority_name }}"
+           data-rating="{{ c.new_rating }}"
+           data-date="{{ c.change_date }}">
+        <div class="card-inner">
+          <p class="card-name">
+            {{ c.business_name }}
+            {% if show_date_badge %}<span class="card-date-badge">{{ c.change_date }}</span>{% endif %}
+            {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+          </p>
+          {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+          <p class="card-address">
+            {% if c._address %}{{ c._address }},{% endif %}
+            {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}
+          </p>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+            {% if c.old_rating %}
+              <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
+              <span style="color:#aaa;">→</span>
+            {% endif %}
+            <span class="rating-chip" style="background:{{ chip_bg }};">
+              {{ c._new_rating_display }}{% if show_drop and c._drop %} (−{{ c._drop }} ★){% endif %}
+            </span>
+          </div>
+          {% if c._old_rating_date_display and c.old_rating %}
+          <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
+          {% endif %}
+          {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:4px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+          {% if c.new_hygiene is not none %}
+          <div class="scores-row">
+            {{ score_chip("Hygiene",    c.new_hygiene,    c._new_hygiene_colour,    25, c._new_hygiene_label) }}
+            {{ score_chip("Structural", c.new_structural, c._new_structural_colour, 25, c._new_structural_label) }}
+            {{ score_chip("Management", c.new_management, c._new_management_colour, 30, c._new_management_label) }}
+          </div>
+          {% endif %}
+          <a href="{{ c._fsa_url }}" class="fsa-link">View on FSA Ratings →</a>
+        </div>
+      </div>
+      {%- endmacro -%}
+
+      {# ── Macro: render a full section using a given bucket + totals ── #}
+      {%- macro changes_section(sec_id, cat, badge_text, badge_bg, badge_fg, title, count_colour,
+                                 bucket, total, page_size, chip_bg, show_drop=false) -%}
+      {% if total %}
+      <div class="section" id="{{ sec_id }}" data-section-cat="{{ cat }}">
+        <div class="section-head">
+          <span class="section-badge" style="background:{{ badge_bg }};color:{{ badge_fg }};">{{ badge_text }}</span>
+          <span class="section-title">{{ title }}</span>
+          <span class="section-count" style="color:{{ count_colour }};" data-section-count>{{ total }}</span>
+        </div>
+        {% if total > page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">
+          Showing {{ bucket|length }} of {{ total }} — use the authority or rating filter to narrow results.
+        </p>
+        {% endif %}
+        {% for c in bucket %}
+          {{ change_card(c, "card-" ~ cat if cat in ("critical","warning","positive","new","info") else "card-info",
+                         chip_bg, show_drop=show_drop, show_date_badge=false) }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      {%- endmacro -%}
+
+      {# We render the WINDOW buckets (90-day data) and let JS filter by date #}
+      {% if window_section_totals.zero_rated %}
       <div class="section" data-section-cat="critical">
         <div class="section-head">
           <span class="section-badge" style="background:#c0392b;color:#fff;">Critical</span>
           <span class="section-title">Zero-rated / Improvement Required</span>
-          <span class="section-count" style="color:#c0392b;" data-section-count>{{ section_totals.zero_rated }}</span>
+          <span class="section-count" style="color:#c0392b;" data-section-count>{{ window_section_totals.zero_rated }}</span>
         </div>
-        {% for c in buckets.zero_rated %}
-        <div class="est-card card-critical" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+        {% if window_section_totals.zero_rated > window_page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">Showing {{ window_buckets.zero_rated|length }} of {{ window_section_totals.zero_rated }}</p>
+        {% endif %}
+        {% for c in window_buckets.zero_rated %}
+        <div class="est-card card-critical"
+             data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}" data-date="{{ c.change_date }}">
           <div class="card-inner">
-            <p class="card-name">
-              {{ c.business_name }}
-              {% if c.new_hygiene is not none and c.new_hygiene != '' %}{% endif %}
-            </p>
+            <p class="card-name">{{ c.business_name }}<span class="card-date-badge" style="display:none;" data-date-badge>{{ c.change_date }}</span>{% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}</p>
             {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if c._address %}{{ c._address }},{% endif %}
-              {{ c.postcode }}
-              &nbsp;·&nbsp; {{ c.local_authority_name }}
-            </p>
+            <p class="card-address">{% if c._address %}{{ c._address }},{% endif %} {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
-              {% if c.old_rating %}
-                <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
-                <span style="color:#aaa;">→</span>
-              {% endif %}
+              {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span><span style="color:#aaa;">→</span>{% endif %}
               <span class="rating-chip" style="background:#c0392b;color:#fff;">{{ c._new_rating_display }}</span>
-              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
             </div>
-            {% if c.old_rating and c._old_rating_date_display %}
-            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
-            {% endif %}
-            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:3px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c._old_rating_date_display and c.old_rating %}<p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>{% endif %}
+            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:4px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
             {% if c.new_hygiene is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
-              <span class="score-chip">Structural: {{ c.new_structural }}</span>
-              <span class="score-chip">Management: {{ c.new_management }}</span>
+              <div class="score-chip" style="background:{{ c._new_hygiene_colour }}18;color:{{ c._new_hygiene_colour }};border-color:{{ c._new_hygiene_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ c.new_hygiene }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_hygiene_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_structural_colour }}18;color:{{ c._new_structural_colour }};border-color:{{ c._new_structural_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ c.new_structural }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_structural_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_management_colour }}18;color:{{ c._new_management_colour }};border-color:{{ c._new_management_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ c.new_management }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ c._new_management_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ c._fsa_url }}" class="fsa-link">View on FSA Ratings →</a>
@@ -362,41 +447,35 @@
       </div>
       {% endif %}
 
-      {# ── SIGNIFICANT DROPS ── #}
-      {% if section_totals.significant_drops %}
+      {% if window_section_totals.significant_drops %}
       <div class="section" data-section-cat="drops">
         <div class="section-head">
           <span class="section-badge" style="background:#ffa631;color:#1a1a1a;">Warning</span>
           <span class="section-title">Significant drops</span>
-          <span class="section-count" style="color:#ffa631;" data-section-count>{{ section_totals.significant_drops }}</span>
+          <span class="section-count" style="color:#ffa631;" data-section-count>{{ window_section_totals.significant_drops }}</span>
         </div>
-        {% for c in buckets.significant_drops %}
-        <div class="est-card card-warning" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+        {% if window_section_totals.significant_drops > window_page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">Showing {{ window_buckets.significant_drops|length }} of {{ window_section_totals.significant_drops }}</p>
+        {% endif %}
+        {% for c in window_buckets.significant_drops %}
+        <div class="est-card card-warning"
+             data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}" data-date="{{ c.change_date }}">
           <div class="card-inner">
-            <p class="card-name">{{ c.business_name }}</p>
+            <p class="card-name">{{ c.business_name }}<span class="card-date-badge" style="display:none;" data-date-badge>{{ c.change_date }}</span>{% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}</p>
             {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if c._address %}{{ c._address }},{% endif %}
-              {{ c.postcode }}
-              &nbsp;·&nbsp; {{ c.local_authority_name }}
-            </p>
+            <p class="card-address">{% if c._address %}{{ c._address }},{% endif %} {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
               <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
               <span style="color:#aaa;">→</span>
-              <span class="rating-chip" style="background:#ffa631;color:#1a1a1a;">
-                Now: {{ c._new_rating_display }}{% if c._drop %} (−{{ c._drop }} ★){% endif %}
-              </span>
-              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+              <span class="rating-chip" style="background:#ffa631;color:#1a1a1a;">Now: {{ c._new_rating_display }}{% if c._drop %} (−{{ c._drop }} ★){% endif %}</span>
             </div>
-            {% if c._old_rating_date_display %}
-            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
-            {% endif %}
-            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:3px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c._old_rating_date_display %}<p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>{% endif %}
+            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:4px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
             {% if c.new_hygiene is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
-              <span class="score-chip">Structural: {{ c.new_structural }}</span>
-              <span class="score-chip">Management: {{ c.new_management }}</span>
+              <div class="score-chip" style="background:{{ c._new_hygiene_colour }}18;color:{{ c._new_hygiene_colour }};border-color:{{ c._new_hygiene_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ c.new_hygiene }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_hygiene_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_structural_colour }}18;color:{{ c._new_structural_colour }};border-color:{{ c._new_structural_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ c.new_structural }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_structural_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_management_colour }}18;color:{{ c._new_management_colour }};border-color:{{ c._new_management_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ c.new_management }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ c._new_management_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
@@ -406,41 +485,34 @@
       </div>
       {% endif %}
 
-      {# ── NEW INSPECTIONS / RATING CHANGES ── #}
-      {% if section_totals.new_inspections %}
+      {% if window_section_totals.new_inspections %}
       <div class="section" data-section-cat="ratings">
         <div class="section-head">
           <span class="section-badge" style="background:#6352b9;color:#fff;">Inspections</span>
           <span class="section-title">New ratings</span>
-          <span class="section-count" style="color:#6352b9;" data-section-count>{{ section_totals.new_inspections }}</span>
+          <span class="section-count" style="color:#6352b9;" data-section-count>{{ window_section_totals.new_inspections }}</span>
         </div>
-        {% for c in buckets.new_inspections %}
-        <div class="est-card card-info" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+        {% if window_section_totals.new_inspections > window_page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">Showing {{ window_buckets.new_inspections|length }} of {{ window_section_totals.new_inspections }}</p>
+        {% endif %}
+        {% for c in window_buckets.new_inspections %}
+        <div class="est-card card-info"
+             data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}" data-date="{{ c.change_date }}">
           <div class="card-inner">
-            <p class="card-name">{{ c.business_name }}</p>
+            <p class="card-name">{{ c.business_name }}<span class="card-date-badge" style="display:none;" data-date-badge>{{ c.change_date }}</span>{% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}</p>
             {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if c._address %}{{ c._address }},{% endif %}
-              {{ c.postcode }}
-              &nbsp;·&nbsp; {{ c.local_authority_name }}
-            </p>
+            <p class="card-address">{% if c._address %}{{ c._address }},{% endif %} {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
-              {% if c.old_rating %}
-                <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span>
-                <span style="color:#aaa;font-size:12px;">→</span>
-              {% endif %}
+              {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span><span style="color:#aaa;font-size:12px;">→</span>{% endif %}
               <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
-              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
             </div>
-            {% if c._old_rating_date_display %}
-            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
-            {% endif %}
-            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c._old_rating_date_display and c.old_rating %}<p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>{% endif %}
+            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:4px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
             {% if c.new_hygiene is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
-              <span class="score-chip">Structural: {{ c.new_structural }}</span>
-              <span class="score-chip">Management: {{ c.new_management }}</span>
+              <div class="score-chip" style="background:{{ c._new_hygiene_colour }}18;color:{{ c._new_hygiene_colour }};border-color:{{ c._new_hygiene_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ c.new_hygiene }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_hygiene_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_structural_colour }}18;color:{{ c._new_structural_colour }};border-color:{{ c._new_structural_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ c.new_structural }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_structural_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_management_colour }}18;color:{{ c._new_management_colour }};border-color:{{ c._new_management_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ c.new_management }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ c._new_management_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
@@ -450,40 +522,31 @@
       </div>
       {% endif %}
 
-      {# ── IMPROVEMENTS ── #}
-      {% if section_totals.improvements %}
+      {% if window_section_totals.improvements %}
       <div class="section" data-section-cat="improved">
         <div class="section-head">
           <span class="section-badge" style="background:#27ae60;color:#fff;">Improvements</span>
           <span class="section-title">Ratings improved</span>
-          <span class="section-count" style="color:#27ae60;" data-section-count>{{ section_totals.improvements }}</span>
+          <span class="section-count" style="color:#27ae60;" data-section-count>{{ window_section_totals.improvements }}</span>
         </div>
-        {% for c in buckets.improvements %}
-        <div class="est-card card-positive" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+        {% for c in window_buckets.improvements %}
+        <div class="est-card card-positive"
+             data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}" data-date="{{ c.change_date }}">
           <div class="card-inner">
-            <p class="card-name">{{ c.business_name }}</p>
+            <p class="card-name">{{ c.business_name }}<span class="card-date-badge" style="display:none;" data-date-badge>{{ c.change_date }}</span></p>
             {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if c._address %}{{ c._address }},{% endif %}
-              {{ c.postcode }}
-              &nbsp;·&nbsp; {{ c.local_authority_name }}
-            </p>
+            <p class="card-address">{% if c._address %}{{ c._address }},{% endif %} {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
-              {% if c.old_rating %}
-                <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span>
-                <span style="color:#aaa;font-size:12px;">→</span>
-              {% endif %}
+              {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span><span style="color:#aaa;font-size:12px;">→</span>{% endif %}
               <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
             </div>
-            {% if c._old_rating_date_display %}
-            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
-            {% endif %}
-            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c._old_rating_date_display and c.old_rating %}<p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>{% endif %}
+            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:4px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
             {% if c.new_hygiene is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
-              <span class="score-chip">Structural: {{ c.new_structural }}</span>
-              <span class="score-chip">Management: {{ c.new_management }}</span>
+              <div class="score-chip" style="background:{{ c._new_hygiene_colour }}18;color:{{ c._new_hygiene_colour }};border-color:{{ c._new_hygiene_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ c.new_hygiene }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_hygiene_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_structural_colour }}18;color:{{ c._new_structural_colour }};border-color:{{ c._new_structural_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ c.new_structural }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_structural_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_management_colour }}18;color:{{ c._new_management_colour }};border-color:{{ c._new_management_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ c.new_management }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ c._new_management_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
@@ -493,41 +556,32 @@
       </div>
       {% endif %}
 
-      {# ── NEW ESTABLISHMENTS ── #}
-      {% if section_totals.new_establishments %}
+      {% if window_section_totals.new_establishments %}
       <div class="section" data-section-cat="new">
         <div class="section-head">
           <span class="section-badge" style="background:#2c3e50;color:#fff;">New</span>
           <span class="section-title">New listings</span>
-          <span class="section-count" style="color:#2c3e50;" data-section-count>{{ section_totals.new_establishments }}</span>
+          <span class="section-count" style="color:#2c3e50;" data-section-count>{{ window_section_totals.new_establishments }}</span>
         </div>
-        {% if section_totals.new_establishments > section_page_size %}
-        <p style="font-size:12px;color:#888;margin:0 0 12px;">
-          Showing {{ section_page_size }} of {{ section_totals.new_establishments }} — use the authority filter to narrow by area.
-        </p>
+        {% if window_section_totals.new_establishments > window_page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">Showing {{ window_buckets.new_establishments|length }} of {{ window_section_totals.new_establishments }} — use the authority filter to narrow.</p>
         {% endif %}
-        {% for c in buckets.new_establishments %}
-        <div class="est-card card-new" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+        {% for c in window_buckets.new_establishments %}
+        <div class="est-card card-new"
+             data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}" data-date="{{ c.change_date }}">
           <div class="card-inner">
-            <p class="card-name">{{ c.business_name }}</p>
+            <p class="card-name">{{ c.business_name }}<span class="card-date-badge" style="display:none;" data-date-badge>{{ c.change_date }}</span>{% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}</p>
             {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if c._address %}{{ c._address }},{% endif %}
-              {{ c.postcode }}
-              &nbsp;·&nbsp; {{ c.local_authority_name }}
-            </p>
+            <p class="card-address">{% if c._address %}{{ c._address }},{% endif %} {{ c.postcode }}&nbsp;·&nbsp;{{ c.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px;">
-              {% if c.new_rating %}
-                <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
-              {% endif %}
-              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+              {% if c.new_rating %}<span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>{% endif %}
             </div>
             {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
             {% if c.new_hygiene is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
-              <span class="score-chip">Structural: {{ c.new_structural }}</span>
-              <span class="score-chip">Management: {{ c.new_management }}</span>
+              <div class="score-chip" style="background:{{ c._new_hygiene_colour }}18;color:{{ c._new_hygiene_colour }};border-color:{{ c._new_hygiene_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ c.new_hygiene }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_hygiene_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_structural_colour }}18;color:{{ c._new_structural_colour }};border-color:{{ c._new_structural_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ c.new_structural }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ c._new_structural_label }}</span></div>
+              <div class="score-chip" style="background:{{ c._new_management_colour }}18;color:{{ c._new_management_colour }};border-color:{{ c._new_management_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ c.new_management }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ c._new_management_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
@@ -537,11 +591,10 @@
       </div>
       {% endif %}
 
-      <div class="no-filter-results" id="no-filter-results" style="display:none;">
+      <div class="no-results" id="no-filter-results" style="display:none;">
         <p style="font-size:14px;color:#999;margin:0;">No changes match the current filters.</p>
       </div>
 
-      {% endif %}{# end has_news #}
     </div>{# end view-today #}
 
 
@@ -549,31 +602,20 @@
     <div id="view-all" style="display:none;">
       <div class="all-data-header">
         <span style="font-size:13px;font-weight:700;color:#3d3677;">All monitored establishments</span>
-        <span class="count-label" id="all-data-count">
-          Showing {{ all_establishments|length }} of {{ total_establishments }}
-        </span>
+        <span class="count-label" id="all-data-count">Showing {{ all_establishments|length }} of {{ total_establishments }}</span>
       </div>
       {% if total_establishments > all_data_limit %}
       <p style="font-size:12px;color:#888;margin:-4px 32px 8px;line-height:1.5;">
-        Displaying {{ all_data_limit }} of {{ total_establishments }} establishments (round-robin across authorities).
-        Use the rating or authority filters to narrow results.
+        Displaying {{ all_data_limit }} of {{ total_establishments }} (round-robin across authorities). Use rating or authority filters to narrow.
       </p>
       {% endif %}
-
-      <div class="section" style="padding-top:8px;" id="all-data-section">
+      <div class="section" style="padding-top:8px;">
         {% for e in all_establishments %}
         <div class="est-card card-snap" data-la="{{ e.local_authority_name }}" data-rating="{{ e.rating_value }}">
           <div class="card-inner">
-            <p class="card-name">
-              {{ e.business_name }}
-              {% if e.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
-            </p>
+            <p class="card-name">{{ e.business_name }}{% if e.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}</p>
             {% if e.business_type %}<p class="card-meta">{{ e.business_type }}</p>{% endif %}
-            <p class="card-address">
-              {% if e._address %}{{ e._address }},{% endif %}
-              {{ e.postcode }}
-              &nbsp;·&nbsp; {{ e.local_authority_name }}
-            </p>
+            <p class="card-address">{% if e._address %}{{ e._address }},{% endif %} {{ e.postcode }}&nbsp;·&nbsp;{{ e.local_authority_name }}</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
               <span class="rating-chip"
                 style="background:
@@ -589,17 +631,16 @@
             {% if e._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ e._rating_date_display }}</p>{% endif %}
             {% if e.hygiene_score is not none %}
             <div class="scores-row">
-              <span class="score-chip">Hygiene: {{ e.hygiene_score }}</span>
-              <span class="score-chip">Structural: {{ e.structural_score }}</span>
-              <span class="score-chip">Management: {{ e.management_score }}</span>
+              <div class="score-chip" style="background:{{ e._hygiene_score_colour }}18;color:{{ e._hygiene_score_colour }};border-color:{{ e._hygiene_score_colour }}33;"><span class="sc-label">Hygiene</span><span class="sc-val">{{ e.hygiene_score }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ e._hygiene_score_label }}</span></div>
+              <div class="score-chip" style="background:{{ e._structural_score_colour }}18;color:{{ e._structural_score_colour }};border-color:{{ e._structural_score_colour }}33;"><span class="sc-label">Structural</span><span class="sc-val">{{ e.structural_score }}</span><span class="sc-max">out of 25</span><span class="sc-desc">{{ e._structural_score_label }}</span></div>
+              <div class="score-chip" style="background:{{ e._management_score_colour }}18;color:{{ e._management_score_colour }};border-color:{{ e._management_score_colour }}33;"><span class="sc-label">Management</span><span class="sc-val">{{ e.management_score }}</span><span class="sc-max">out of 30</span><span class="sc-desc">{{ e._management_score_label }}</span></div>
             </div>
             {% endif %}
             <a href="{{ e._fsa_url }}" class="fsa-link">FSA listing →</a>
           </div>
         </div>
         {% endfor %}
-
-        <div class="no-filter-results" id="no-filter-results-all" style="display:none;">
+        <div class="no-results" id="no-filter-results-all" style="display:none;">
           <p style="font-size:14px;color:#999;margin:0;">No establishments match the current filters.</p>
         </div>
       </div>
@@ -620,66 +661,88 @@
 </div>{# end page-wrapper #}
 
 <script>
+  var RUN_DATE = '{{ run_date }}';
   var activeView     = 'today';
   var activeCategory = 'all';
   var activeRating   = '';
   var activeLa       = '';
+  var activeDateMode = 'today';
 
+  /* ── Date arithmetic ─────────────────────────────────────────────────── */
+  function addDays(dateStr, days) {
+    var d = new Date(dateStr);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function getDateBounds() {
+    if (activeDateMode === 'today')  return { from: RUN_DATE,           to: RUN_DATE };
+    if (activeDateMode === '7d')     return { from: addDays(RUN_DATE,-6), to: RUN_DATE };
+    if (activeDateMode === '30d')    return { from: addDays(RUN_DATE,-29), to: RUN_DATE };
+    if (activeDateMode === 'all')    return { from: null, to: null };
+    if (activeDateMode === 'custom') {
+      return {
+        from: document.getElementById('date-from').value || null,
+        to:   document.getElementById('date-to').value   || RUN_DATE
+      };
+    }
+    return { from: RUN_DATE, to: RUN_DATE };
+  }
+
+  /* ── Setters ─────────────────────────────────────────────────────────── */
   function setView(v) {
     activeView = v;
-    document.querySelectorAll('.pill[data-view]').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.view === v);
+    document.querySelectorAll('.pill[data-view]').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.view === v);
     });
-    var todayEl = document.getElementById('view-today');
-    var allEl   = document.getElementById('view-all');
-    var catRow  = document.getElementById('category-row');
-    var statusBar = document.getElementById('status-bar');
-    if (v === 'all') {
-      todayEl.style.display = 'none';
-      allEl.style.display   = '';
-      if (catRow) catRow.style.display = 'none';
-      statusBar.className = 'status-bar all-data';
-      document.getElementById('status-msg') && (document.getElementById('status-msg').textContent = '');
-    } else {
-      todayEl.style.display = '';
-      allEl.style.display   = 'none';
-      if (catRow) catRow.style.display = '';
-      statusBar.className = 'status-bar {% if has_news %}has-news{% else %}no-news{% endif %}';
-    }
+    var isAll = v === 'all';
+    document.getElementById('view-today').style.display = isAll ? 'none' : '';
+    document.getElementById('view-all').style.display   = isAll ? '' : 'none';
+    document.getElementById('date-row').style.display     = isAll ? 'none' : '';
+    document.getElementById('category-row').style.display = isAll ? 'none' : '';
+    document.getElementById('custom-date-inputs').classList.toggle('visible', false);
+    var sb = document.getElementById('status-bar');
+    sb.className = 'status-bar ' + (isAll ? 'all-data' : ('{% if has_news %}has-news{% else %}no-news{% endif %}'));
+    applyFilters();
+  }
+
+  function setDateRange(mode) {
+    activeDateMode = mode;
+    document.querySelectorAll('.pill[data-date]').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.date === mode);
+    });
+    document.getElementById('custom-date-inputs').classList.toggle('visible', mode === 'custom');
     applyFilters();
   }
 
   function setCategory(cat) {
     activeCategory = cat;
-    document.querySelectorAll('.pill[data-cat]').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.cat === cat);
+    document.querySelectorAll('.pill[data-cat]').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cat === cat);
     });
     applyFilters();
   }
 
   function setRating(r) {
     activeRating = r;
-    document.querySelectorAll('.pill[data-rating]').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.rating === r);
+    document.querySelectorAll('.pill[data-rating]').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.rating === r);
     });
     applyFilters();
   }
 
-  function filterByLA(val) {
-    activeLa = val;
-    applyFilters();
-  }
+  function filterByLA(val) { activeLa = val; applyFilters(); }
 
+  /* ── Main filter dispatcher ──────────────────────────────────────────── */
   function applyFilters() {
-    if (activeView === 'today') {
-      applyChangesFilters();
-    } else {
-      applyAllDataFilters();
-    }
+    if (activeView === 'all') { applyAllDataFilters(); return; }
+    applyChangesFilters();
   }
 
+  /* ── Changes filter ──────────────────────────────────────────────────── */
   function applyChangesFilters() {
-    var noResults = document.getElementById('no-filter-results');
+    var bounds = getDateBounds();
+    var isMultiDay = activeDateMode !== 'today';
     var totalVisible = 0;
 
     document.querySelectorAll('#view-today .section[data-section-cat]').forEach(function(section) {
@@ -691,10 +754,14 @@
       var cards = section.querySelectorAll('.est-card[data-la]');
       var sectionVisible = 0;
       cards.forEach(function(card) {
-        var laMatch     = !activeLa     || card.dataset.la === activeLa;
-        var ratingMatch = !activeRating || card.dataset.rating === activeRating;
-        var show = laMatch && ratingMatch;
+        var laOk     = !activeLa     || card.dataset.la === activeLa;
+        var ratingOk = !activeRating || card.dataset.rating === activeRating;
+        var dateOk   = !bounds.from  || (card.dataset.date >= bounds.from && card.dataset.date <= bounds.to);
+        var show = laOk && ratingOk && dateOk;
         card.style.display = show ? '' : 'none';
+        /* Show/hide date badge on cards when multi-day view is active */
+        var badge = card.querySelector('[data-date-badge]');
+        if (badge) badge.style.display = (show && isMultiDay) ? 'inline-block' : 'none';
         if (show) { sectionVisible++; totalVisible++; }
       });
       section.style.display = sectionVisible === 0 ? 'none' : '';
@@ -702,45 +769,60 @@
       if (countEl) countEl.textContent = sectionVisible;
     });
 
-    if (noResults) {
-      noResults.style.display =
-        (totalVisible === 0 && (activeCategory !== 'all' || activeLa || activeRating)) ? '' : 'none';
-    }
+    var noR = document.getElementById('no-filter-results');
+    if (noR) noR.style.display = (totalVisible === 0) ? '' : 'none';
     updateFilterCount(totalVisible);
+
+    /* Update status bar */
+    var msg = document.getElementById('status-msg');
+    if (msg) {
+      if (activeDateMode === 'today') {
+        msg.textContent = '{{ total_changes }} change{% if total_changes != 1 %}s{% endif %} detected today';
+      } else {
+        msg.textContent = totalVisible + ' change' + (totalVisible !== 1 ? 's' : '') + ' — ' + periodLabel();
+      }
+    }
   }
 
+  function periodLabel() {
+    if (activeDateMode === '7d')    return 'last 7 days';
+    if (activeDateMode === '30d')   return 'last 30 days';
+    if (activeDateMode === 'all')   return 'all available data';
+    if (activeDateMode === 'custom') {
+      var f = document.getElementById('date-from').value;
+      var t = document.getElementById('date-to').value;
+      return (f || '?') + ' to ' + (t || '?');
+    }
+    return '';
+  }
+
+  /* ── All-data filter ─────────────────────────────────────────────────── */
   function applyAllDataFilters() {
-    var noResults = document.getElementById('no-filter-results-all');
-    var totalVisible = 0;
-
+    var n = 0;
     document.querySelectorAll('#view-all .est-card[data-la]').forEach(function(card) {
-      var laMatch     = !activeLa     || card.dataset.la === activeLa;
-      var ratingMatch = !activeRating || card.dataset.rating === activeRating;
-      var show = laMatch && ratingMatch;
+      var show = (!activeLa || card.dataset.la === activeLa) &&
+                 (!activeRating || card.dataset.rating === activeRating);
       card.style.display = show ? '' : 'none';
-      if (show) totalVisible++;
+      if (show) n++;
     });
-
-    if (noResults) {
-      noResults.style.display = totalVisible === 0 ? '' : 'none';
+    var noR = document.getElementById('no-filter-results-all');
+    if (noR) noR.style.display = n === 0 ? '' : 'none';
+    var lbl = document.getElementById('all-data-count');
+    if (lbl) {
+      var shown = Math.min({{ total_establishments }}, {{ all_data_limit }});
+      lbl.textContent = (activeLa || activeRating)
+        ? n + ' matching'
+        : 'Showing ' + shown + ' of {{ total_establishments }}';
     }
-
-    var countLabel = document.getElementById('all-data-count');
-    if (countLabel) {
-      var total = {{ total_establishments }};
-      var shown = Math.min(total, {{ all_data_limit }});
-      countLabel.textContent = (activeLa || activeRating)
-        ? totalVisible + ' matching'
-        : 'Showing ' + shown + ' of ' + total;
-    }
-
-    updateFilterCount(totalVisible);
+    updateFilterCount(n);
   }
 
   function updateFilterCount(n) {
     var el = document.getElementById('filter-count');
     if (!el) return;
-    var isFiltered = (activeCategory !== 'all' && activeView === 'today') || activeLa || activeRating;
+    var isFiltered = (activeCategory !== 'all' && activeView === 'today')
+                     || activeLa || activeRating
+                     || (activeDateMode !== 'today' && activeView === 'today');
     el.textContent = isFiltered ? n + ' result' + (n !== 1 ? 's' : '') : '';
   }
 </script>

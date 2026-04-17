@@ -133,6 +133,59 @@ def _format_rating(rating: str | None, scheme: str) -> str:
         return rating
 
 
+def _score_colour(score: int | None) -> str:
+    """Return a CSS hex colour for an FHRS penalty score (lower = better)."""
+    if score is None:
+        return "#aaa"
+    if score == 0:
+        return "#1a7a4a"
+    if score <= 5:
+        return "#27ae60"
+    if score <= 10:
+        return "#f39c12"
+    if score <= 15:
+        return "#e67e22"
+    if score <= 20:
+        return "#e74c3c"
+    return "#c0392b"
+
+
+def _score_label(score: int | None) -> str:
+    """Return a plain-English label for an FHRS penalty score."""
+    if score is None:
+        return ""
+    if score == 0:
+        return "Very good"
+    if score <= 5:
+        return "Good"
+    if score <= 10:
+        return "Generally satisfactory"
+    if score <= 15:
+        return "Improvement necessary"
+    if score <= 20:
+        return "Urgent improvement needed"
+    return "Urgent / Major non-compliance"
+
+
+def _augment_scores(c: dict) -> None:
+    """Add score display helpers to a change or establishment dict."""
+    for prefix, max_val in (("new_hygiene", 25), ("new_structural", 25), ("new_management", 30)):
+        val = c.get(prefix)
+        if val is None:
+            # Also try without prefix (for establishment records)
+            plain = prefix.replace("new_", "")  # hygiene_score etc handled separately
+        c[f"_{prefix}_colour"] = _score_colour(val)
+        c[f"_{prefix}_label"]  = _score_label(val)
+        c[f"_{prefix}_max"]    = max_val
+
+    # Establishment snapshot uses different field names
+    for field, max_val in (("hygiene_score", 25), ("structural_score", 25), ("management_score", 30)):
+        val = c.get(field)
+        c[f"_{field}_colour"] = _score_colour(val)
+        c[f"_{field}_label"]  = _score_label(val)
+        c[f"_{field}_max"]    = max_val
+
+
 def _format_date(date_str: str | None) -> str:
     if not date_str:
         return ""
@@ -188,11 +241,17 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
 
     buckets = _classify_changes(changes)
 
-    # ── Fetch current snapshot for "All data" view ────────────────────────────
-    from .db import get_connection, get_current_establishments
+    # ── Fetch current snapshot + 90-day window ───────────────────────────────
+    from .db import get_connection, get_current_establishments, get_changes_window
     conn = get_connection()
-    current_rows = get_current_establishments(conn)
+    current_rows  = get_current_establishments(conn)
+    window_rows   = get_changes_window(conn, days=90)
     conn.close()
+
+    # Window changes for historical date-range browsing
+    window_changes = [dict(r) for r in window_rows]
+    window_buckets = _classify_changes(window_changes)
+    window_section_totals = {k: len(v) for k, v in window_buckets.items()}
 
     # Build address lookup: fhrs_id → display address (from current snapshot)
     address_lookup: dict[str, str] = {}
@@ -201,20 +260,28 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
         addr = _build_address(r_dict)
         address_lookup[r_dict["fhrs_id"]] = addr
 
-    # Augment each change with display helpers
+    def _augment_change(c: dict) -> None:
+        c["_fsa_url"] = _fsa_url(c["fhrs_id"])
+        c["_new_rating_display"] = _format_rating(
+            c.get("new_rating"), c.get("scheme_type", "FHRS"))
+        c["_old_rating_display"] = _format_rating(
+            c.get("old_rating"), c.get("scheme_type", "FHRS"))
+        c["_rating_date_display"] = _format_date(c.get("new_rating_date"))
+        c["_old_rating_date_display"] = _format_date(c.get("old_rating_date"))
+        c["_drop"] = _rating_drop(c)
+        c["_address"] = (c.get("address") or "").strip() or \
+                        address_lookup.get(c["fhrs_id"], "")
+        _augment_scores(c)
+
+    # Augment today's buckets
     for bucket in buckets.values():
         for c in bucket:
-            c["_fsa_url"] = _fsa_url(c["fhrs_id"])
-            c["_new_rating_display"] = _format_rating(
-                c.get("new_rating"), c.get("scheme_type", "FHRS"))
-            c["_old_rating_display"] = _format_rating(
-                c.get("old_rating"), c.get("scheme_type", "FHRS"))
-            c["_rating_date_display"] = _format_date(c.get("new_rating_date"))
-            c["_old_rating_date_display"] = _format_date(c.get("old_rating_date"))
-            c["_drop"] = _rating_drop(c)
-            # Use address from change_log if present, else fall back to snapshot
-            c["_address"] = (c.get("address") or "").strip() or \
-                             address_lookup.get(c["fhrs_id"], "")
+            _augment_change(c)
+
+    # Augment window buckets (historical browsing)
+    for bucket in window_buckets.values():
+        for c in bucket:
+            _augment_change(c)
 
     # Real totals before truncation (shown in section headers)
     section_totals = {k: len(v) for k, v in buckets.items()}
@@ -224,7 +291,12 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
                           for c in changes if c.get("local_authority_name")})
 
     # Truncate rendered buckets
-    buckets = {k: _interleave_truncate(v, SECTION_PAGE_SIZE) for k, v in buckets.items()}
+    WINDOW_PAGE_SIZE = 300   # per section across 90-day window
+    buckets        = {k: _interleave_truncate(v, SECTION_PAGE_SIZE) for k, v in buckets.items()}
+    window_buckets = {k: _interleave_truncate(v, WINDOW_PAGE_SIZE)  for k, v in window_buckets.items()}
+
+    # Date range for the calendar controls
+    window_dates = sorted({c["change_date"] for c in window_changes})
     coverage = ", ".join(authorities) if authorities else "all monitored areas"
 
     total_changes = sum(v for k, v in section_totals.items()
@@ -243,6 +315,7 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
             d.get("rating_value"), d.get("scheme_type", "FHRS"))
         d["_rating_date_display"] = _format_date(d.get("rating_date"))
         d["_fsa_url"] = _fsa_url(d["fhrs_id"])
+        _augment_scores(d)
         all_establishments.append(d)
         if d.get("local_authority_name"):
             all_authorities_set.add(d["local_authority_name"])
@@ -263,6 +336,7 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
         coverage=coverage,
         has_news=has_news,
         total_changes=total_changes,
+        # Today's buckets (default view)
         buckets=buckets,
         section_totals=section_totals,
         section_page_size=SECTION_PAGE_SIZE,
@@ -270,6 +344,11 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
         all_changes=changes,
         is_first_run=all_new,
         baseline_count=baseline_count,
+        # 90-day window (date-range browsing)
+        window_buckets=window_buckets,
+        window_section_totals=window_section_totals,
+        window_page_size=WINDOW_PAGE_SIZE,
+        window_dates=window_dates,
         # All-data view
         all_establishments=all_establishments,
         all_authorities=all_authorities,
