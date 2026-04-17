@@ -61,9 +61,10 @@ jobs:
           git config user.name  "PA ATOMIC Bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage the database and today's digest
+          # Stage the database, digest, and notifications page
           git add data/fhrs.db
           git add output/digest_*.html
+          git add output/notifications.html
 
           # Only commit if there's actually something new
           if git diff --staged --quiet; then
