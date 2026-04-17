@@ -20,7 +20,7 @@ from datetime import date
 # Ensure src is importable
 sys.path.insert(0, os.path.dirname(__file__))
 
-from src.db import init_db
+from src.db import init_db, get_connection, get_changes_for_date, migrate_address_lines
 from src.ingest import run_ingestion, resolve_authority_ids, list_all_authority_names
 from src.detect import run_change_detection, summarise_changes
 from src.feed import run_feed
@@ -87,6 +87,13 @@ def main() -> None:
     logger.info("=== PA ATOMIC pipeline start | date: %s ===", run_date)
     init_db()
 
+    # One-time migration: fix address lines that were blank due to wrong key casing
+    _conn = get_connection()
+    _fixed = migrate_address_lines(_conn)
+    _conn.close()
+    if _fixed:
+        logger.info("Address migration: fixed %s establishment records", _fixed)
+
     recipients = [] if args.dry_run else get_recipients()
 
     # Step 1: Ingestion
@@ -107,7 +114,6 @@ def main() -> None:
         logger.info("Changes: %s", summary)
     elif args.feed_only:
         # Load changes from DB for the given date
-        from src.db import get_connection, get_changes_for_date
         conn = get_connection()
         rows = get_changes_for_date(conn, run_date)
         conn.close()

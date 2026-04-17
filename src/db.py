@@ -184,3 +184,55 @@ def get_changes_window(conn: sqlite3.Connection, days: int = 90) -> list[sqlite3
         WHERE change_date >= date('now', ?)
         ORDER BY change_date DESC
     """, (f"-{days} days",)).fetchall()
+
+
+def get_current_establishments(conn: sqlite3.Connection) -> list[sqlite3.Row]:
+    """Return the most recent record for every establishment across all authorities."""
+    return conn.execute("""
+        SELECT e.*
+        FROM establishments e
+        INNER JOIN (
+            SELECT fhrs_id, MAX(pull_date) AS max_date
+            FROM establishments
+            GROUP BY fhrs_id
+        ) latest ON e.fhrs_id = latest.fhrs_id AND e.pull_date = latest.max_date
+        ORDER BY local_authority_name, business_name
+    """).fetchall()
+
+
+def migrate_address_lines(conn: sqlite3.Connection) -> int:
+    """
+    One-time fix: populate address_line1-4 from raw_json for records where
+    they are blank (caused by the initial ingest using wrong key casing).
+    Returns the number of rows updated.
+    """
+    rows = conn.execute("""
+        SELECT id, raw_json FROM establishments
+        WHERE (address_line1 IS NULL OR address_line1 = '')
+          AND raw_json IS NOT NULL AND raw_json != ''
+    """).fetchall()
+
+    updated = 0
+    for row in rows:
+        try:
+            data = json.loads(row["raw_json"])
+            conn.execute("""
+                UPDATE establishments
+                SET address_line1 = ?,
+                    address_line2 = ?,
+                    address_line3 = ?,
+                    address_line4 = ?
+                WHERE id = ?
+            """, (
+                data.get("AddressLine1", ""),
+                data.get("AddressLine2", ""),
+                data.get("AddressLine3", ""),
+                data.get("AddressLine4", ""),
+                row["id"],
+            ))
+            updated += 1
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    conn.commit()
+    return updated

@@ -1,6 +1,6 @@
 """
 Milestone 3: Daily Feed Generation
-Renders the change log into a PA-branded HTML email digest.
+Renders the change log into a PA-branded HTML digest.
 
 Sections (in priority order):
   1. Zero-rated / Improvement Required (most newsworthy)
@@ -10,7 +10,8 @@ Sections (in priority order):
   5. New establishments
   6. Re-inspections / score changes (optional — collapsed by default)
 
-If no changes, the digest confirms the pipeline ran — silence means silence.
+The digest also carries a full current-snapshot view so newsrooms can
+browse all monitored establishments filtered by rating or local authority.
 """
 
 import logging
@@ -29,6 +30,19 @@ logger = logging.getLogger(__name__)
 
 TEMPLATES_DIR = Path(__file__).parent.parent / "templates"
 OUTPUT_DIR = Path(__file__).parent.parent / "output"
+
+
+# ── Address helpers ───────────────────────────────────────────────────────────
+
+def _build_address(row) -> str:
+    """Join address_line1-4 into a single display string."""
+    parts = [
+        row.get("address_line1") or "",
+        row.get("address_line2") or "",
+        row.get("address_line3") or "",
+        row.get("address_line4") or "",
+    ]
+    return ", ".join(p for p in parts if p.strip())
 
 
 # ── Change classification ─────────────────────────────────────────────────────
@@ -92,7 +106,7 @@ def _classify_changes(changes: list[dict]) -> dict:
                     else:
                         buckets["new_inspections"].append(c)
                 else:
-                    # FHIS or non-numeric: any rating change goes to new_inspections
+                    # FHIS or non-numeric
                     if (scheme == "FHIS" and
                             new_rating.lower() != "improvement required" and
                             old_rating.lower() == "improvement required"):
@@ -131,11 +145,11 @@ def _format_date(date_str: str | None) -> str:
 
 # ── Truncation helpers ────────────────────────────────────────────────────────
 
-def _interleave_truncate(items: list[dict], limit: int) -> list[dict]:
+def _interleave_truncate(items: list[dict], limit: int,
+                         key: str = "local_authority_name") -> list[dict]:
     """
-    Return up to `limit` items sampled round-robin across local authorities.
-    Prevents any single authority dominating the rendered output when data
-    is sorted alphabetically by authority name.
+    Return up to `limit` items sampled round-robin across `key` groups.
+    Prevents any single group dominating when data is alphabetically sorted.
     """
     if len(items) <= limit:
         return items
@@ -143,12 +157,12 @@ def _interleave_truncate(items: list[dict], limit: int) -> list[dict]:
     from collections import defaultdict
     from itertools import zip_longest
 
-    by_authority: dict[str, list] = defaultdict(list)
+    by_group: dict[str, list] = defaultdict(list)
     for item in items:
-        by_authority[item.get("local_authority_name", "")].append(item)
+        by_group[item.get(key, "")].append(item)
 
     result = []
-    for round_items in zip_longest(*by_authority.values()):
+    for round_items in zip_longest(*by_group.values()):
         for item in round_items:
             if item is not None:
                 result.append(item)
@@ -169,11 +183,23 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
     all_new = len(non_new) == 0 and len(changes) > 100
     baseline_count = len(changes) if all_new else 0
 
-    # How many cards to render per section. Keeps file size sane regardless of
-    # data volume — the real totals are still shown in each section header.
     SECTION_PAGE_SIZE = 100
+    ALL_DATA_LIMIT = 2000   # cards rendered in the "all data" view
 
     buckets = _classify_changes(changes)
+
+    # ── Fetch current snapshot for "All data" view ────────────────────────────
+    from .db import get_connection, get_current_establishments
+    conn = get_connection()
+    current_rows = get_current_establishments(conn)
+    conn.close()
+
+    # Build address lookup: fhrs_id → display address (from current snapshot)
+    address_lookup: dict[str, str] = {}
+    for r in current_rows:
+        r_dict = dict(r)
+        addr = _build_address(r_dict)
+        address_lookup[r_dict["fhrs_id"]] = addr
 
     # Augment each change with display helpers
     for bucket in buckets.values():
@@ -184,18 +210,20 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
             c["_old_rating_display"] = _format_rating(
                 c.get("old_rating"), c.get("scheme_type", "FHRS"))
             c["_rating_date_display"] = _format_date(c.get("new_rating_date"))
+            c["_old_rating_date_display"] = _format_date(c.get("old_rating_date"))
             c["_drop"] = _rating_drop(c)
+            # Use address from change_log if present, else fall back to snapshot
+            c["_address"] = (c.get("address") or "").strip() or \
+                             address_lookup.get(c["fhrs_id"], "")
 
     # Real totals before truncation (shown in section headers)
     section_totals = {k: len(v) for k, v in buckets.items()}
 
-    # Full authority list — built before truncation so the dropdown always
-    # shows every authority that has data today, not just those in the first N cards.
+    # Full authority list — built before truncation
     authorities = sorted({c.get("local_authority_name", "")
                           for c in changes if c.get("local_authority_name")})
 
-    # Truncate to keep rendered HTML manageable, using round-robin interleaving
-    # so every authority gets representation rather than the first N alphabetically.
+    # Truncate rendered buckets
     buckets = {k: _interleave_truncate(v, SECTION_PAGE_SIZE) for k, v in buckets.items()}
     coverage = ", ".join(authorities) if authorities else "all monitored areas"
 
@@ -204,6 +232,24 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
     has_news = total_changes > 0
 
     run_date_display = _format_date(run_date + "T00:00:00") or run_date
+
+    # ── Build "all data" snapshot list ───────────────────────────────────────
+    all_establishments = []
+    all_authorities_set = set()
+    for r in current_rows:
+        d = dict(r)
+        d["_address"] = _build_address(d)
+        d["_rating_display"] = _format_rating(
+            d.get("rating_value"), d.get("scheme_type", "FHRS"))
+        d["_rating_date_display"] = _format_date(d.get("rating_date"))
+        d["_fsa_url"] = _fsa_url(d["fhrs_id"])
+        all_establishments.append(d)
+        if d.get("local_authority_name"):
+            all_authorities_set.add(d["local_authority_name"])
+
+    all_authorities = sorted(all_authorities_set)
+    total_establishments = len(all_establishments)
+    all_establishments = _interleave_truncate(all_establishments, ALL_DATA_LIMIT)
 
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
@@ -224,6 +270,11 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
         all_changes=changes,
         is_first_run=all_new,
         baseline_count=baseline_count,
+        # All-data view
+        all_establishments=all_establishments,
+        all_authorities=all_authorities,
+        total_establishments=total_establishments,
+        all_data_limit=ALL_DATA_LIMIT,
     )
 
 

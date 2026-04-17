@@ -3,247 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PA Atomic | Food Hygiene Digest — {{ run_date_display }}</title>
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td { font-family: Helvetica, Arial, sans-serif !important; }
-  </style>
-  <![endif]-->
+  <title>PA Atomic | Food Hygiene — {{ run_date_display }}</title>
   <style>
-    body, p, h1, h2, h3, h4, table, td { margin: 0; padding: 0; }
-    img { border: 0; display: block; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body, p, h1, h2, h3, h4 { margin: 0; padding: 0; }
     a { text-decoration: none; }
 
     body {
-      background-color: #f5f5f5;
+      background-color: #f0eef8;
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 15px;
       color: #1a1a1a;
-      -webkit-text-size-adjust: 100%;
     }
 
-    .email-wrapper { width: 100%; background-color: #f5f5f5; padding: 24px 0; }
+    .page-wrapper { max-width: 780px; margin: 0 auto; padding: 0 0 40px; }
 
-    .email-container {
-      max-width: 640px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    /* Header */
-    .email-header {
+    /* ── Header ── */
+    .site-header {
       background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
-      padding: 32px 32px 24px;
-      color: #ffffff;
+      padding: 28px 32px 22px;
+      color: #fff;
     }
+    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .atomic-badge {
+      background: #ffcb47; color: #1a1a1a;
+      font-weight: 700; font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+    }
+    .header-sub { color: rgba(255,255,255,0.75); font-size: 13px; }
+    .site-header h1 { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 5px; }
+    .site-header .coverage { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .site-header .coverage strong { color: #ffcb47; }
 
-    /* Filter bar */
+    /* ── Status bar ── */
+    .status-bar {
+      padding: 10px 32px;
+      font-size: 13px; font-weight: 600;
+    }
+    .status-bar.has-news { background: #ffcb47; color: #1a1a1a; }
+    .status-bar.no-news  { background: #e8f5e9; color: #2e7d32; }
+    .status-bar.all-data { background: #6352b9; color: #fff; }
+
+    /* ── Filter bar ── */
     .filter-bar {
-      background-color: #f0eef8;
+      background: #fff;
       border-bottom: 1px solid #ddd9f0;
       padding: 12px 32px;
+      position: sticky; top: 0; z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
-
     .filter-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
-
-    .filter-row + .filter-row { margin-top: 10px; }
-
+    .filter-row + .filter-row { margin-top: 8px; }
     .filter-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #3d3677;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      white-space: nowrap;
-      min-width: 56px;
+      font-size: 11px; font-weight: 700; color: #3d3677;
+      text-transform: uppercase; letter-spacing: 1px;
+      white-space: nowrap; min-width: 60px;
     }
 
-    /* Category pill buttons */
-    .cat-btn {
+    /* Generic pill button */
+    .pill {
       appearance: none;
-      border: 1.5px solid #c9c2e8;
-      border-radius: 20px;
-      background: #ffffff;
-      color: #6352b9;
-      font-size: 12px;
-      font-weight: 600;
+      border: 1.5px solid #c9c2e8; border-radius: 20px;
+      background: #fff; color: #6352b9;
+      font-size: 12px; font-weight: 600;
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      padding: 4px 13px;
-      cursor: pointer;
+      padding: 4px 13px; cursor: pointer;
       transition: background 0.1s, color 0.1s, border-color 0.1s;
       white-space: nowrap;
     }
+    .pill:hover { border-color: #6352b9; }
+    .pill.active { background: #6352b9; color: #fff; border-color: #6352b9; }
 
-    .cat-btn:hover { border-color: #6352b9; }
+    /* View toggle */
+    .pill.view-today.active  { background: #3d3677; border-color: #3d3677; }
+    .pill.view-all.active    { background: #3d3677; border-color: #3d3677; }
 
-    .cat-btn.active {
-      background: #6352b9;
-      color: #ffffff;
-      border-color: #6352b9;
-    }
+    /* Category pills */
+    .pill.cat-critical.active  { background: #c0392b; border-color: #c0392b; }
+    .pill.cat-drops.active     { background: #ffa631; border-color: #ffa631; color: #1a1a1a; }
+    .pill.cat-ratings.active   { background: #6352b9; border-color: #6352b9; }
+    .pill.cat-improved.active  { background: #27ae60; border-color: #27ae60; }
+    .pill.cat-new.active       { background: #2c3e50; border-color: #2c3e50; }
 
-    .cat-btn.active.btn-critical  { background: #c0392b; border-color: #c0392b; }
-    .cat-btn.active.btn-drops     { background: #ffa631; border-color: #ffa631; color: #1a1a1a; }
-    .cat-btn.active.btn-ratings   { background: #6352b9; border-color: #6352b9; }
-    .cat-btn.active.btn-improved  { background: #27ae60; border-color: #27ae60; }
-    .cat-btn.active.btn-new       { background: #2c3e50; border-color: #2c3e50; }
+    /* Rating pills */
+    .pill.rating-fail.active   { background: #c0392b; border-color: #c0392b; }
+    .pill.rating-0.active      { background: #c0392b; border-color: #c0392b; }
+    .pill.rating-1.active      { background: #e67e22; border-color: #e67e22; }
+    .pill.rating-2.active      { background: #e67e22; border-color: #e67e22; }
+    .pill.rating-3.active      { background: #f39c12; border-color: #f39c12; color: #1a1a1a; }
+    .pill.rating-4.active      { background: #27ae60; border-color: #27ae60; }
+    .pill.rating-5.active      { background: #1a7a4a; border-color: #1a7a4a; }
+    .pill.rating-pass.active   { background: #1a7a4a; border-color: #1a7a4a; }
 
     /* LA dropdown */
     .filter-select {
-      flex: 1;
-      min-width: 160px;
-      appearance: none;
-      -webkit-appearance: none;
-      background-color: #ffffff;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236352b9' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      border: 1.5px solid #c9c2e8;
-      border-radius: 5px;
-      padding: 6px 28px 6px 10px;
-      font-size: 13px;
+      flex: 1; min-width: 160px;
+      appearance: none; -webkit-appearance: none;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236352b9' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+      border: 1.5px solid #c9c2e8; border-radius: 5px;
+      padding: 6px 28px 6px 10px; font-size: 13px;
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: #1a1a1a;
-      cursor: pointer;
-      outline: none;
+      color: #1a1a1a; cursor: pointer; outline: none;
     }
+    .filter-select:focus { border-color: #6352b9; }
+    .filter-count { font-size: 12px; color: #888; white-space: nowrap; }
 
-    .filter-select:focus { border-color: #6352b9; box-shadow: 0 0 0 3px rgba(99,82,185,0.15); }
+    /* ── Main body ── */
+    .body-wrap { background: #fff; }
 
-    .filter-count {
-      font-size: 12px;
-      color: #888;
+    /* ── Sections ── */
+    .section { padding: 22px 32px; border-bottom: 1px solid #f0f0f0; }
+    .section:last-child { border-bottom: none; }
+    .section-head {
+      display: flex; align-items: center; margin-bottom: 14px; gap: 10px;
+    }
+    .section-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
       white-space: nowrap;
     }
+    .section-title { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+    .section-count { margin-left: auto; font-size: 20px; font-weight: 700; }
 
-    /* Show-more button */
-    .show-more-btn {
-      display: block;
-      width: 100%;
-      margin-top: 10px;
-      padding: 8px;
-      background: none;
-      border: 1.5px dashed #c9c2e8;
-      border-radius: 6px;
-      color: #6352b9;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .show-more-btn:hover { border-color: #6352b9; background: #f0eef8; }
-
-    /* Section */
-    .section { padding: 24px 32px; border-bottom: 1px solid #f0f0f0; }
-    .section:last-child { border-bottom: none; }
-
-    /* Establishment card */
+    /* ── Cards ── */
     .est-card {
-      background: #fafafa;
-      border: 1px solid #e8e8e8;
-      border-radius: 6px;
-      margin-bottom: 10px;
+      background: #fafafa; border: 1px solid #e8e8e8;
+      border-radius: 6px; margin-bottom: 10px;
     }
     .est-card:last-child { margin-bottom: 0; }
-
     .est-card.card-critical { border-left: 4px solid #c0392b; background: #fff8f8; }
     .est-card.card-warning  { border-left: 4px solid #ffa631; }
-    .est-card.card-positive { border-left: 4px solid #27ae60; background: #f8fff8; }
+    .est-card.card-positive { border-left: 4px solid #27ae60; background: #f8fff9; }
     .est-card.card-new      { border-left: 4px solid #2c3e50; }
     .est-card.card-info     { border-left: 4px solid #6352b9; }
+    .est-card.card-snap     { border-left: 4px solid #c9c2e8; }
 
-    .card-inner { padding: 14px 16px; }
+    .card-inner { padding: 13px 16px; }
+
+    .card-name { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 0 0 2px; }
+    .card-meta { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px; }
+    .card-address { font-size: 12px; color: #555; margin: 0 0 8px; line-height: 1.4; }
 
     .rating-chip {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 700;
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 12px; font-weight: 700;
     }
 
-    /* No changes panel */
-    .no-changes-panel { padding: 40px 32px; text-align: center; }
+    .card-prev {
+      font-size: 11px; color: #888; margin: 5px 0 0;
+      line-height: 1.4;
+    }
 
-    /* Footer */
-    .email-footer { background-color: #2c2c2c; padding: 24px 32px; text-align: center; }
+    .scores-row {
+      display: flex; gap: 10px; flex-wrap: wrap; margin: 7px 0 5px;
+    }
+    .score-chip {
+      font-size: 11px; color: #555;
+      background: #f0eef8; border-radius: 4px;
+      padding: 2px 7px; white-space: nowrap;
+    }
 
-    @media only screen and (max-width: 640px) {
-      .email-header, .section, .email-footer, .filter-bar { padding-left: 20px !important; padding-right: 20px !important; }
+    .pending-badge {
+      display: inline-block; background: #fff3cd; color: #856404;
+      border: 1px solid #ffc107; border-radius: 4px;
+      font-size: 10px; font-weight: 700; padding: 1px 6px;
+      margin-left: 6px; vertical-align: middle; text-transform: uppercase;
+    }
+
+    .fsa-link { font-size: 11px; color: #6352b9; font-weight: 600; text-decoration: underline; }
+
+    /* ── First-run banner ── */
+    .first-run-banner {
+      background: #d6dcff; border-left: 4px solid #6352b9;
+      padding: 14px 32px;
+    }
+
+    /* ── No-changes panel ── */
+    .no-changes { padding: 40px 32px; text-align: center; }
+
+    /* ── No-filter-results ── */
+    .no-filter-results { padding: 28px 32px; text-align: center; }
+
+    /* ── All-data separator ── */
+    .all-data-header {
+      padding: 16px 32px 10px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .all-data-header .count-label {
+      font-size: 12px; color: #888; margin-left: auto;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #2c2c2c; padding: 22px 32px; text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .site-header, .filter-bar, .section, .site-footer, .first-run-banner,
+      .all-data-header { padding-left: 16px !important; padding-right: 16px !important; }
     }
   </style>
 </head>
 <body>
-<div class="email-wrapper">
-<div class="email-container">
+<div class="page-wrapper">
 
   <!-- HEADER -->
-  <div class="email-header">
-    <div style="margin-bottom:12px;">
-      <span style="background:#ffcb47;color:#1a1a1a;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:3px;display:inline-block;">PA ATOMIC</span>
-      <span style="color:rgba(255,255,255,0.75);font-size:13px;margin-left:12px;">Food Hygiene Intelligence</span>
+  <div class="site-header">
+    <div class="header-top">
+      <span class="atomic-badge">PA ATOMIC</span>
+      <span class="header-sub">Food Hygiene Intelligence</span>
     </div>
-    <h1 style="font-size:26px;font-weight:700;color:#ffffff;line-height:1.2;margin:0 0 8px;">
-      Daily Feed — {{ run_date_display }}
-    </h1>
-    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:0;">
-      Coverage: <strong style="color:#ffcb47;">{{ coverage }}</strong>
-    </p>
+    <h1>Daily Feed — {{ run_date_display }}</h1>
+    <p class="coverage">Coverage: <strong>{{ coverage }}</strong></p>
   </div>
 
-  <!-- STATUS BAR -->
-  <div style="background-color:{% if has_news %}#ffcb47{% else %}#e8f5e9{% endif %};padding:10px 32px;">
-    <p style="font-size:13px;font-weight:600;color:{% if has_news %}#1a1a1a{% else %}#2e7d32{% endif %};margin:0;">
-      {% if has_news %}
-        <span id="status-count">{{ total_changes }}</span> change{% if total_changes != 1 %}s{% endif %} detected today
-      {% else %}
-        No changes detected — pipeline confirmed running
-      {% endif %}
-    </p>
+  <!-- STATUS BAR (JS will swap classes) -->
+  <div class="status-bar {% if has_news %}has-news{% else %}no-news{% endif %}" id="status-bar">
+    {% if has_news %}
+      <span id="status-msg">{{ total_changes }} change{% if total_changes != 1 %}s{% endif %} detected today</span>
+    {% else %}
+      No changes detected — pipeline confirmed running
+    {% endif %}
   </div>
 
-  {% if has_news %}
   <!-- FILTER BAR -->
   <div class="filter-bar">
 
-    <!-- Row 1: Category buttons -->
+    <!-- Row 0: View toggle -->
     <div class="filter-row">
+      <span class="filter-label">View</span>
+      <button class="pill view-today active" data-view="today" onclick="setView('today')">Today's changes</button>
+      <button class="pill view-all"          data-view="all"   onclick="setView('all')">All data ({{ total_establishments }})</button>
+    </div>
+
+    <!-- Row 1: Category (hidden in all-data view) -->
+    <div class="filter-row" id="category-row">
       <span class="filter-label">Show</span>
-      <button class="cat-btn active"           data-cat="all"      onclick="setCategory('all')">All</button>
+      <button class="pill active" data-cat="all" onclick="setCategory('all')">All</button>
       {% if section_totals.zero_rated %}
-      <button class="cat-btn btn-critical"      data-cat="critical" onclick="setCategory('critical')">Zero-rated / Fail</button>
+      <button class="pill cat-critical" data-cat="critical" onclick="setCategory('critical')">Zero-rated / Fail</button>
       {% endif %}
       {% if section_totals.significant_drops %}
-      <button class="cat-btn btn-drops"         data-cat="drops"    onclick="setCategory('drops')">Drops</button>
+      <button class="pill cat-drops" data-cat="drops" onclick="setCategory('drops')">Drops</button>
       {% endif %}
       {% if section_totals.new_inspections %}
-      <button class="cat-btn btn-ratings"       data-cat="ratings"  onclick="setCategory('ratings')">New ratings</button>
+      <button class="pill cat-ratings" data-cat="ratings" onclick="setCategory('ratings')">New ratings</button>
       {% endif %}
       {% if section_totals.improvements %}
-      <button class="cat-btn btn-improved"      data-cat="improved" onclick="setCategory('improved')">Improvements</button>
+      <button class="pill cat-improved" data-cat="improved" onclick="setCategory('improved')">Improvements</button>
       {% endif %}
       {% if section_totals.new_establishments %}
-      <button class="cat-btn btn-new"           data-cat="new"      onclick="setCategory('new')">New listings</button>
+      <button class="pill cat-new" data-cat="new" onclick="setCategory('new')">New listings</button>
       {% endif %}
     </div>
 
-    <!-- Row 2: LA dropdown -->
+    <!-- Row 2: Rating filter -->
+    <div class="filter-row">
+      <span class="filter-label">Rating</span>
+      <button class="pill active" data-rating="" onclick="setRating('')">All</button>
+      <button class="pill rating-pass" data-rating="Pass" onclick="setRating('Pass')">Pass</button>
+      <button class="pill rating-fail" data-rating="Improvement Required" onclick="setRating('Improvement Required')">Improvement Required</button>
+      <button class="pill rating-5" data-rating="5" onclick="setRating('5')">★★★★★</button>
+      <button class="pill rating-4" data-rating="4" onclick="setRating('4')">★★★★</button>
+      <button class="pill rating-3" data-rating="3" onclick="setRating('3')">★★★</button>
+      <button class="pill rating-2" data-rating="2" onclick="setRating('2')">★★</button>
+      <button class="pill rating-1" data-rating="1" onclick="setRating('1')">★</button>
+      <button class="pill rating-0" data-rating="0" onclick="setRating('0')">0</button>
+    </div>
+
+    <!-- Row 3: Authority -->
     <div class="filter-row">
       <span class="filter-label">Authority</span>
       <select class="filter-select" id="la-filter" onchange="filterByLA(this.value)">
         <option value="">All areas</option>
-        {% for la in authorities %}
+        {% for la in all_authorities %}
         <option value="{{ la }}">{{ la }}</option>
         {% endfor %}
       </select>
@@ -251,251 +286,462 @@
     </div>
 
   </div>
-  {% endif %}
 
   <!-- BODY -->
-  <div id="email-body">
+  <div class="body-wrap">
 
-    {% if is_first_run %}
-    <div style="background:#d6dcff;border-left:4px solid #6352b9;padding:16px 32px;">
-      <p style="font-size:13px;font-weight:700;color:#3d3677;margin:0 0 4px;">Baseline established</p>
-      <p style="font-size:13px;color:#3d3677;margin:0;line-height:1.5;">
-        This is the first run. <strong>{{ baseline_count }}</strong> establishments across
-        {{ coverage }} have been logged as the baseline. From tomorrow, this digest will show
-        only what has actually changed. Any low-rated premises from the initial scan are shown below.
-      </p>
-    </div>
-    {% endif %}
+    <!-- ══ TODAY'S CHANGES VIEW ══ -->
+    <div id="view-today">
 
-    {% if not has_news %}
-    <div class="no-changes-panel">
-      <p style="font-size:36px;margin:0 0 12px;">✓</p>
-      <h2 style="font-size:18px;font-weight:700;color:#2e7d32;margin:0 0 8px;">No changes today</h2>
-      <p style="font-size:14px;color:#666666;line-height:1.6;margin:0;">
-        The FSA data for all monitored authorities was checked and found no new inspections,
-        rating changes, or new establishments since the previous pull.<br><br>
-        This confirms the pipeline is running correctly. Silence means silence.
-      </p>
-    </div>
-
-    {% else %}
-
-    {# ── ZERO RATED / IMPROVEMENT REQUIRED ── #}
-    {% if section_totals.zero_rated %}
-    <div class="section" id="section-zero-rated" data-section-cat="critical">
-      <div style="display:flex;align-items:center;margin-bottom:16px;">
-        <span style="background:#c0392b;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Critical</span>
-        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Zero-rated / Improvement Required</span>
-        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#c0392b;" data-section-count>{{ section_totals.zero_rated }}</span>
+      {% if is_first_run %}
+      <div class="first-run-banner">
+        <p style="font-size:13px;font-weight:700;color:#3d3677;margin:0 0 4px;">Baseline established</p>
+        <p style="font-size:13px;color:#3d3677;margin:0;line-height:1.5;">
+          This is the first run. <strong>{{ baseline_count }}</strong> establishments have been logged
+          as the baseline. From tomorrow this digest will show only what has actually changed.
+        </p>
       </div>
-      {% for c in buckets.zero_rated %}
-      <div class="est-card card-critical" data-la="{{ c.local_authority_name }}">
-        <div class="card-inner">
-          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">{{ c.business_name }}</p>
-          {% if c.business_type %}<p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">{{ c.business_type }}</p>{% endif %}
-          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">{{ c.address }}{% if c.postcode %}, {{ c.postcode }}{% endif %} &nbsp;·&nbsp; {{ c.local_authority_name }}</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span><span style="color:#aaa;">→</span>{% endif %}
-            <span class="rating-chip" style="background:#c0392b;color:#fff;">{{ c._new_rating_display }}</span>
-          </div>
-          {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
-          <a href="{{ c._fsa_url }}" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+      {% endif %}
+
+      {% if not has_news %}
+      <div class="no-changes">
+        <p style="font-size:36px;margin:0 0 12px;">✓</p>
+        <h2 style="font-size:18px;font-weight:700;color:#2e7d32;margin:0 0 8px;">No changes today</h2>
+        <p style="font-size:14px;color:#666;line-height:1.6;margin:0;">
+          All monitored authorities were checked. No new inspections, rating changes or new
+          establishments since the previous pull.<br><br>Silence means silence.
+        </p>
+      </div>
+
+      {% else %}
+
+      {# ── ZERO RATED / IMPROVEMENT REQUIRED ── #}
+      {% if section_totals.zero_rated %}
+      <div class="section" data-section-cat="critical">
+        <div class="section-head">
+          <span class="section-badge" style="background:#c0392b;color:#fff;">Critical</span>
+          <span class="section-title">Zero-rated / Improvement Required</span>
+          <span class="section-count" style="color:#c0392b;" data-section-count>{{ section_totals.zero_rated }}</span>
         </div>
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    {# ── SIGNIFICANT DROPS ── #}
-    {% if section_totals.significant_drops %}
-    <div class="section" id="section-significant-drops" data-section-cat="drops">
-      <div style="display:flex;align-items:center;margin-bottom:16px;">
-        <span style="background:#ffa631;color:#1a1a1a;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Warning</span>
-        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Significant drops</span>
-        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#ffa631;" data-section-count>{{ section_totals.significant_drops }}</span>
-      </div>
-      {% for c in buckets.significant_drops %}
-      <div class="est-card card-warning" data-la="{{ c.local_authority_name }}">
-        <div class="card-inner">
-          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">{{ c.business_name }}</p>
-          {% if c.business_type %}<p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">{{ c.business_type }}</p>{% endif %}
-          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">{{ c.address }}{% if c.postcode %}, {{ c.postcode }}{% endif %} &nbsp;·&nbsp; {{ c.local_authority_name }}</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
-            <span style="color:#aaa;">→</span>
-            <span class="rating-chip" style="background:#ffa631;color:#1a1a1a;">Now: {{ c._new_rating_display }}{% if c._drop %} (−{{ c._drop }} ★){% endif %}</span>
+        {% for c in buckets.zero_rated %}
+        <div class="est-card card-critical" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+          <div class="card-inner">
+            <p class="card-name">
+              {{ c.business_name }}
+              {% if c.new_hygiene is not none and c.new_hygiene != '' %}{% endif %}
+            </p>
+            {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if c._address %}{{ c._address }},{% endif %}
+              {{ c.postcode }}
+              &nbsp;·&nbsp; {{ c.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+              {% if c.old_rating %}
+                <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
+                <span style="color:#aaa;">→</span>
+              {% endif %}
+              <span class="rating-chip" style="background:#c0392b;color:#fff;">{{ c._new_rating_display }}</span>
+              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+            </div>
+            {% if c.old_rating and c._old_rating_date_display %}
+            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
+            {% endif %}
+            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:3px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c.new_hygiene is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
+              <span class="score-chip">Structural: {{ c.new_structural }}</span>
+              <span class="score-chip">Management: {{ c.new_management }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ c._fsa_url }}" class="fsa-link">View on FSA Ratings →</a>
           </div>
-          {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
-          <a href="{{ c._fsa_url }}" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    {# ── NEW INSPECTIONS ── #}
-    {% if section_totals.new_inspections %}
-    <div class="section" id="section-new-inspections" data-section-cat="ratings">
-      <div style="display:flex;align-items:center;margin-bottom:16px;">
-        <span style="background:#6352b9;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Inspections</span>
-        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">New ratings</span>
-        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#6352b9;" data-section-count>{{ section_totals.new_inspections }}</span>
-      </div>
-      {% for c in buckets.new_inspections %}
-      <div class="est-card card-info" data-la="{{ c.local_authority_name }}">
-        <div class="card-inner">
-          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">{{ c.business_name }}</p>
-          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">{{ c.address }}{% if c.postcode %}, {{ c.postcode }}{% endif %} &nbsp;·&nbsp; {{ c.local_authority_name }}</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-            {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span><span style="color:#aaa;font-size:12px;">→</span>{% endif %}
-            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
+      {# ── SIGNIFICANT DROPS ── #}
+      {% if section_totals.significant_drops %}
+      <div class="section" data-section-cat="drops">
+        <div class="section-head">
+          <span class="section-badge" style="background:#ffa631;color:#1a1a1a;">Warning</span>
+          <span class="section-title">Significant drops</span>
+          <span class="section-count" style="color:#ffa631;" data-section-count>{{ section_totals.significant_drops }}</span>
+        </div>
+        {% for c in buckets.significant_drops %}
+        <div class="est-card card-warning" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+          <div class="card-inner">
+            <p class="card-name">{{ c.business_name }}</p>
+            {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if c._address %}{{ c._address }},{% endif %}
+              {{ c.postcode }}
+              &nbsp;·&nbsp; {{ c.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+              <span class="rating-chip" style="background:#eee;color:#555;">Was: {{ c._old_rating_display }}</span>
+              <span style="color:#aaa;">→</span>
+              <span class="rating-chip" style="background:#ffa631;color:#1a1a1a;">
+                Now: {{ c._new_rating_display }}{% if c._drop %} (−{{ c._drop }} ★){% endif %}
+              </span>
+              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+            </div>
+            {% if c._old_rating_date_display %}
+            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
+            {% endif %}
+            {% if c._rating_date_display %}<p style="font-size:12px;color:#999;margin:3px 0 6px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c.new_hygiene is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
+              <span class="score-chip">Structural: {{ c.new_structural }}</span>
+              <span class="score-chip">Management: {{ c.new_management }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
           </div>
-          {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:0 0 4px;">{{ c._rating_date_display }}</p>{% endif %}
-          <a href="{{ c._fsa_url }}" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    {# ── IMPROVEMENTS ── #}
-    {% if section_totals.improvements %}
-    <div class="section" id="section-improvements" data-section-cat="improved">
-      <div style="display:flex;align-items:center;margin-bottom:16px;">
-        <span style="background:#27ae60;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Improvements</span>
-        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Ratings improved</span>
-        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#27ae60;" data-section-count>{{ section_totals.improvements }}</span>
-      </div>
-      {% for c in buckets.improvements %}
-      <div class="est-card card-positive" data-la="{{ c.local_authority_name }}">
-        <div class="card-inner">
-          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">{{ c.business_name }}</p>
-          <p style="font-size:12px;color:#555;margin:0 0 6px;">{{ c.address }}{% if c.postcode %}, {{ c.postcode }}{% endif %} &nbsp;·&nbsp; {{ c.local_authority_name }}</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-            {% if c.old_rating %}<span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span><span style="color:#aaa;font-size:12px;">→</span>{% endif %}
-            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
+      {# ── NEW INSPECTIONS / RATING CHANGES ── #}
+      {% if section_totals.new_inspections %}
+      <div class="section" data-section-cat="ratings">
+        <div class="section-head">
+          <span class="section-badge" style="background:#6352b9;color:#fff;">Inspections</span>
+          <span class="section-title">New ratings</span>
+          <span class="section-count" style="color:#6352b9;" data-section-count>{{ section_totals.new_inspections }}</span>
+        </div>
+        {% for c in buckets.new_inspections %}
+        <div class="est-card card-info" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+          <div class="card-inner">
+            <p class="card-name">{{ c.business_name }}</p>
+            {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if c._address %}{{ c._address }},{% endif %}
+              {{ c.postcode }}
+              &nbsp;·&nbsp; {{ c.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+              {% if c.old_rating %}
+                <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span>
+                <span style="color:#aaa;font-size:12px;">→</span>
+              {% endif %}
+              <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
+              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+            </div>
+            {% if c._old_rating_date_display %}
+            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
+            {% endif %}
+            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c.new_hygiene is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
+              <span class="score-chip">Structural: {{ c.new_structural }}</span>
+              <span class="score-chip">Management: {{ c.new_management }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
           </div>
-          {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:0 0 4px;">{{ c._rating_date_display }}</p>{% endif %}
-          <a href="{{ c._fsa_url }}" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    {# ── NEW ESTABLISHMENTS ── #}
-    {% if section_totals.new_establishments %}
-    <div class="section" id="section-new-establishments" data-section-cat="new">
-      <div style="display:flex;align-items:center;margin-bottom:{% if section_totals.new_establishments > section_page_size %}8px{% else %}16px{% endif %};">
-        <span style="background:#2c3e50;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">New</span>
-        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">New listings</span>
-        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#2c3e50;" data-section-count>{{ section_totals.new_establishments }}</span>
+      {# ── IMPROVEMENTS ── #}
+      {% if section_totals.improvements %}
+      <div class="section" data-section-cat="improved">
+        <div class="section-head">
+          <span class="section-badge" style="background:#27ae60;color:#fff;">Improvements</span>
+          <span class="section-title">Ratings improved</span>
+          <span class="section-count" style="color:#27ae60;" data-section-count>{{ section_totals.improvements }}</span>
+        </div>
+        {% for c in buckets.improvements %}
+        <div class="est-card card-positive" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+          <div class="card-inner">
+            <p class="card-name">{{ c.business_name }}</p>
+            {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if c._address %}{{ c._address }},{% endif %}
+              {{ c.postcode }}
+              &nbsp;·&nbsp; {{ c.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+              {% if c.old_rating %}
+                <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">{{ c._old_rating_display }}</span>
+                <span style="color:#aaa;font-size:12px;">→</span>
+              {% endif %}
+              <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
+            </div>
+            {% if c._old_rating_date_display %}
+            <p class="card-prev">Previous inspection: {{ c._old_rating_date_display }}</p>
+            {% endif %}
+            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c.new_hygiene is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
+              <span class="score-chip">Structural: {{ c.new_structural }}</span>
+              <span class="score-chip">Management: {{ c.new_management }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-      {% if section_totals.new_establishments > section_page_size %}
-      <p style="font-size:12px;color:#888;margin:0 0 14px;">
-        Showing first {{ section_page_size }} of {{ section_totals.new_establishments }} listings.
-        Use the authority filter to narrow by area, or download the full
-        <a href="../change_log_{{ run_date }}.json" style="color:#6352b9;font-weight:600;">change log JSON</a>.
+      {% endif %}
+
+      {# ── NEW ESTABLISHMENTS ── #}
+      {% if section_totals.new_establishments %}
+      <div class="section" data-section-cat="new">
+        <div class="section-head">
+          <span class="section-badge" style="background:#2c3e50;color:#fff;">New</span>
+          <span class="section-title">New listings</span>
+          <span class="section-count" style="color:#2c3e50;" data-section-count>{{ section_totals.new_establishments }}</span>
+        </div>
+        {% if section_totals.new_establishments > section_page_size %}
+        <p style="font-size:12px;color:#888;margin:0 0 12px;">
+          Showing {{ section_page_size }} of {{ section_totals.new_establishments }} — use the authority filter to narrow by area.
+        </p>
+        {% endif %}
+        {% for c in buckets.new_establishments %}
+        <div class="est-card card-new" data-la="{{ c.local_authority_name }}" data-rating="{{ c.new_rating }}">
+          <div class="card-inner">
+            <p class="card-name">{{ c.business_name }}</p>
+            {% if c.business_type %}<p class="card-meta">{{ c.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if c._address %}{{ c._address }},{% endif %}
+              {{ c.postcode }}
+              &nbsp;·&nbsp; {{ c.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px;">
+              {% if c.new_rating %}
+                <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>
+              {% endif %}
+              {% if c.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+            </div>
+            {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ c._rating_date_display }}</p>{% endif %}
+            {% if c.new_hygiene is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ c.new_hygiene }}</span>
+              <span class="score-chip">Structural: {{ c.new_structural }}</span>
+              <span class="score-chip">Management: {{ c.new_management }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ c._fsa_url }}" class="fsa-link">FSA listing →</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="no-filter-results" id="no-filter-results" style="display:none;">
+        <p style="font-size:14px;color:#999;margin:0;">No changes match the current filters.</p>
+      </div>
+
+      {% endif %}{# end has_news #}
+    </div>{# end view-today #}
+
+
+    <!-- ══ ALL DATA VIEW ══ -->
+    <div id="view-all" style="display:none;">
+      <div class="all-data-header">
+        <span style="font-size:13px;font-weight:700;color:#3d3677;">All monitored establishments</span>
+        <span class="count-label" id="all-data-count">
+          Showing {{ all_establishments|length }} of {{ total_establishments }}
+        </span>
+      </div>
+      {% if total_establishments > all_data_limit %}
+      <p style="font-size:12px;color:#888;margin:-4px 32px 8px;line-height:1.5;">
+        Displaying {{ all_data_limit }} of {{ total_establishments }} establishments (round-robin across authorities).
+        Use the rating or authority filters to narrow results.
       </p>
       {% endif %}
-      {% for c in buckets.new_establishments %}
-      <div class="est-card card-new" data-la="{{ c.local_authority_name }}">
-        <div class="card-inner">
-          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">{{ c.business_name }}</p>
-          {% if c.business_type %}<p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">{{ c.business_type }}</p>{% endif %}
-          <p style="font-size:12px;color:#555;margin:0 0 6px;">{{ c.address }}{% if c.postcode %}, {{ c.postcode }}{% endif %} &nbsp;·&nbsp; {{ c.local_authority_name }}</p>
-          {% if c.new_rating %}<span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">{{ c._new_rating_display }}</span>{% endif %}
-          {% if c._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:5px 0 4px;">{{ c._rating_date_display }}</p>{% endif %}
-          <a href="{{ c._fsa_url }}" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+
+      <div class="section" style="padding-top:8px;" id="all-data-section">
+        {% for e in all_establishments %}
+        <div class="est-card card-snap" data-la="{{ e.local_authority_name }}" data-rating="{{ e.rating_value }}">
+          <div class="card-inner">
+            <p class="card-name">
+              {{ e.business_name }}
+              {% if e.new_rating_pending %}<span class="pending-badge">New rating pending</span>{% endif %}
+            </p>
+            {% if e.business_type %}<p class="card-meta">{{ e.business_type }}</p>{% endif %}
+            <p class="card-address">
+              {% if e._address %}{{ e._address }},{% endif %}
+              {{ e.postcode }}
+              &nbsp;·&nbsp; {{ e.local_authority_name }}
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px;">
+              <span class="rating-chip"
+                style="background:
+                  {%- if e.rating_value == '0' or e.rating_value|lower == 'improvement required' -%}#c0392b;color:#fff
+                  {%- elif e.rating_value == '1' -%}#e67e22;color:#fff
+                  {%- elif e.rating_value == '2' -%}#e67e22;color:#fff
+                  {%- elif e.rating_value == '3' -%}#f39c12;color:#1a1a1a
+                  {%- elif e.rating_value == '4' -%}#27ae60;color:#fff
+                  {%- elif e.rating_value == '5' or e.rating_value|lower == 'pass' -%}#1a7a4a;color:#fff
+                  {%- else -%}#888;color:#fff{%- endif -%}
+                ;">{{ e._rating_display }}</span>
+            </div>
+            {% if e._rating_date_display %}<p style="font-size:11px;color:#aaa;margin:3px 0 5px;">Inspected: {{ e._rating_date_display }}</p>{% endif %}
+            {% if e.hygiene_score is not none %}
+            <div class="scores-row">
+              <span class="score-chip">Hygiene: {{ e.hygiene_score }}</span>
+              <span class="score-chip">Structural: {{ e.structural_score }}</span>
+              <span class="score-chip">Management: {{ e.management_score }}</span>
+            </div>
+            {% endif %}
+            <a href="{{ e._fsa_url }}" class="fsa-link">FSA listing →</a>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="no-filter-results" id="no-filter-results-all" style="display:none;">
+          <p style="font-size:14px;color:#999;margin:0;">No establishments match the current filters.</p>
         </div>
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+    </div>{# end view-all #}
 
-    <!-- Empty state shown when filter returns no results -->
-    <div id="no-filter-results" style="display:none;padding:32px;text-align:center;">
-      <p style="font-size:14px;color:#999;margin:0;">No changes for this authority today.</p>
-    </div>
-
-    {% endif %}{# end has_news #}
-
-  </div>{# end email-body #}
+  </div>{# end body-wrap #}
 
   <!-- FOOTER -->
-  <div class="email-footer">
+  <div class="site-footer">
     <p style="font-size:13px;font-weight:700;color:#ffcb47;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;">PA ATOMIC</p>
     <p style="font-size:12px;color:#999;line-height:1.5;margin:0;">
       Automated food hygiene intelligence by PA Media Group.<br>
-      Data sourced from the
-      <a href="https://www.food.gov.uk/safety-hygiene/food-hygiene-rating-scheme"
-         style="color:#ffcb47;">Food Standards Agency FHRS/FHIS</a>.
+      Data sourced from the <a href="https://www.food.gov.uk/safety-hygiene/food-hygiene-rating-scheme" style="color:#ffcb47;">Food Standards Agency FHRS/FHIS</a>.
       This is a prototype — for testing only.
     </p>
   </div>
 
-</div>{# end email-container #}
-</div>{# end email-wrapper #}
+</div>{# end page-wrapper #}
 
 <script>
+  var activeView     = 'today';
   var activeCategory = 'all';
-  var activeLa = '';
+  var activeRating   = '';
+  var activeLa       = '';
+
+  function setView(v) {
+    activeView = v;
+    document.querySelectorAll('.pill[data-view]').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.view === v);
+    });
+    var todayEl = document.getElementById('view-today');
+    var allEl   = document.getElementById('view-all');
+    var catRow  = document.getElementById('category-row');
+    var statusBar = document.getElementById('status-bar');
+    if (v === 'all') {
+      todayEl.style.display = 'none';
+      allEl.style.display   = '';
+      if (catRow) catRow.style.display = 'none';
+      statusBar.className = 'status-bar all-data';
+      document.getElementById('status-msg') && (document.getElementById('status-msg').textContent = '');
+    } else {
+      todayEl.style.display = '';
+      allEl.style.display   = 'none';
+      if (catRow) catRow.style.display = '';
+      statusBar.className = 'status-bar {% if has_news %}has-news{% else %}no-news{% endif %}';
+    }
+    applyFilters();
+  }
 
   function setCategory(cat) {
     activeCategory = cat;
-    document.querySelectorAll('.cat-btn').forEach(function(btn) {
+    document.querySelectorAll('.pill[data-cat]').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.cat === cat);
     });
     applyFilters();
   }
 
-  function filterByLA(value) {
-    activeLa = value;
+  function setRating(r) {
+    activeRating = r;
+    document.querySelectorAll('.pill[data-rating]').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.rating === r);
+    });
+    applyFilters();
+  }
+
+  function filterByLA(val) {
+    activeLa = val;
     applyFilters();
   }
 
   function applyFilters() {
+    if (activeView === 'today') {
+      applyChangesFilters();
+    } else {
+      applyAllDataFilters();
+    }
+  }
+
+  function applyChangesFilters() {
     var noResults = document.getElementById('no-filter-results');
     var totalVisible = 0;
 
-    document.querySelectorAll('.section[data-section-cat]').forEach(function(section) {
+    document.querySelectorAll('#view-today .section[data-section-cat]').forEach(function(section) {
       var cat = section.dataset.sectionCat;
-
-      // Hide entire section if category filter doesn't match
       if (activeCategory !== 'all' && activeCategory !== cat) {
         section.style.display = 'none';
         return;
       }
-
-      // Filter cards within section by LA
       var cards = section.querySelectorAll('.est-card[data-la]');
       var sectionVisible = 0;
       cards.forEach(function(card) {
-        var show = !activeLa || card.dataset.la === activeLa;
+        var laMatch     = !activeLa     || card.dataset.la === activeLa;
+        var ratingMatch = !activeRating || card.dataset.rating === activeRating;
+        var show = laMatch && ratingMatch;
         card.style.display = show ? '' : 'none';
         if (show) { sectionVisible++; totalVisible++; }
       });
-
       section.style.display = sectionVisible === 0 ? 'none' : '';
-
       var countEl = section.querySelector('[data-section-count]');
       if (countEl) countEl.textContent = sectionVisible;
     });
 
-    // Empty state
     if (noResults) {
       noResults.style.display =
-        (totalVisible === 0 && (activeCategory !== 'all' || activeLa)) ? '' : 'none';
+        (totalVisible === 0 && (activeCategory !== 'all' || activeLa || activeRating)) ? '' : 'none';
+    }
+    updateFilterCount(totalVisible);
+  }
+
+  function applyAllDataFilters() {
+    var noResults = document.getElementById('no-filter-results-all');
+    var totalVisible = 0;
+
+    document.querySelectorAll('#view-all .est-card[data-la]').forEach(function(card) {
+      var laMatch     = !activeLa     || card.dataset.la === activeLa;
+      var ratingMatch = !activeRating || card.dataset.rating === activeRating;
+      var show = laMatch && ratingMatch;
+      card.style.display = show ? '' : 'none';
+      if (show) totalVisible++;
+    });
+
+    if (noResults) {
+      noResults.style.display = totalVisible === 0 ? '' : 'none';
     }
 
-    // Result count label
-    var countEl = document.getElementById('filter-count');
-    if (countEl) {
-      var isFiltered = activeCategory !== 'all' || activeLa;
-      countEl.textContent = isFiltered
-        ? totalVisible + ' result' + (totalVisible !== 1 ? 's' : '')
-        : '';
+    var countLabel = document.getElementById('all-data-count');
+    if (countLabel) {
+      var total = {{ total_establishments }};
+      var shown = Math.min(total, {{ all_data_limit }});
+      countLabel.textContent = (activeLa || activeRating)
+        ? totalVisible + ' matching'
+        : 'Showing ' + shown + ' of ' + total;
     }
+
+    updateFilterCount(totalVisible);
+  }
+
+  function updateFilterCount(n) {
+    var el = document.getElementById('filter-count');
+    if (!el) return;
+    var isFiltered = (activeCategory !== 'all' && activeView === 'today') || activeLa || activeRating;
+    el.textContent = isFiltered ? n + ' result' + (n !== 1 ? 's' : '') : '';
   }
 </script>
 </body>

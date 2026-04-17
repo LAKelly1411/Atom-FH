@@ -149,24 +149,15 @@ def _fetch_establishments_for_authority(la_id: int) -> list[dict]:
 def _parse_establishment(raw: dict, la_config: dict, pull_date: str) -> dict:
     """Map FSA API record to our DB schema."""
     scores = raw.get("scores") or {}
-    address_parts = [
-        raw.get("addressLine1", ""),
-        raw.get("addressLine2", ""),
-        raw.get("addressLine3", ""),
-        raw.get("addressLine4", ""),
-    ]
-    # Build a clean single-line address for display
-    address_display = ", ".join(p for p in address_parts if p)
-
     return {
         "fhrs_id": str(raw.get("FHRSID", "")),
         "pull_date": pull_date,
         "business_name": raw.get("BusinessName", ""),
         "business_type": raw.get("BusinessType", ""),
-        "address_line1": raw.get("addressLine1", ""),
-        "address_line2": raw.get("addressLine2", ""),
-        "address_line3": raw.get("addressLine3", ""),
-        "address_line4": raw.get("addressLine4", ""),
+        "address_line1": raw.get("AddressLine1", ""),
+        "address_line2": raw.get("AddressLine2", ""),
+        "address_line3": raw.get("AddressLine3", ""),
+        "address_line4": raw.get("AddressLine4", ""),
         "postcode": raw.get("PostCode", ""),
         "local_authority_id": la_config["id"],
         "local_authority_name": la_config["name"],
