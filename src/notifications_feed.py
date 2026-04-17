@@ -11,6 +11,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 from .alerts import get_historical_alerts, load_rules
+from .db import get_connection, get_changes_window
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +62,41 @@ def render_notifications(run_date: str) -> str:
     historical = get_historical_alerts(days=90)
     rules = load_rules()
 
+    # Embed last 30 days of change data for client-side custom rule evaluation.
+    # Exclude first-run days (where everything is new_establishment with no old_rating)
+    # so the embedded dataset is useful signal, not baseline noise.
+    conn = get_connection()
+    window_rows = get_changes_window(conn, days=30)
+    conn.close()
+    change_data_for_js = []
+    for r in window_rows:
+        d = dict(r)
+        # Only include rating-meaningful changes
+        if d.get("change_type") == "new_establishment" and not d.get("new_rating"):
+            continue
+        change_data_for_js.append({
+            "fhrs_id":              d.get("fhrs_id"),
+            "change_date":          d.get("change_date"),
+            "change_type":          d.get("change_type"),
+            "business_name":        d.get("business_name"),
+            "business_type":        d.get("business_type"),
+            "address":              d.get("address") or "",
+            "postcode":             d.get("postcode"),
+            "local_authority_name": d.get("local_authority_name"),
+            "region":               d.get("region"),
+            "scheme_type":          d.get("scheme_type"),
+            "old_rating":           d.get("old_rating"),
+            "new_rating":           d.get("new_rating"),
+            "old_rating_date":      d.get("old_rating_date"),
+            "new_rating_date":      d.get("new_rating_date"),
+        })
+
+    authorities = sorted({d["local_authority_name"] for d in change_data_for_js
+                          if d.get("local_authority_name")})
+    business_types = sorted({d["business_type"] for d in change_data_for_js
+                              if d.get("business_type")})
+    change_data_json = json.dumps(change_data_for_js)
+
     # Augment historical alerts
     for a in historical:
         a["_date_display"]  = _format_date(a["flag_date"])
@@ -93,6 +129,9 @@ def render_notifications(run_date: str) -> str:
         alerts=historical,
         rules=rules,
         total_alerts=total_alerts,
+        change_data_json=change_data_json,
+        authorities=authorities,
+        business_types=business_types,
     )
 
 

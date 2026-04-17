@@ -14,7 +14,6 @@
       font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 15px; color: #1a1a1a;
     }
-
     .page-wrapper { max-width: 820px; margin: 0 auto; padding: 0 0 48px; }
 
     /* ── Header ── */
@@ -24,185 +23,247 @@
     }
     .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .atomic-badge {
-      background: #ffcb47; color: #1a1a1a;
-      font-weight: 700; font-size: 11px; letter-spacing: 1.5px;
-      text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+      background: #ffcb47; color: #1a1a1a; font-weight: 700; font-size: 11px;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
     }
     .header-sub { color: rgba(255,255,255,0.75); font-size: 13px; }
 
-    /* ── Nav tabs ── */
-    .nav-tabs { display: flex; gap: 0; margin-top: 6px; }
+    /* Nav tabs */
+    .nav-tabs { display: flex; gap: 0; }
     .nav-tab {
       padding: 10px 20px; font-size: 13px; font-weight: 600;
       color: rgba(255,255,255,0.65); cursor: pointer;
-      border-bottom: 3px solid transparent;
+      border-bottom: 3px solid transparent; border-top: none; border-left: none; border-right: none;
+      background: none; font-family: inherit; white-space: nowrap;
       transition: color 0.15s, border-color 0.15s;
-      background: none; border-top: none; border-left: none; border-right: none;
-      font-family: inherit; white-space: nowrap;
     }
     .nav-tab:hover  { color: rgba(255,255,255,0.9); }
     .nav-tab.active { color: #fff; border-bottom-color: #ffcb47; }
-    .nav-tab .tab-badge {
+    .tab-badge {
       display: inline-block; background: #ffcb47; color: #1a1a1a;
       border-radius: 10px; font-size: 10px; font-weight: 700;
       padding: 1px 6px; margin-left: 6px; vertical-align: middle;
     }
-    .nav-tab .tab-badge.zero { background: rgba(255,255,255,0.25); color: #fff; }
+    .tab-badge.muted { background: rgba(255,255,255,0.2); color: #fff; }
     .back-link {
       margin-left: auto; color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600;
       padding: 10px 0; align-self: center;
     }
     .back-link:hover { color: #fff; }
 
-    /* ── Tab content ── */
+    /* Tab panels */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
     /* ── Section headings ── */
     .section-heading {
-      padding: 20px 32px 12px;
-      display: flex; align-items: center; gap: 10px;
+      padding: 20px 32px 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     }
     .section-heading h2 { font-size: 15px; font-weight: 700; color: #3d3677; }
     .section-heading .count { font-size: 12px; color: #888; margin-left: auto; }
 
+    /* ── Filter strip ── */
+    .filter-strip {
+      background: #fff; border-bottom: 1px solid #ddd9f0;
+      padding: 10px 32px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-label { font-size: 11px; font-weight: 700; color: #3d3677; text-transform: uppercase; letter-spacing: 1px; }
+    .pill {
+      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 20px;
+      background: #fff; color: #6352b9; font-size: 12px; font-weight: 600;
+      font-family: inherit; padding: 4px 13px; cursor: pointer; white-space: nowrap;
+      transition: background 0.1s, color 0.1s;
+    }
+    .pill:hover { border-color: #6352b9; }
+    .pill.active { background: #6352b9; color: #fff; border-color: #6352b9; }
+
     /* ── Alert cards ── */
-    .alert-list { padding: 0 32px 24px; display: flex; flex-direction: column; gap: 10px; }
+    .alert-list { padding: 0 32px 8px; display: flex; flex-direction: column; gap: 10px; }
 
     .alert-card {
       background: #fff; border-radius: 8px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      border-left: 5px solid #6352b9;
-      overflow: hidden;
+      border-left: 5px solid #6352b9; overflow: hidden;
     }
-    .alert-card.type-zero_rating   { border-left-color: #c0392b; }
-    .alert-card.type-threshold     { border-left-color: #ffa631; }
-    .alert-card.type-business_type { border-left-color: #8e44ad; }
-    .alert-card.type-watchlist     { border-left-color: #2c3e50; }
-    .alert-card.acknowledged       { opacity: 0.55; }
+    .alert-card.type-zero_rating    { border-left-color: #c0392b; }
+    .alert-card.type-threshold      { border-left-color: #e67e22; }
+    .alert-card.type-business_type  { border-left-color: #8e44ad; }
+    .alert-card.type-watchlist      { border-left-color: #2c3e50; }
+    .alert-card.type-custom         { border-left-color: #27ae60; }
+    .alert-card.acknowledged        { opacity: 0.5; }
 
-    .alert-header {
-      padding: 14px 16px 10px;
-      display: flex; align-items: flex-start; gap: 10px;
-    }
+    .alert-header { padding: 13px 16px 10px; display: flex; align-items: flex-start; gap: 10px; }
     .alert-type-badge {
-      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
-      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
     }
     .type-zero_rating   .alert-type-badge { background: #fde8e8; color: #c0392b; }
     .type-threshold     .alert-type-badge { background: #fff3e0; color: #e67e22; }
     .type-business_type .alert-type-badge { background: #f3e5f5; color: #8e44ad; }
     .type-watchlist     .alert-type-badge { background: #eceff1; color: #2c3e50; }
+    .type-custom        .alert-type-badge { background: #e8f5e9; color: #27ae60; }
 
     .alert-main { flex: 1; min-width: 0; }
-    .alert-rule-name { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+    .alert-rule-name  { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
     .alert-description { font-size: 12px; color: #666; margin-bottom: 4px; line-height: 1.4; }
-    .alert-meta { font-size: 11px; color: #aaa; }
+    .alert-meta        { font-size: 11px; color: #aaa; }
 
-    .alert-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .alert-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .ack-btn {
       appearance: none; border: 1.5px solid #c9c2e8; border-radius: 5px;
-      background: #fff; color: #6352b9;
-      font-size: 11px; font-weight: 700;
-      font-family: inherit; padding: 4px 10px; cursor: pointer;
-      transition: background 0.1s, color 0.1s;
-      white-space: nowrap;
+      background: #fff; color: #6352b9; font-size: 11px; font-weight: 700;
+      font-family: inherit; padding: 4px 10px; cursor: pointer; white-space: nowrap;
     }
-    .ack-btn:hover { background: #6352b9; color: #fff; border-color: #6352b9; }
-    .ack-btn.acked { background: #e8f5e9; color: #27ae60; border-color: #a5d6a7; cursor: default; }
+    .ack-btn:hover      { background: #6352b9; color: #fff; border-color: #6352b9; }
+    .ack-btn.acked      { background: #e8f5e9; color: #27ae60; border-color: #a5d6a7; cursor: default; }
 
-    /* Triggered businesses list */
-    .triggered-list {
-      border-top: 1px solid #f0eef8;
-      padding: 0 16px 12px;
-    }
+    .triggered-list { border-top: 1px solid #f0eef8; padding: 0 16px 12px; }
     .triggered-list.collapsed { display: none; }
     .triggered-item {
       display: flex; align-items: baseline; gap: 8px;
       padding: 7px 0; border-bottom: 1px solid #f8f7fc; font-size: 13px;
     }
     .triggered-item:last-child { border-bottom: none; }
-    .triggered-name { font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
+    .triggered-name   { font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
     .triggered-detail { font-size: 11px; color: #888; white-space: nowrap; }
     .rating-chip-sm {
       display: inline-block; padding: 1px 8px; border-radius: 10px;
       font-size: 11px; font-weight: 700; flex-shrink: 0;
     }
-
     .expand-btn {
-      appearance: none; background: none; border: none;
-      font-size: 11px; color: #6352b9; font-weight: 600;
-      font-family: inherit; cursor: pointer; padding: 8px 16px;
-      display: block;
+      appearance: none; background: none; border: none; font-size: 11px; color: #6352b9;
+      font-weight: 600; font-family: inherit; cursor: pointer; padding: 8px 16px; display: block;
     }
     .expand-btn:hover { text-decoration: underline; }
 
     /* ── Empty state ── */
-    .empty-state {
-      padding: 48px 32px; text-align: center;
-    }
+    .empty-state { padding: 48px 32px; text-align: center; }
     .empty-icon { font-size: 40px; margin-bottom: 12px; }
     .empty-state h3 { font-size: 18px; font-weight: 700; color: #3d3677; margin-bottom: 8px; }
-    .empty-state p { font-size: 14px; color: #888; line-height: 1.6; }
+    .empty-state p  { font-size: 14px; color: #888; line-height: 1.6; }
 
     /* ── Rule cards ── */
-    .rules-grid { padding: 0 32px 24px; display: flex; flex-direction: column; gap: 10px; }
+    .rules-grid { padding: 0 32px 8px; display: flex; flex-direction: column; gap: 10px; }
+    .rules-subheading {
+      padding: 16px 32px 8px; font-size: 11px; font-weight: 700; color: #aaa;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
 
     .rule-card {
-      background: #fff; border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      padding: 16px 18px;
-      display: flex; align-items: flex-start; gap: 14px;
+      background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      padding: 15px 18px; display: flex; align-items: flex-start; gap: 14px;
     }
-    .rule-card.inactive { opacity: 0.55; }
+    .rule-card.custom-rule  { border-left: 4px solid #27ae60; }
+    .rule-card.system-rule  { border-left: 4px solid #c9c2e8; }
+    .rule-card.inactive { opacity: 0.5; }
 
-    .rule-status-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #27ae60; flex-shrink: 0; margin-top: 4px;
-    }
+    .rule-status-dot { width: 10px; height: 10px; border-radius: 50%; background: #27ae60; flex-shrink: 0; margin-top: 4px; }
     .rule-status-dot.inactive { background: #ccc; }
 
     .rule-body { flex: 1; min-width: 0; }
     .rule-name { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
     .rule-desc { font-size: 12px; color: #555; margin-bottom: 6px; line-height: 1.4; }
-    .rule-meta { font-size: 11px; color: #aaa; display: flex; flex-wrap: wrap; gap: 6px; }
-    .rule-meta-chip {
-      background: #f0eef8; color: #6352b9; border-radius: 4px;
-      padding: 2px 7px; font-weight: 600;
-    }
+    .rule-meta { font-size: 11px; color: #aaa; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .rule-meta-chip { background: #f0eef8; color: #6352b9; border-radius: 4px; padding: 2px 7px; font-weight: 600; }
 
-    .rule-stats { text-align: right; flex-shrink: 0; }
-    .rule-stats .stat-num { font-size: 22px; font-weight: 800; color: #6352b9; line-height: 1; }
-    .rule-stats .stat-lbl { font-size: 10px; color: #aaa; margin-top: 2px; }
-    .rule-stats .last-fired { font-size: 11px; color: #888; margin-top: 6px; }
+    .rule-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+    .rule-stat-num { font-size: 22px; font-weight: 800; color: #6352b9; line-height: 1; text-align: right; }
+    .rule-stat-lbl { font-size: 10px; color: #aaa; text-align: right; }
+    .rule-last-fired { font-size: 11px; color: #888; text-align: right; }
+    .icon-btn {
+      appearance: none; background: none; border: 1.5px solid #e8e8e8; border-radius: 5px;
+      color: #888; font-size: 11px; font-family: inherit; padding: 3px 8px; cursor: pointer;
+    }
+    .icon-btn:hover { border-color: #6352b9; color: #6352b9; }
+    .icon-btn.danger:hover { border-color: #c0392b; color: #c0392b; }
 
-    /* ── No-alerts-for-period notice ── */
-    .period-notice {
-      padding: 10px 32px;
-      font-size: 12px; color: #888;
+    /* ── Create alert form ── */
+    .create-alert-bar {
+      padding: 12px 32px; background: #fff; border-bottom: 1px solid #f0eef8;
+      display: flex; align-items: center; justify-content: space-between;
     }
+    .create-alert-bar p { font-size: 13px; color: #666; }
+    .btn-primary {
+      appearance: none; background: #6352b9; color: #fff; border: none; border-radius: 6px;
+      font-size: 13px; font-weight: 700; font-family: inherit;
+      padding: 9px 20px; cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #3d3677; }
 
-    /* ── Filter bar ── */
-    .filter-strip {
-      background: #fff; border-bottom: 1px solid #ddd9f0;
-      padding: 10px 32px;
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    .rule-form-wrap {
+      display: none; background: #f7f5ff; border-bottom: 2px solid #6352b9;
+      padding: 24px 32px;
     }
-    .pill {
-      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 20px;
-      background: #fff; color: #6352b9;
-      font-size: 12px; font-weight: 600; font-family: inherit;
-      padding: 4px 13px; cursor: pointer;
-      transition: background 0.1s, color 0.1s, border-color 0.1s;
-      white-space: nowrap;
+    .rule-form-wrap.open { display: block; }
+
+    .form-title { font-size: 16px; font-weight: 700; color: #3d3677; margin-bottom: 20px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 12px; font-weight: 700; color: #3d3677; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-input, .form-select {
+      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 6px;
+      padding: 8px 12px; font-size: 13px; font-family: inherit; color: #1a1a1a;
+      background: #fff; outline: none;
     }
-    .pill:hover { border-color: #6352b9; }
-    .pill.active { background: #6352b9; color: #fff; border-color: #6352b9; }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236352b9' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px;
+    }
+    .form-input:focus, .form-select:focus { border-color: #6352b9; box-shadow: 0 0 0 3px rgba(99,82,185,0.12); }
+
+    /* Trigger type cards */
+    .trigger-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+    .trigger-option {
+      border: 2px solid #e0ddf5; border-radius: 8px; padding: 12px 14px;
+      cursor: pointer; background: #fff; transition: border-color 0.15s, background 0.15s;
+    }
+    .trigger-option:hover { border-color: #6352b9; background: #f7f5ff; }
+    .trigger-option.selected { border-color: #6352b9; background: #f0eef8; }
+    .trigger-option input[type=radio] { display: none; }
+    .trigger-icon { font-size: 20px; margin-bottom: 5px; }
+    .trigger-label { font-size: 12px; font-weight: 700; color: #3d3677; margin-bottom: 2px; }
+    .trigger-desc  { font-size: 11px; color: #888; line-height: 1.3; }
+
+    /* Extra params */
+    .trigger-params { margin-top: 14px; display: none; }
+    .trigger-params.visible { display: block; }
+
+    /* Preview */
+    .preview-box {
+      margin-top: 16px; padding: 12px 16px; background: #fff;
+      border: 1.5px solid #c9c2e8; border-radius: 6px; font-size: 13px;
+    }
+    .preview-box.has-matches { border-color: #27ae60; background: #f0faf2; }
+    .preview-box.no-matches  { border-color: #e0ddf5; color: #888; }
+    .preview-count { font-size: 18px; font-weight: 800; color: #6352b9; }
+    .preview-count.green { color: #27ae60; }
+    .preview-items { margin-top: 8px; max-height: 120px; overflow-y: auto; }
+    .preview-item  { font-size: 12px; color: #555; padding: 3px 0; border-bottom: 1px solid #f0eef8; }
+    .preview-item:last-child { border-bottom: none; }
+
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-cancel {
+      appearance: none; background: #fff; color: #6352b9; border: 1.5px solid #c9c2e8;
+      border-radius: 6px; font-size: 13px; font-weight: 700; font-family: inherit;
+      padding: 9px 20px; cursor: pointer;
+    }
+    .btn-cancel:hover { border-color: #6352b9; }
+    .btn-save {
+      appearance: none; background: #27ae60; color: #fff; border: none; border-radius: 6px;
+      font-size: 13px; font-weight: 700; font-family: inherit;
+      padding: 9px 20px; cursor: pointer;
+    }
+    .btn-save:hover { background: #1e8449; }
+    .btn-save:disabled { background: #ccc; cursor: default; }
 
     @media (max-width: 600px) {
-      .site-header, .section-heading, .alert-list, .rules-grid,
-      .filter-strip, .period-notice { padding-left: 16px !important; padding-right: 16px !important; }
+      .site-header, .section-heading, .alert-list, .rules-grid, .rules-subheading,
+      .filter-strip, .create-alert-bar, .rule-form-wrap { padding-left: 16px !important; padding-right: 16px !important; }
     }
   </style>
 </head>
@@ -215,16 +276,12 @@
       <span class="atomic-badge">PA ATOMIC</span>
       <span class="header-sub">Alert Notifications</span>
     </div>
-
-    <!-- Navigation tabs -->
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showTab('alerts')" id="tab-btn-alerts">
-        Alert inbox
-        <span class="tab-badge" id="inbox-badge">{{ total_alerts }}</span>
+        Alert inbox <span class="tab-badge" id="inbox-badge">{{ total_alerts }}</span>
       </button>
       <button class="nav-tab" onclick="showTab('rules')" id="tab-btn-rules">
-        Alert rules
-        <span class="tab-badge zero">{{ rules|length }}</span>
+        Alert rules <span class="tab-badge muted" id="rules-badge">{{ rules|length }}</span>
       </button>
       <a href="digest_{{ run_date }}.html" class="back-link">← Back to digest</a>
     </div>
@@ -233,120 +290,204 @@
   <!-- ══ ALERT INBOX TAB ══ -->
   <div class="tab-panel active" id="tab-alerts">
 
-    {% if not alerts %}
-    <div class="empty-state">
-      <div class="empty-icon">🔔</div>
-      <h3>No alerts yet</h3>
-      <p>
-        Alert rules are active and will fire as the pipeline runs daily.<br>
-        Triggered alerts will appear here.
-      </p>
-    </div>
-
-    {% else %}
-
     <!-- Filter strip -->
     <div class="filter-strip">
-      <span style="font-size:11px;font-weight:700;color:#3d3677;text-transform:uppercase;letter-spacing:1px;">Filter</span>
+      <span class="filter-label">Filter</span>
       <button class="pill active" data-filter="all"    onclick="filterAlerts('all')">All</button>
       <button class="pill"        data-filter="unread" onclick="filterAlerts('unread')">Unacknowledged</button>
-      {% set rule_types = alerts | map(attribute='_rule_type') | unique | list %}
-      {% if 'zero_rating' in rule_types %}
-      <button class="pill" data-filter="zero_rating" onclick="filterAlerts('zero_rating')">Zero rating</button>
-      {% endif %}
-      {% if 'threshold' in rule_types %}
-      <button class="pill" data-filter="threshold" onclick="filterAlerts('threshold')">Rating drops</button>
-      {% endif %}
-      {% if 'business_type' in rule_types %}
-      <button class="pill" data-filter="business_type" onclick="filterAlerts('business_type')">Sensitive premises</button>
-      {% endif %}
+      <button class="pill"        data-filter="system" onclick="filterAlerts('system')">System</button>
+      <button class="pill"        data-filter="custom" onclick="filterAlerts('custom')">My alerts</button>
     </div>
 
     <div class="section-heading">
       <h2>Triggered alerts</h2>
-      <span class="count" id="alert-visible-count">{{ total_alerts }} total</span>
+      <span class="count" id="alert-visible-count"></span>
     </div>
 
-    <div class="alert-list" id="alert-list">
+    <!-- System alerts from pipeline -->
+    {% if alerts %}
+    <div class="alert-list" id="system-alert-list">
       {% for a in alerts %}
       <div class="alert-card type-{{ a._rule_type }}"
            id="alert-{{ a.id }}"
-           data-rule-type="{{ a._rule_type }}"
-           data-alert-id="{{ a.id }}">
-
+           data-alert-id="{{ a.id }}"
+           data-source="system"
+           data-rule-type="{{ a._rule_type }}">
         <div class="alert-header">
           <span class="alert-type-badge">{{ a._rule_type_label }}</span>
           <div class="alert-main">
             <p class="alert-rule-name">{{ a.detector_name }}</p>
             {% if a.plain_english %}<p class="alert-description">{{ a.plain_english }}</p>{% endif %}
-            <p class="alert-meta">
-              {{ a._date_display }}
-              {% if a._count %}&nbsp;·&nbsp; {{ a._count }} premises{% endif %}
-            </p>
+            <p class="alert-meta">{{ a._date_display }}{% if a._count %} &nbsp;·&nbsp; {{ a._count }} premises{% endif %}</p>
           </div>
           <div class="alert-actions">
-            <button class="ack-btn" id="ack-{{ a.id }}"
-                    onclick="acknowledge({{ a.id }})">
-              Acknowledge
-            </button>
+            <button class="ack-btn" id="ack-{{ a.id }}" onclick="acknowledge('s_{{ a.id }}')">Acknowledge</button>
           </div>
         </div>
-
         {% if a._triggered %}
-        {% if a._triggered|length <= 5 %}
-        <div class="triggered-list" id="triggered-{{ a.id }}">
-        {% else %}
-        <div class="triggered-list collapsed" id="triggered-{{ a.id }}">
-        {% endif %}
+        <div class="triggered-list{% if a._triggered|length > 5 %} collapsed{% endif %}" id="triggered-{{ a.id }}">
           {% for b in a._triggered %}
           <div class="triggered-item">
             <span class="triggered-name">{{ b.business_name }}</span>
             <span class="triggered-detail">{{ b.local_authority_name }}</span>
             {% if b.new_rating %}
-            <span class="rating-chip-sm"
-              style="background:
-                {%- if b.new_rating == '0' or b.new_rating|lower == 'improvement required' -%}#fde8e8;color:#c0392b
-                {%- elif b.new_rating in ('1','2') -%}#fff3e0;color:#e67e22
-                {%- elif b.new_rating == '3' -%}#fffde7;color:#f39c12
-                {%- elif b.new_rating in ('4','5') or b.new_rating|lower == 'pass' -%}#e8f5e9;color:#27ae60
-                {%- else -%}#f5f5f5;color:#888{%- endif -%}
-              ;">
-              {{ b.new_rating }}
-            </span>
+            <span class="rating-chip-sm" style="background:{% if b.new_rating == '0' or b.new_rating|lower == 'improvement required' %}#fde8e8;color:#c0392b{% elif b.new_rating in ('1','2') %}#fff3e0;color:#e67e22{% elif b.new_rating == '3' %}#fffde7;color:#f39c12{% else %}#e8f5e9;color:#27ae60{% endif %};">{{ b.new_rating }}</span>
             {% endif %}
           </div>
           {% endfor %}
         </div>
         {% if a._triggered|length > 5 %}
         <button class="expand-btn" id="expand-{{ a.id }}"
-                onclick="toggleTriggered({{ a.id }}, {{ a._triggered|length }})">
+                onclick="toggleTriggered('triggered-{{ a.id }}', 'expand-{{ a.id }}', {{ a._triggered|length }})">
           Show {{ a._triggered|length }} premises ▾
         </button>
         {% endif %}
         {% endif %}
-
       </div>
       {% endfor %}
     </div>
-
     {% endif %}
+
+    <!-- Custom rule alerts rendered by JS -->
+    <div id="custom-alert-list"></div>
+
+    <div class="empty-state" id="alerts-empty" style="display:none;">
+      <div class="empty-icon">🔔</div>
+      <h3>No alerts match</h3>
+      <p>Try a different filter, or create a new alert rule in the Alert rules tab.</p>
+    </div>
+
   </div>{# end tab-alerts #}
 
 
   <!-- ══ ALERT RULES TAB ══ -->
   <div class="tab-panel" id="tab-rules">
 
-    <div class="section-heading">
-      <h2>Configured rules</h2>
-      <span class="count">
-        {{ rules | selectattr('active') | list | length }} active
-        · {{ rules | length }} total
-      </span>
+    <!-- Create alert button -->
+    <div class="create-alert-bar">
+      <p>Define your own alert rules — triggered results appear in the inbox.</p>
+      <button class="btn-primary" onclick="toggleCreateForm()">+ Create alert</button>
     </div>
 
+    <!-- Create alert form -->
+    <div class="rule-form-wrap" id="rule-form-wrap">
+      <p class="form-title">New alert rule</p>
+
+      <div class="form-grid">
+        <!-- Rule name -->
+        <div class="form-group full">
+          <label class="form-label">Rule name</label>
+          <input type="text" class="form-input" id="rule-name" placeholder="e.g. Zero-rated in Westminster" oninput="updatePreview()">
+        </div>
+
+        <!-- Trigger type -->
+        <div class="form-group full">
+          <label class="form-label">Alert me when</label>
+          <div class="trigger-options">
+            <label class="trigger-option selected" onclick="selectTrigger('zero_rating', this)">
+              <input type="radio" name="trigger" value="zero_rating" checked>
+              <div class="trigger-icon">🔴</div>
+              <div class="trigger-label">Zero-rated / Fail</div>
+              <div class="trigger-desc">Rating 0 or Improvement Required</div>
+            </label>
+            <label class="trigger-option" onclick="selectTrigger('threshold', this)">
+              <input type="radio" name="trigger" value="threshold">
+              <div class="trigger-icon">⭐</div>
+              <div class="trigger-label">Rating at or below</div>
+              <div class="trigger-desc">Any premises below a set star rating</div>
+            </label>
+            <label class="trigger-option" onclick="selectTrigger('drop', this)">
+              <input type="radio" name="trigger" value="drop">
+              <div class="trigger-icon">📉</div>
+              <div class="trigger-label">Rating drop</div>
+              <div class="trigger-desc">Falls by N or more stars</div>
+            </label>
+            <label class="trigger-option" onclick="selectTrigger('name', this)">
+              <input type="radio" name="trigger" value="name">
+              <div class="trigger-icon">🏪</div>
+              <div class="trigger-label">Business name</div>
+              <div class="trigger-desc">Name contains a keyword or chain name</div>
+            </label>
+            <label class="trigger-option" onclick="selectTrigger('business_type', this)">
+              <input type="radio" name="trigger" value="business_type">
+              <div class="trigger-icon">🏥</div>
+              <div class="trigger-label">Business type</div>
+              <div class="trigger-desc">School, hospital, care home, etc.</div>
+            </label>
+            <label class="trigger-option" onclick="selectTrigger('any', this)">
+              <input type="radio" name="trigger" value="any">
+              <div class="trigger-icon">📋</div>
+              <div class="trigger-label">Any change</div>
+              <div class="trigger-desc">Every inspection and rating change</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Trigger-specific params -->
+        <div class="form-group full">
+          <div class="trigger-params" id="params-threshold">
+            <label class="form-label">Show premises rated at or below</label>
+            <select class="form-select" id="param-threshold" onchange="updatePreview()" style="max-width:200px;">
+              <option value="1">★ (1 star)</option>
+              <option value="2">★★ (2 stars)</option>
+              <option value="3">★★★ (3 stars)</option>
+            </select>
+          </div>
+          <div class="trigger-params" id="params-drop">
+            <label class="form-label">Dropped by at least</label>
+            <select class="form-select" id="param-drop" onchange="updatePreview()" style="max-width:200px;">
+              <option value="1">1 star</option>
+              <option value="2" selected>2 stars</option>
+              <option value="3">3 stars</option>
+            </select>
+          </div>
+          <div class="trigger-params" id="params-name">
+            <label class="form-label">Business name contains</label>
+            <input type="text" class="form-input" id="param-name" placeholder="e.g. McDonald's, Greggs, Tesco…" oninput="updatePreview()" style="max-width:320px;">
+          </div>
+          <div class="trigger-params" id="params-business_type">
+            <label class="form-label">Business type contains</label>
+            <input type="text" class="form-input" id="param-btype" placeholder="e.g. school, hospital, care home, takeaway…" oninput="updatePreview()" style="max-width:320px;">
+          </div>
+        </div>
+
+        <!-- Authority scope -->
+        <div class="form-group">
+          <label class="form-label">In area (optional)</label>
+          <select class="form-select" id="rule-authority" onchange="updatePreview()">
+            <option value="">All monitored areas</option>
+            {% for la in authorities %}
+            <option value="{{ la }}">{{ la }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Preview -->
+        <div class="form-group">
+          <label class="form-label">Preview (last 30 days of data)</label>
+          <div class="preview-box no-matches" id="preview-box">
+            <span class="preview-count" id="preview-count">0</span> matches
+            <div class="preview-items" id="preview-items"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="toggleCreateForm()">Cancel</button>
+        <button class="btn-save" id="btn-save-rule" onclick="saveRule()" disabled>Save alert</button>
+      </div>
+    </div>
+
+    <!-- Custom rules (from localStorage) -->
+    <div id="custom-rules-section">
+      <!-- rendered by JS -->
+    </div>
+
+    <!-- System rules (from pipeline config) -->
+    <p class="rules-subheading">System rules</p>
     <div class="rules-grid">
       {% for r in rules %}
-      <div class="rule-card {% if not r.active %}inactive{% endif %}">
+      <div class="rule-card system-rule {% if not r.active %}inactive{% endif %}">
         <div class="rule-status-dot {% if not r.active %}inactive{% endif %}"></div>
         <div class="rule-body">
           <p class="rule-name">{{ r.name }}</p>
@@ -357,135 +498,445 @@
             {% if not r.active %}<span style="color:#e67e22;font-weight:700;">Inactive</span>{% endif %}
           </div>
         </div>
-        <div class="rule-stats">
-          <div class="stat-num">{{ r._total_fired }}</div>
-          <div class="stat-lbl">triggers</div>
-          {% if r._last_fired %}
-          <div class="last-fired">Last: {{ r._last_fired }}</div>
-          {% endif %}
+        <div class="rule-actions">
+          <div class="rule-stat-num">{{ r._total_fired }}</div>
+          <div class="rule-stat-lbl">triggers</div>
+          {% if r._last_fired %}<div class="rule-last-fired">Last: {{ r._last_fired }}</div>{% endif %}
         </div>
       </div>
       {% endfor %}
     </div>
 
-    <div style="padding: 0 32px 24px;">
+    <div style="padding: 12px 32px 24px;">
       <p style="font-size:12px;color:#aaa;line-height:1.6;">
-        Rules are defined in <code>config/alert_rules.yaml</code>. Edit that file to
-        add, remove or adjust rules — changes take effect on the next pipeline run.
-        Alert types: <strong>zero_rating</strong>, <strong>threshold</strong> (rating drop),
-        <strong>business_type</strong> (school/hospital/care home etc.),
-        <strong>watchlist</strong> (specific premises by FHRS ID).
+        System rules are defined in <code>config/alert_rules.yaml</code> and evaluated
+        automatically by the pipeline each morning.
       </p>
     </div>
 
   </div>{# end tab-rules #}
 
-</div>{# end page-wrapper #}
+</div>
+
+<!-- Embed change data for client-side evaluation -->
+<script>
+var PA_CHANGE_DATA = {{ change_data_json | safe }};
+var PA_RUN_DATE    = '{{ run_date }}';
+</script>
 
 <script>
-  /* ── Tab switching ─────────────────────────────────────────────────── */
-  function showTab(name) {
-    ['alerts', 'rules'].forEach(function(t) {
-      document.getElementById('tab-' + t).classList.toggle('active', t === name);
-      document.getElementById('tab-btn-' + t).classList.toggle('active', t === name);
-    });
-  }
+/* ═══════════════════════════════════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════════════════════════════════ */
+function showTab(name) {
+  ['alerts','rules'].forEach(function(t) {
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+    document.getElementById('tab-btn-' + t).classList.toggle('active', t === name);
+  });
+  if (name === 'rules') renderCustomRules();
+}
 
-  /* ── Acknowledge ───────────────────────────────────────────────────── */
-  var ACK_KEY = 'pa-atomic-acked';
+/* ═══════════════════════════════════════════════════════════════════════
+   ACKNOWLEDGE (localStorage keyed by "s_{id}" for system, "c_{id}" custom)
+═══════════════════════════════════════════════════════════════════════ */
+var ACK_KEY = 'pa-atomic-acked-v2';
 
-  function getAcked() {
-    try { return JSON.parse(localStorage.getItem(ACK_KEY) || '[]'); }
-    catch(e) { return []; }
-  }
-
-  function saveAcked(ids) {
-    try { localStorage.setItem(ACK_KEY, JSON.stringify(ids)); } catch(e) {}
-  }
-
-  function acknowledge(id) {
-    var ids = getAcked();
-    if (ids.indexOf(id) === -1) ids.push(id);
-    saveAcked(ids);
-    applyAcked();
-  }
-
-  function applyAcked() {
-    var acked = getAcked();
-    var unread = 0;
-    document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
-      var id = parseInt(card.dataset.alertId);
-      var isAcked = acked.indexOf(id) !== -1;
-      card.classList.toggle('acknowledged', isAcked);
-      var btn = document.getElementById('ack-' + id);
-      if (btn) {
-        btn.textContent = isAcked ? '✓ Acknowledged' : 'Acknowledge';
-        btn.classList.toggle('acked', isAcked);
-        if (isAcked) btn.disabled = true;
-      }
-      if (!isAcked) unread++;
-    });
-    var badge = document.getElementById('inbox-badge');
-    if (badge) {
-      badge.textContent = unread;
-      badge.classList.toggle('zero', unread === 0);
-    }
-    updateVisibleCount();
-  }
-
-  /* ── Filter ────────────────────────────────────────────────────────── */
-  var activeFilter = 'all';
-
-  function filterAlerts(f) {
-    activeFilter = f;
-    document.querySelectorAll('.pill[data-filter]').forEach(function(b) {
-      b.classList.toggle('active', b.dataset.filter === f);
-    });
-    applyFilter();
-  }
-
-  function applyFilter() {
-    var acked = getAcked();
-    var visible = 0;
-    document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
-      var id       = parseInt(card.dataset.alertId);
-      var ruleType = card.dataset.ruleType;
-      var isAcked  = acked.indexOf(id) !== -1;
-
-      var show = true;
-      if (activeFilter === 'unread'    && isAcked)                     show = false;
-      if (activeFilter !== 'all' && activeFilter !== 'unread' && ruleType !== activeFilter) show = false;
-
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    updateVisibleCount(visible);
-  }
-
-  function updateVisibleCount(n) {
-    var el = document.getElementById('alert-visible-count');
-    if (!el) return;
-    if (n === undefined) {
-      n = 0;
-      document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(c) {
-        if (c.style.display !== 'none') n++;
-      });
-    }
-    var total = {{ total_alerts }};
-    el.textContent = n === total ? total + ' total' : n + ' of ' + total + ' shown';
-  }
-
-  /* ── Expand/collapse long triggered lists ───────────────────────────── */
-  function toggleTriggered(id, total) {
-    var list = document.getElementById('triggered-' + id);
-    var btn  = document.getElementById('expand-' + id);
-    if (!list || !btn) return;
-    var collapsed = list.classList.toggle('collapsed');
-    btn.textContent = collapsed ? 'Show ' + total + ' premises ▾' : 'Collapse ▴';
-  }
-
-  /* ── Init ──────────────────────────────────────────────────────────── */
+function getAcked() {
+  try { return JSON.parse(localStorage.getItem(ACK_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveAcked(ids) {
+  try { localStorage.setItem(ACK_KEY, JSON.stringify(ids)); } catch(e) {}
+}
+function acknowledge(key) {
+  var ids = getAcked();
+  if (ids.indexOf(key) === -1) ids.push(key);
+  saveAcked(ids);
   applyAcked();
+}
+function applyAcked() {
+  var acked = getAcked();
+  var unread = 0;
+  document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
+    var key    = (card.dataset.source === 'custom' ? 'c_' : 's_') + card.dataset.alertId;
+    var isAck  = acked.indexOf(key) !== -1;
+    card.classList.toggle('acknowledged', isAck);
+    var btn = card.querySelector('.ack-btn');
+    if (btn) {
+      btn.textContent = isAck ? '✓ Acknowledged' : 'Acknowledge';
+      btn.classList.toggle('acked', isAck);
+      btn.disabled = isAck;
+    }
+    if (!isAck) unread++;
+  });
+  var badge = document.getElementById('inbox-badge');
+  if (badge) badge.textContent = unread;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FILTER
+═══════════════════════════════════════════════════════════════════════ */
+var activeFilter = 'all';
+
+function filterAlerts(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-strip .pill').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  applyFilter();
+}
+
+function applyFilter() {
+  var acked   = getAcked();
+  var visible = 0;
+  document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
+    var key    = (card.dataset.source === 'custom' ? 'c_' : 's_') + card.dataset.alertId;
+    var isAck  = acked.indexOf(key) !== -1;
+    var src    = card.dataset.source;
+    var show   = true;
+    if (activeFilter === 'unread' && isAck)            show = false;
+    if (activeFilter === 'system' && src !== 'system') show = false;
+    if (activeFilter === 'custom' && src !== 'custom') show = false;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  var countEl = document.getElementById('alert-visible-count');
+  var total   = document.querySelectorAll('.alert-card[data-alert-id]').length;
+  if (countEl) countEl.textContent = visible === total ? total + ' total' : visible + ' of ' + total + ' shown';
+
+  var emptyEl = document.getElementById('alerts-empty');
+  if (emptyEl) emptyEl.style.display = visible === 0 ? '' : 'none';
+}
+
+function toggleTriggered(listId, btnId, total) {
+  var list = document.getElementById(listId);
+  var btn  = document.getElementById(btnId);
+  if (!list || !btn) return;
+  var collapsed = list.classList.toggle('collapsed');
+  btn.textContent = collapsed ? 'Show ' + total + ' premises ▾' : 'Collapse ▴';
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CUSTOM RULES — STORAGE
+═══════════════════════════════════════════════════════════════════════ */
+var RULES_KEY = 'pa-atomic-custom-rules-v2';
+
+function getCustomRules() {
+  try { return JSON.parse(localStorage.getItem(RULES_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveCustomRules(rules) {
+  try { localStorage.setItem(RULES_KEY, JSON.stringify(rules)); } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RULE EVALUATION
+═══════════════════════════════════════════════════════════════════════ */
+function evaluateRule(rule, data) {
+  return data.filter(function(c) {
+    if (rule.authority && c.local_authority_name !== rule.authority) return false;
+
+    switch (rule.type) {
+      case 'zero_rating': {
+        var r = (c.new_rating || '').trim().toLowerCase();
+        return r === '0' || r === 'improvement required';
+      }
+      case 'threshold': {
+        var n = parseInt(c.new_rating);
+        return !isNaN(n) && n <= parseInt(rule.params.max_rating || '1');
+      }
+      case 'drop': {
+        var old_n = parseInt(c.old_rating);
+        var new_n = parseInt(c.new_rating);
+        var drop = parseInt(rule.params.min_drop || '2');
+        return !isNaN(old_n) && !isNaN(new_n) && (old_n - new_n) >= drop;
+      }
+      case 'name': {
+        var kw = (rule.params.keyword || '').toLowerCase();
+        return kw && (c.business_name || '').toLowerCase().includes(kw);
+      }
+      case 'business_type': {
+        var kw = (rule.params.keyword || '').toLowerCase();
+        return kw && (c.business_type || '').toLowerCase().includes(kw);
+      }
+      case 'any':
+        return true;
+    }
+    return false;
+  });
+}
+
+function ruleDescription(rule) {
+  switch (rule.type) {
+    case 'zero_rating':   return 'Premises rated 0 or Improvement Required';
+    case 'threshold':     return 'Premises rated ' + rule.params.max_rating + ' stars or below';
+    case 'drop':          return 'Premises dropping ' + rule.params.min_drop + '+ stars';
+    case 'name':          return 'Business name contains "' + rule.params.keyword + '"';
+    case 'business_type': return 'Business type contains "' + rule.params.keyword + '"';
+    case 'any':           return 'Any inspection or rating change';
+  }
+  return '';
+}
+
+function ratingChipStyle(rating) {
+  var r = (rating || '').toString();
+  if (r === '0' || r.toLowerCase() === 'improvement required')
+    return 'background:#fde8e8;color:#c0392b';
+  if (r === '1' || r === '2') return 'background:#fff3e0;color:#e67e22';
+  if (r === '3') return 'background:#fffde7;color:#f39c12';
+  return 'background:#e8f5e9;color:#27ae60';
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RENDER CUSTOM ALERTS
+═══════════════════════════════════════════════════════════════════════ */
+function renderCustomAlerts() {
+  var rules   = getCustomRules().filter(function(r) { return r.active !== false; });
+  var container = document.getElementById('custom-alert-list');
+  if (!container) return;
+
+  var html = '';
+  rules.forEach(function(rule) {
+    var matches = evaluateRule(rule, PA_CHANGE_DATA);
+    if (!matches.length) return;
+
+    var todayMatches = matches.filter(function(c) { return c.change_date === PA_RUN_DATE; });
+    var display = todayMatches.length ? todayMatches : matches.slice(0, 10);
+    var count = matches.length;
+
+    var headline = count === 1
+      ? rule.name + ': ' + matches[0].business_name
+      : rule.name + ': ' + count + ' premises affected';
+
+    html += '<div class="alert-card type-custom" data-alert-id="' + rule.id + '" data-source="custom">';
+    html += '<div class="alert-header">';
+    html += '<span class="alert-type-badge">My alert</span>';
+    html += '<div class="alert-main">';
+    html += '<p class="alert-rule-name">' + escHtml(rule.name) + '</p>';
+    html += '<p class="alert-description">' + escHtml(ruleDescription(rule)) + '</p>';
+    html += '<p class="alert-meta">Last 30 days &nbsp;·&nbsp; ' + count + ' premises</p>';
+    html += '</div>';
+    html += '<div class="alert-actions">';
+    html += '<button class="ack-btn" onclick="acknowledge(\'c_' + rule.id + '\')">Acknowledge</button>';
+    html += '</div></div>';
+
+    if (display.length) {
+      html += '<div class="triggered-list' + (display.length > 5 ? ' collapsed' : '') + '" id="triggered-c-' + rule.id + '">';
+      display.forEach(function(b) {
+        html += '<div class="triggered-item">';
+        html += '<span class="triggered-name">' + escHtml(b.business_name) + '</span>';
+        html += '<span class="triggered-detail">' + escHtml(b.local_authority_name) + '</span>';
+        if (b.new_rating) {
+          html += '<span class="rating-chip-sm" style="' + ratingChipStyle(b.new_rating) + '">' + escHtml(b.new_rating) + '</span>';
+        }
+        html += '</div>';
+      });
+      html += '</div>';
+      if (display.length > 5) {
+        html += '<button class="expand-btn" onclick="toggleTriggered(\'triggered-c-' + rule.id + '\',null,' + display.length + ')" id="expand-c-' + rule.id + '">Show ' + display.length + ' premises ▾</button>';
+      }
+    }
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RENDER CUSTOM RULES LIST
+═══════════════════════════════════════════════════════════════════════ */
+function renderCustomRules() {
+  var rules = getCustomRules();
+  var section = document.getElementById('custom-rules-section');
+  if (!section) return;
+
+  if (!rules.length) {
+    section.innerHTML = '';
+    return;
+  }
+
+  var html = '<p class="rules-subheading">My alert rules</p><div class="rules-grid">';
+  rules.forEach(function(rule) {
+    var matches  = evaluateRule(rule, PA_CHANGE_DATA);
+    var inactive = rule.active === false;
+    html += '<div class="rule-card custom-rule' + (inactive ? ' inactive' : '') + '">';
+    html += '<div class="rule-status-dot' + (inactive ? ' inactive' : '') + '"></div>';
+    html += '<div class="rule-body">';
+    html += '<p class="rule-name">' + escHtml(rule.name) + '</p>';
+    html += '<p class="rule-desc">' + escHtml(ruleDescription(rule)) + '</p>';
+    html += '<div class="rule-meta">';
+    html += '<span class="rule-meta-chip">My alert</span>';
+    if (rule.authority) html += '<span>' + escHtml(rule.authority) + '</span>';
+    if (inactive) html += '<span style="color:#e67e22;font-weight:700;">Paused</span>';
+    html += '</div></div>';
+    html += '<div class="rule-actions">';
+    html += '<div class="rule-stat-num">' + matches.length + '</div>';
+    html += '<div class="rule-stat-lbl">matches</div>';
+    html += '<button class="icon-btn" onclick="toggleCustomRule(\'' + rule.id + '\')">' + (inactive ? 'Enable' : 'Pause') + '</button>';
+    html += '<button class="icon-btn danger" onclick="deleteCustomRule(\'' + rule.id + '\')">Delete</button>';
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  section.innerHTML = html;
+  updateRulesBadge();
+}
+
+function toggleCustomRule(id) {
+  var rules = getCustomRules();
+  var rule  = rules.find(function(r) { return r.id === id; });
+  if (rule) rule.active = rule.active === false ? true : false;
+  saveCustomRules(rules);
+  renderCustomRules();
+  renderCustomAlerts();
+  applyAcked();
+  applyFilter();
+}
+
+function deleteCustomRule(id) {
+  if (!confirm('Delete this alert rule?')) return;
+  var rules = getCustomRules().filter(function(r) { return r.id !== id; });
+  saveCustomRules(rules);
+  renderCustomRules();
+  renderCustomAlerts();
+  applyAcked();
+  applyFilter();
+}
+
+function updateRulesBadge() {
+  var el = document.getElementById('rules-badge');
+  if (!el) return;
+  var system = {{ rules|length }};
+  var custom = getCustomRules().length;
+  el.textContent = system + custom;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CREATE ALERT FORM
+═══════════════════════════════════════════════════════════════════════ */
+var currentTrigger = 'zero_rating';
+
+function toggleCreateForm() {
+  var wrap = document.getElementById('rule-form-wrap');
+  wrap.classList.toggle('open');
+  if (wrap.classList.contains('open')) updatePreview();
+}
+
+function selectTrigger(type, el) {
+  currentTrigger = type;
+  document.querySelectorAll('.trigger-option').forEach(function(o) { o.classList.remove('selected'); });
+  if (el) el.classList.add('selected');
+  ['threshold','drop','name','business_type'].forEach(function(t) {
+    var el = document.getElementById('params-' + t);
+    if (el) el.classList.toggle('visible', t === type);
+  });
+  updatePreview();
+}
+
+function updatePreview() {
+  var name      = (document.getElementById('rule-name').value || '').trim();
+  var authority = document.getElementById('rule-authority').value;
+  var rule      = buildDraftRule();
+  var matches   = rule ? evaluateRule(rule, PA_CHANGE_DATA) : [];
+
+  var box   = document.getElementById('preview-box');
+  var count = document.getElementById('preview-count');
+  var items = document.getElementById('preview-items');
+  var btn   = document.getElementById('btn-save-rule');
+
+  count.textContent = matches.length;
+  count.className   = 'preview-count' + (matches.length > 0 ? ' green' : '');
+  box.className     = 'preview-box ' + (matches.length > 0 ? 'has-matches' : 'no-matches');
+
+  var previewHtml = '';
+  matches.slice(0, 6).forEach(function(c) {
+    previewHtml += '<div class="preview-item">' + escHtml(c.business_name) +
+      ' &nbsp;·&nbsp; ' + escHtml(c.local_authority_name || '') +
+      (c.new_rating ? ' &nbsp;·&nbsp; ' + escHtml(c.new_rating) : '') +
+      '</div>';
+  });
+  if (matches.length > 6) {
+    previewHtml += '<div class="preview-item" style="color:#aaa;">…and ' + (matches.length - 6) + ' more</div>';
+  }
+  items.innerHTML = previewHtml;
+
+  btn.disabled = !name || !rule || !isRuleValid(rule);
+}
+
+function buildDraftRule() {
+  var type      = currentTrigger;
+  var authority = document.getElementById('rule-authority').value;
+  var params    = {};
+
+  if (type === 'threshold') {
+    params.max_rating = document.getElementById('param-threshold').value;
+  } else if (type === 'drop') {
+    params.min_drop = document.getElementById('param-drop').value;
+  } else if (type === 'name') {
+    params.keyword = (document.getElementById('param-name').value || '').trim();
+    if (!params.keyword) return null;
+  } else if (type === 'business_type') {
+    params.keyword = (document.getElementById('param-btype').value || '').trim();
+    if (!params.keyword) return null;
+  }
+
+  return { type: type, authority: authority, params: params };
+}
+
+function isRuleValid(rule) {
+  if (rule.type === 'name' && !rule.params.keyword) return false;
+  if (rule.type === 'business_type' && !rule.params.keyword) return false;
+  return true;
+}
+
+function saveRule() {
+  var name = (document.getElementById('rule-name').value || '').trim();
+  var rule = buildDraftRule();
+  if (!name || !rule || !isRuleValid(rule)) return;
+
+  var newRule = {
+    id:        'r_' + Date.now(),
+    name:      name,
+    type:      rule.type,
+    authority: rule.authority,
+    params:    rule.params,
+    active:    true,
+    created:   PA_RUN_DATE,
+  };
+
+  var rules = getCustomRules();
+  rules.push(newRule);
+  saveCustomRules(rules);
+
+  // Reset form
+  document.getElementById('rule-name').value = '';
+  selectTrigger('zero_rating', document.querySelector('.trigger-option'));
+  document.getElementById('rule-authority').value = '';
+  toggleCreateForm();
+
+  renderCustomRules();
+  renderCustomAlerts();
+  applyAcked();
+  applyFilter();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════════════════════ */
+function escHtml(s) {
+  return (s || '').toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════════════ */
+renderCustomAlerts();
+applyAcked();
+applyFilter();
+updateRulesBadge();
 </script>
 </body>
 </html>
