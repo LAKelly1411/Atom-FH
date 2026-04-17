@@ -24,6 +24,8 @@ from src.db import init_db, get_connection, get_changes_for_date, migrate_addres
 from src.ingest import run_ingestion, resolve_authority_ids, list_all_authority_names
 from src.detect import run_change_detection, summarise_changes
 from src.feed import run_feed
+from src.alerts import run_alerts
+from src.notifications_feed import run_notifications_feed
 
 
 def configure_logging(verbose: bool = False) -> None:
@@ -132,6 +134,16 @@ def main() -> None:
         if not recipients:
             logger.info("(No recipients configured — email not sent. "
                         "Set DIGEST_RECIPIENTS env var to enable.)")
+
+    # Step 4: Alerts
+    if not args.ingest_only and not args.detect_only:
+        logger.info("--- Step 4: Alerts ---")
+        alerts = run_alerts(changes=changes, run_date=run_date)
+        logger.info("Alerts triggered: %s", len(alerts))
+        for a in alerts:
+            logger.info("  [%s] %s", a["detector_name"], a["headline"])
+        notifications_path = run_notifications_feed(run_date=run_date)
+        logger.info("Notifications page saved: %s", notifications_path)
 
     logger.info("=== PA ATOMIC pipeline complete ===")
 

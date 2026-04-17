@@ -241,6 +241,12 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
 
     buckets = _classify_changes(changes)
 
+    # ── Alert count for the notifications badge ───────────────────────────────
+    from .alerts import get_historical_alerts
+    today_alerts = [a for a in get_historical_alerts(days=1)
+                    if a["flag_date"] == run_date]
+    alert_count = len(today_alerts)
+
     # ── Fetch current snapshot + 90-day window ───────────────────────────────
     from .db import get_connection, get_current_establishments, get_changes_window
     conn = get_connection()
@@ -349,6 +355,8 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
         window_section_totals=window_section_totals,
         window_page_size=WINDOW_PAGE_SIZE,
         window_dates=window_dates,
+        # Alert badge
+        alert_count=alert_count,
         # All-data view
         all_establishments=all_establishments,
         all_authorities=all_authorities,

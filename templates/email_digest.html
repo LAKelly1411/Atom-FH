@@ -213,6 +213,17 @@
     <p class="coverage">Coverage: <strong>{{ coverage }}</strong></p>
   </div>
 
+  <!-- NAV BAR -->
+  <div style="background:rgba(0,0,0,0.25);padding:0 32px;display:flex;align-items:center;">
+    <a href="#" style="display:inline-block;padding:10px 16px 10px 0;font-size:13px;font-weight:700;color:#fff;border-bottom:3px solid #ffcb47;">Digest</a>
+    <a href="notifications.html" style="display:inline-block;padding:10px 16px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);border-bottom:3px solid transparent;margin-left:4px;">
+      Notifications
+      {% if alert_count %}
+      <span style="background:#ffcb47;color:#1a1a1a;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:5px;vertical-align:middle;">{{ alert_count }}</span>
+      {% endif %}
+    </a>
+  </div>
+
   <!-- STATUS BAR -->
   <div class="status-bar {% if has_news %}has-news{% else %}no-news{% endif %}" id="status-bar">
     <span id="status-msg">

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Atomic | Alert Notifications</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body, p, h1, h2, h3 { margin: 0; padding: 0; }
+    a { text-decoration: none; }
+
+    body {
+      background: #f0eef8;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 15px; color: #1a1a1a;
+    }
+
+    .page-wrapper { max-width: 820px; margin: 0 auto; padding: 0 0 48px; }
+
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
+      padding: 28px 32px 0;
+    }
+    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .atomic-badge {
+      background: #ffcb47; color: #1a1a1a;
+      font-weight: 700; font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+    }
+    .header-sub { color: rgba(255,255,255,0.75); font-size: 13px; }
+
+    /* ── Nav tabs ── */
+    .nav-tabs { display: flex; gap: 0; margin-top: 6px; }
+    .nav-tab {
+      padding: 10px 20px; font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.65); cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      background: none; border-top: none; border-left: none; border-right: none;
+      font-family: inherit; white-space: nowrap;
+    }
+    .nav-tab:hover  { color: rgba(255,255,255,0.9); }
+    .nav-tab.active { color: #fff; border-bottom-color: #ffcb47; }
+    .nav-tab .tab-badge {
+      display: inline-block; background: #ffcb47; color: #1a1a1a;
+      border-radius: 10px; font-size: 10px; font-weight: 700;
+      padding: 1px 6px; margin-left: 6px; vertical-align: middle;
+    }
+    .nav-tab .tab-badge.zero { background: rgba(255,255,255,0.25); color: #fff; }
+    .back-link {
+      margin-left: auto; color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600;
+      padding: 10px 0; align-self: center;
+    }
+    .back-link:hover { color: #fff; }
+
+    /* ── Tab content ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Section headings ── */
+    .section-heading {
+      padding: 20px 32px 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-heading h2 { font-size: 15px; font-weight: 700; color: #3d3677; }
+    .section-heading .count { font-size: 12px; color: #888; margin-left: auto; }
+
+    /* ── Alert cards ── */
+    .alert-list { padding: 0 32px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+    .alert-card {
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border-left: 5px solid #6352b9;
+      overflow: hidden;
+    }
+    .alert-card.type-zero_rating   { border-left-color: #c0392b; }
+    .alert-card.type-threshold     { border-left-color: #ffa631; }
+    .alert-card.type-business_type { border-left-color: #8e44ad; }
+    .alert-card.type-watchlist     { border-left-color: #2c3e50; }
+    .alert-card.acknowledged       { opacity: 0.55; }
+
+    .alert-header {
+      padding: 14px 16px 10px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .alert-type-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .type-zero_rating   .alert-type-badge { background: #fde8e8; color: #c0392b; }
+    .type-threshold     .alert-type-badge { background: #fff3e0; color: #e67e22; }
+    .type-business_type .alert-type-badge { background: #f3e5f5; color: #8e44ad; }
+    .type-watchlist     .alert-type-badge { background: #eceff1; color: #2c3e50; }
+
+    .alert-main { flex: 1; min-width: 0; }
+    .alert-rule-name { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+    .alert-description { font-size: 12px; color: #666; margin-bottom: 4px; line-height: 1.4; }
+    .alert-meta { font-size: 11px; color: #aaa; }
+
+    .alert-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .ack-btn {
+      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 5px;
+      background: #fff; color: #6352b9;
+      font-size: 11px; font-weight: 700;
+      font-family: inherit; padding: 4px 10px; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+      white-space: nowrap;
+    }
+    .ack-btn:hover { background: #6352b9; color: #fff; border-color: #6352b9; }
+    .ack-btn.acked { background: #e8f5e9; color: #27ae60; border-color: #a5d6a7; cursor: default; }
+
+    /* Triggered businesses list */
+    .triggered-list {
+      border-top: 1px solid #f0eef8;
+      padding: 0 16px 12px;
+    }
+    .triggered-list.collapsed { display: none; }
+    .triggered-item {
+      display: flex; align-items: baseline; gap: 8px;
+      padding: 7px 0; border-bottom: 1px solid #f8f7fc; font-size: 13px;
+    }
+    .triggered-item:last-child { border-bottom: none; }
+    .triggered-name { font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
+    .triggered-detail { font-size: 11px; color: #888; white-space: nowrap; }
+    .rating-chip-sm {
+      display: inline-block; padding: 1px 8px; border-radius: 10px;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+
+    .expand-btn {
+      appearance: none; background: none; border: none;
+      font-size: 11px; color: #6352b9; font-weight: 600;
+      font-family: inherit; cursor: pointer; padding: 8px 16px;
+      display: block;
+    }
+    .expand-btn:hover { text-decoration: underline; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      padding: 48px 32px; text-align: center;
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 18px; font-weight: 700; color: #3d3677; margin-bottom: 8px; }
+    .empty-state p { font-size: 14px; color: #888; line-height: 1.6; }
+
+    /* ── Rule cards ── */
+    .rules-grid { padding: 0 32px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+    .rule-card {
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      padding: 16px 18px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .rule-card.inactive { opacity: 0.55; }
+
+    .rule-status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #27ae60; flex-shrink: 0; margin-top: 4px;
+    }
+    .rule-status-dot.inactive { background: #ccc; }
+
+    .rule-body { flex: 1; min-width: 0; }
+    .rule-name { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+    .rule-desc { font-size: 12px; color: #555; margin-bottom: 6px; line-height: 1.4; }
+    .rule-meta { font-size: 11px; color: #aaa; display: flex; flex-wrap: wrap; gap: 6px; }
+    .rule-meta-chip {
+      background: #f0eef8; color: #6352b9; border-radius: 4px;
+      padding: 2px 7px; font-weight: 600;
+    }
+
+    .rule-stats { text-align: right; flex-shrink: 0; }
+    .rule-stats .stat-num { font-size: 22px; font-weight: 800; color: #6352b9; line-height: 1; }
+    .rule-stats .stat-lbl { font-size: 10px; color: #aaa; margin-top: 2px; }
+    .rule-stats .last-fired { font-size: 11px; color: #888; margin-top: 6px; }
+
+    /* ── No-alerts-for-period notice ── */
+    .period-notice {
+      padding: 10px 32px;
+      font-size: 12px; color: #888;
+    }
+
+    /* ── Filter bar ── */
+    .filter-strip {
+      background: #fff; border-bottom: 1px solid #ddd9f0;
+      padding: 10px 32px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .pill {
+      appearance: none; border: 1.5px solid #c9c2e8; border-radius: 20px;
+      background: #fff; color: #6352b9;
+      font-size: 12px; font-weight: 600; font-family: inherit;
+      padding: 4px 13px; cursor: pointer;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: #6352b9; }
+    .pill.active { background: #6352b9; color: #fff; border-color: #6352b9; }
+
+    @media (max-width: 600px) {
+      .site-header, .section-heading, .alert-list, .rules-grid,
+      .filter-strip, .period-notice { padding-left: 16px !important; padding-right: 16px !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <div class="header-top">
+      <span class="atomic-badge">PA ATOMIC</span>
+      <span class="header-sub">Alert Notifications</span>
+    </div>
+
+    <!-- Navigation tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showTab('alerts')" id="tab-btn-alerts">
+        Alert inbox
+        <span class="tab-badge" id="inbox-badge">{{ total_alerts }}</span>
+      </button>
+      <button class="nav-tab" onclick="showTab('rules')" id="tab-btn-rules">
+        Alert rules
+        <span class="tab-badge zero">{{ rules|length }}</span>
+      </button>
+      <a href="digest_{{ run_date }}.html" class="back-link">← Back to digest</a>
+    </div>
+  </div>
+
+  <!-- ══ ALERT INBOX TAB ══ -->
+  <div class="tab-panel active" id="tab-alerts">
+
+    {% if not alerts %}
+    <div class="empty-state">
+      <div class="empty-icon">🔔</div>
+      <h3>No alerts yet</h3>
+      <p>
+        Alert rules are active and will fire as the pipeline runs daily.<br>
+        Triggered alerts will appear here.
+      </p>
+    </div>
+
+    {% else %}
+
+    <!-- Filter strip -->
+    <div class="filter-strip">
+      <span style="font-size:11px;font-weight:700;color:#3d3677;text-transform:uppercase;letter-spacing:1px;">Filter</span>
+      <button class="pill active" data-filter="all"    onclick="filterAlerts('all')">All</button>
+      <button class="pill"        data-filter="unread" onclick="filterAlerts('unread')">Unacknowledged</button>
+      {% set rule_types = alerts | map(attribute='_rule_type') | unique | list %}
+      {% if 'zero_rating' in rule_types %}
+      <button class="pill" data-filter="zero_rating" onclick="filterAlerts('zero_rating')">Zero rating</button>
+      {% endif %}
+      {% if 'threshold' in rule_types %}
+      <button class="pill" data-filter="threshold" onclick="filterAlerts('threshold')">Rating drops</button>
+      {% endif %}
+      {% if 'business_type' in rule_types %}
+      <button class="pill" data-filter="business_type" onclick="filterAlerts('business_type')">Sensitive premises</button>
+      {% endif %}
+    </div>
+
+    <div class="section-heading">
+      <h2>Triggered alerts</h2>
+      <span class="count" id="alert-visible-count">{{ total_alerts }} total</span>
+    </div>
+
+    <div class="alert-list" id="alert-list">
+      {% for a in alerts %}
+      <div class="alert-card type-{{ a._rule_type }}"
+           id="alert-{{ a.id }}"
+           data-rule-type="{{ a._rule_type }}"
+           data-alert-id="{{ a.id }}">
+
+        <div class="alert-header">
+          <span class="alert-type-badge">{{ a._rule_type_label }}</span>
+          <div class="alert-main">
+            <p class="alert-rule-name">{{ a.detector_name }}</p>
+            {% if a.plain_english %}<p class="alert-description">{{ a.plain_english }}</p>{% endif %}
+            <p class="alert-meta">
+              {{ a._date_display }}
+              {% if a._count %}&nbsp;·&nbsp; {{ a._count }} premises{% endif %}
+            </p>
+          </div>
+          <div class="alert-actions">
+            <button class="ack-btn" id="ack-{{ a.id }}"
+                    onclick="acknowledge({{ a.id }})">
+              Acknowledge
+            </button>
+          </div>
+        </div>
+
+        {% if a._triggered %}
+        {% if a._triggered|length <= 5 %}
+        <div class="triggered-list" id="triggered-{{ a.id }}">
+        {% else %}
+        <div class="triggered-list collapsed" id="triggered-{{ a.id }}">
+        {% endif %}
+          {% for b in a._triggered %}
+          <div class="triggered-item">
+            <span class="triggered-name">{{ b.business_name }}</span>
+            <span class="triggered-detail">{{ b.local_authority_name }}</span>
+            {% if b.new_rating %}
+            <span class="rating-chip-sm"
+              style="background:
+                {%- if b.new_rating == '0' or b.new_rating|lower == 'improvement required' -%}#fde8e8;color:#c0392b
+                {%- elif b.new_rating in ('1','2') -%}#fff3e0;color:#e67e22
+                {%- elif b.new_rating == '3' -%}#fffde7;color:#f39c12
+                {%- elif b.new_rating in ('4','5') or b.new_rating|lower == 'pass' -%}#e8f5e9;color:#27ae60
+                {%- else -%}#f5f5f5;color:#888{%- endif -%}
+              ;">
+              {{ b.new_rating }}
+            </span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% if a._triggered|length > 5 %}
+        <button class="expand-btn" id="expand-{{ a.id }}"
+                onclick="toggleTriggered({{ a.id }}, {{ a._triggered|length }})">
+          Show {{ a._triggered|length }} premises ▾
+        </button>
+        {% endif %}
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+
+    {% endif %}
+  </div>{# end tab-alerts #}
+
+
+  <!-- ══ ALERT RULES TAB ══ -->
+  <div class="tab-panel" id="tab-rules">
+
+    <div class="section-heading">
+      <h2>Configured rules</h2>
+      <span class="count">
+        {{ rules | selectattr('active') | list | length }} active
+        · {{ rules | length }} total
+      </span>
+    </div>
+
+    <div class="rules-grid">
+      {% for r in rules %}
+      <div class="rule-card {% if not r.active %}inactive{% endif %}">
+        <div class="rule-status-dot {% if not r.active %}inactive{% endif %}"></div>
+        <div class="rule-body">
+          <p class="rule-name">{{ r.name }}</p>
+          {% if r.description %}<p class="rule-desc">{{ r.description }}</p>{% endif %}
+          <div class="rule-meta">
+            <span class="rule-meta-chip">{{ r._type_label }}</span>
+            <span>{{ r._scope }}</span>
+            {% if not r.active %}<span style="color:#e67e22;font-weight:700;">Inactive</span>{% endif %}
+          </div>
+        </div>
+        <div class="rule-stats">
+          <div class="stat-num">{{ r._total_fired }}</div>
+          <div class="stat-lbl">triggers</div>
+          {% if r._last_fired %}
+          <div class="last-fired">Last: {{ r._last_fired }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="padding: 0 32px 24px;">
+      <p style="font-size:12px;color:#aaa;line-height:1.6;">
+        Rules are defined in <code>config/alert_rules.yaml</code>. Edit that file to
+        add, remove or adjust rules — changes take effect on the next pipeline run.
+        Alert types: <strong>zero_rating</strong>, <strong>threshold</strong> (rating drop),
+        <strong>business_type</strong> (school/hospital/care home etc.),
+        <strong>watchlist</strong> (specific premises by FHRS ID).
+      </p>
+    </div>
+
+  </div>{# end tab-rules #}
+
+</div>{# end page-wrapper #}
+
+<script>
+  /* ── Tab switching ─────────────────────────────────────────────────── */
+  function showTab(name) {
+    ['alerts', 'rules'].forEach(function(t) {
+      document.getElementById('tab-' + t).classList.toggle('active', t === name);
+      document.getElementById('tab-btn-' + t).classList.toggle('active', t === name);
+    });
+  }
+
+  /* ── Acknowledge ───────────────────────────────────────────────────── */
+  var ACK_KEY = 'pa-atomic-acked';
+
+  function getAcked() {
+    try { return JSON.parse(localStorage.getItem(ACK_KEY) || '[]'); }
+    catch(e) { return []; }
+  }
+
+  function saveAcked(ids) {
+    try { localStorage.setItem(ACK_KEY, JSON.stringify(ids)); } catch(e) {}
+  }
+
+  function acknowledge(id) {
+    var ids = getAcked();
+    if (ids.indexOf(id) === -1) ids.push(id);
+    saveAcked(ids);
+    applyAcked();
+  }
+
+  function applyAcked() {
+    var acked = getAcked();
+    var unread = 0;
+    document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
+      var id = parseInt(card.dataset.alertId);
+      var isAcked = acked.indexOf(id) !== -1;
+      card.classList.toggle('acknowledged', isAcked);
+      var btn = document.getElementById('ack-' + id);
+      if (btn) {
+        btn.textContent = isAcked ? '✓ Acknowledged' : 'Acknowledge';
+        btn.classList.toggle('acked', isAcked);
+        if (isAcked) btn.disabled = true;
+      }
+      if (!isAcked) unread++;
+    });
+    var badge = document.getElementById('inbox-badge');
+    if (badge) {
+      badge.textContent = unread;
+      badge.classList.toggle('zero', unread === 0);
+    }
+    updateVisibleCount();
+  }
+
+  /* ── Filter ────────────────────────────────────────────────────────── */
+  var activeFilter = 'all';
+
+  function filterAlerts(f) {
+    activeFilter = f;
+    document.querySelectorAll('.pill[data-filter]').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.filter === f);
+    });
+    applyFilter();
+  }
+
+  function applyFilter() {
+    var acked = getAcked();
+    var visible = 0;
+    document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(card) {
+      var id       = parseInt(card.dataset.alertId);
+      var ruleType = card.dataset.ruleType;
+      var isAcked  = acked.indexOf(id) !== -1;
+
+      var show = true;
+      if (activeFilter === 'unread'    && isAcked)                     show = false;
+      if (activeFilter !== 'all' && activeFilter !== 'unread' && ruleType !== activeFilter) show = false;
+
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    updateVisibleCount(visible);
+  }
+
+  function updateVisibleCount(n) {
+    var el = document.getElementById('alert-visible-count');
+    if (!el) return;
+    if (n === undefined) {
+      n = 0;
+      document.querySelectorAll('.alert-card[data-alert-id]').forEach(function(c) {
+        if (c.style.display !== 'none') n++;
+      });
+    }
+    var total = {{ total_alerts }};
+    el.textContent = n === total ? total + ' total' : n + ' of ' + total + ' shown';
+  }
+
+  /* ── Expand/collapse long triggered lists ───────────────────────────── */
+  function toggleTriggered(id, total) {
+    var list = document.getElementById('triggered-' + id);
+    var btn  = document.getElementById('expand-' + id);
+    if (!list || !btn) return;
+    var collapsed = list.classList.toggle('collapsed');
+    btn.textContent = collapsed ? 'Show ' + total + ' premises ▾' : 'Collapse ▴';
+  }
+
+  /* ── Init ──────────────────────────────────────────────────────────── */
+  applyAcked();
+</script>
+</body>
+</html>
