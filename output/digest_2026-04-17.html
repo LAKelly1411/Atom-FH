@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PA Atomic | Food Hygiene Digest — 17 April 2026</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td { font-family: Helvetica, Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style>
+    body, p, h1, h2, h3, h4, table, td { margin: 0; padding: 0; }
+    img { border: 0; display: block; }
+    a { text-decoration: none; }
+
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      color: #1a1a1a;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .email-wrapper { width: 100%; background-color: #f5f5f5; padding: 24px 0; }
+
+    .email-container {
+      max-width: 640px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Header */
+    .email-header {
+      background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
+      padding: 32px 32px 24px;
+      color: #ffffff;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      background-color: #f0eef8;
+      border-bottom: 1px solid #ddd9f0;
+      padding: 12px 32px;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-row + .filter-row { margin-top: 10px; }
+
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #3d3677;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      min-width: 56px;
+    }
+
+    /* Category pill buttons */
+    .cat-btn {
+      appearance: none;
+      border: 1.5px solid #c9c2e8;
+      border-radius: 20px;
+      background: #ffffff;
+      color: #6352b9;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      padding: 4px 13px;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+      white-space: nowrap;
+    }
+
+    .cat-btn:hover { border-color: #6352b9; }
+
+    .cat-btn.active {
+      background: #6352b9;
+      color: #ffffff;
+      border-color: #6352b9;
+    }
+
+    .cat-btn.active.btn-critical  { background: #c0392b; border-color: #c0392b; }
+    .cat-btn.active.btn-drops     { background: #ffa631; border-color: #ffa631; color: #1a1a1a; }
+    .cat-btn.active.btn-ratings   { background: #6352b9; border-color: #6352b9; }
+    .cat-btn.active.btn-improved  { background: #27ae60; border-color: #27ae60; }
+    .cat-btn.active.btn-new       { background: #2c3e50; border-color: #2c3e50; }
+
+    /* LA dropdown */
+    .filter-select {
+      flex: 1;
+      min-width: 160px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236352b9' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      border: 1.5px solid #c9c2e8;
+      border-radius: 5px;
+      padding: 6px 28px 6px 10px;
+      font-size: 13px;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .filter-select:focus { border-color: #6352b9; box-shadow: 0 0 0 3px rgba(99,82,185,0.15); }
+
+    .filter-count {
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    /* Show-more button */
+    .show-more-btn {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      background: none;
+      border: 1.5px dashed #c9c2e8;
+      border-radius: 6px;
+      color: #6352b9;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .show-more-btn:hover { border-color: #6352b9; background: #f0eef8; }
+
+    /* Section */
+    .section { padding: 24px 32px; border-bottom: 1px solid #f0f0f0; }
+    .section:last-child { border-bottom: none; }
+
+    /* Establishment card */
+    .est-card {
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .est-card:last-child { margin-bottom: 0; }
+
+    .est-card.card-critical { border-left: 4px solid #c0392b; background: #fff8f8; }
+    .est-card.card-warning  { border-left: 4px solid #ffa631; }
+    .est-card.card-positive { border-left: 4px solid #27ae60; background: #f8fff8; }
+    .est-card.card-new      { border-left: 4px solid #2c3e50; }
+    .est-card.card-info     { border-left: 4px solid #6352b9; }
+
+    .card-inner { padding: 14px 16px; }
+
+    .rating-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* No changes panel */
+    .no-changes-panel { padding: 40px 32px; text-align: center; }
+
+    /* Footer */
+    .email-footer { background-color: #2c2c2c; padding: 24px 32px; text-align: center; }
+
+    @media only screen and (max-width: 640px) {
+      .email-header, .section, .email-footer, .filter-bar { padding-left: 20px !important; padding-right: 20px !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="email-wrapper">
+<div class="email-container">
+
+  <!-- HEADER -->
+  <div class="email-header">
+    <div style="margin-bottom:12px;">
+      <span style="background:#ffcb47;color:#1a1a1a;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:3px;display:inline-block;">PA ATOMIC</span>
+      <span style="color:rgba(255,255,255,0.75);font-size:13px;margin-left:12px;">Food Hygiene Intelligence</span>
+    </div>
+    <h1 style="font-size:26px;font-weight:700;color:#ffffff;line-height:1.2;margin:0 0 8px;">
+      Daily Feed — 17 April 2026
+    </h1>
+    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:0;">
+      Coverage: <strong style="color:#ffcb47;">Camden, City of London Corporation, Perth and Kinross, Southwark, Tower Hamlets, Westminster</strong>
+    </p>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div style="background-color:#ffcb47;padding:10px 32px;">
+    <p style="font-size:13px;font-weight:600;color:#1a1a1a;margin:0;">
+      
+        <span id="status-count">28</span> changes detected today
+      
+    </p>
+  </div>
+
+  
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+
+    <!-- Row 1: Category buttons -->
+    <div class="filter-row">
+      <span class="filter-label">Show</span>
+      <button class="cat-btn active"           data-cat="all"      onclick="setCategory('all')">All</button>
+      
+      <button class="cat-btn btn-critical"      data-cat="critical" onclick="setCategory('critical')">Zero-rated / Fail</button>
+      
+      
+      <button class="cat-btn btn-drops"         data-cat="drops"    onclick="setCategory('drops')">Drops</button>
+      
+      
+      <button class="cat-btn btn-ratings"       data-cat="ratings"  onclick="setCategory('ratings')">New ratings</button>
+      
+      
+      <button class="cat-btn btn-improved"      data-cat="improved" onclick="setCategory('improved')">Improvements</button>
+      
+      
+      <button class="cat-btn btn-new"           data-cat="new"      onclick="setCategory('new')">New listings</button>
+      
+    </div>
+
+    <!-- Row 2: LA dropdown -->
+    <div class="filter-row">
+      <span class="filter-label">Authority</span>
+      <select class="filter-select" id="la-filter" onchange="filterByLA(this.value)">
+        <option value="">All areas</option>
+        
+        <option value="Camden">Camden</option>
+        
+        <option value="City of London Corporation">City of London Corporation</option>
+        
+        <option value="Perth and Kinross">Perth and Kinross</option>
+        
+        <option value="Southwark">Southwark</option>
+        
+        <option value="Tower Hamlets">Tower Hamlets</option>
+        
+        <option value="Westminster">Westminster</option>
+        
+      </select>
+      <span class="filter-count" id="filter-count"></span>
+    </div>
+
+  </div>
+  
+
+  <!-- BODY -->
+  <div id="email-body">
+
+    
+
+    
+
+    
+    
+    <div class="section" id="section-zero-rated" data-section-cat="critical">
+      <div style="display:flex;align-items:center;margin-bottom:16px;">
+        <span style="background:#c0392b;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Critical</span>
+        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Zero-rated / Improvement Required</span>
+        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#c0392b;" data-section-count>4</span>
+      </div>
+      
+      <div class="est-card card-critical" data-la="Camden">
+        <div class="card-inner">
+          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">BAB MANSOUR</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Takeaway/sandwich shop</p>
+          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">, WC2H 9AJ &nbsp;·&nbsp; Camden</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="rating-chip" style="background:#eee;color:#555;">Was: ☆☆☆☆☆</span><span style="color:#aaa;">→</span>
+            <span class="rating-chip" style="background:#c0392b;color:#fff;">★☆☆☆☆</span>
+          </div>
+          <p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: 12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1408750" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-critical" data-la="City of London Corporation">
+        <div class="card-inner">
+          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Continental Sandwich Bar</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Takeaway/sandwich shop</p>
+          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">, EC4M 9BR &nbsp;·&nbsp; City of London Corporation</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="rating-chip" style="background:#eee;color:#555;">Was: ★★★☆☆</span><span style="color:#aaa;">→</span>
+            <span class="rating-chip" style="background:#c0392b;color:#fff;">★☆☆☆☆</span>
+          </div>
+          <p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: 12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/294438" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-critical" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Dragon Chef</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Other catering premises</p>
+          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">, E1 0LB &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="rating-chip" style="background:#eee;color:#555;">Was: ★★★★☆</span><span style="color:#aaa;">→</span>
+            <span class="rating-chip" style="background:#c0392b;color:#fff;">★☆☆☆☆</span>
+          </div>
+          <p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: 26 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1697587" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-critical" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Phat For Life</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Restaurant/Cafe/Canteen</p>
+          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">, E2 6AB &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="rating-chip" style="background:#eee;color:#555;">Was: ★★★★★</span><span style="color:#aaa;">→</span>
+            <span class="rating-chip" style="background:#c0392b;color:#fff;">★☆☆☆☆</span>
+          </div>
+          <p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: 26 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1659562" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    
+    
+    <div class="section" id="section-significant-drops" data-section-cat="drops">
+      <div style="display:flex;align-items:center;margin-bottom:16px;">
+        <span style="background:#ffa631;color:#1a1a1a;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Warning</span>
+        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Significant drops</span>
+        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#ffa631;" data-section-count>1</span>
+      </div>
+      
+      <div class="est-card card-warning" data-la="Camden">
+        <div class="card-inner">
+          <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">The Mac factory</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Takeaway/sandwich shop</p>
+          <p style="font-size:13px;color:#555;margin:0 0 8px;line-height:1.4;">, NW1 8AF &nbsp;·&nbsp; Camden</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="rating-chip" style="background:#eee;color:#555;">Was: ★★★★★</span>
+            <span style="color:#aaa;">→</span>
+            <span class="rating-chip" style="background:#ffa631;color:#1a1a1a;">Now: ★★★☆☆ (−2 ★)</span>
+          </div>
+          <p style="font-size:12px;color:#999;margin:0 0 6px;">Inspected: 12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/939491" style="font-size:12px;color:#6352b9;font-weight:600;text-decoration:underline;">View on FSA Ratings →</a>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    
+    
+    <div class="section" id="section-new-inspections" data-section-cat="ratings">
+      <div style="display:flex;align-items:center;margin-bottom:16px;">
+        <span style="background:#6352b9;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Inspections</span>
+        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">New ratings</span>
+        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#6352b9;" data-section-count>8</span>
+      </div>
+      
+      <div class="est-card card-info" data-la="Camden">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">MEAT HEADS MEXICAN GRILL</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, NW1 8AF &nbsp;·&nbsp; Camden</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★★☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★☆☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1339274" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="City of London Corporation">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">MV Silver Sturgeon</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, WC2N 6AY &nbsp;·&nbsp; City of London Corporation</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★★★</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/909559" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Southwark">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Smoke and lime</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, SE5  &nbsp;·&nbsp; Southwark</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">AwaitingInspection</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1856510" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Al-Ikhwaan</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, E1 2LX &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★★★</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">26 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/80700" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">MARU</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, W1J 7QH &nbsp;·&nbsp; Westminster</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★★★</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/411084" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Oliveto</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, SW1W 9PP &nbsp;·&nbsp; Westminster</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★★★</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/732359" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Sale e Pepe Mare at The Langham</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, W1B 1JA &nbsp;·&nbsp; Westminster</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">AwaitingInspection</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1909991" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-info" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Old Town 97</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;line-height:1.4;">, W1D 6PL &nbsp;·&nbsp; Westminster</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#6352b9;color:#fff;font-size:11px;padding:2px 8px;">★★☆☆☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/412163" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    
+    
+    <div class="section" id="section-improvements" data-section-cat="improved">
+      <div style="display:flex;align-items:center;margin-bottom:16px;">
+        <span style="background:#27ae60;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">Improvements</span>
+        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">Ratings improved</span>
+        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#27ae60;" data-section-count>7</span>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Camden">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Mare Street Market Kings Cross</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, N1C 4DY &nbsp;·&nbsp; Camden</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">☆☆☆☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1705852" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Camden">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">The Top Secret Comedy Club</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, WC2B 5PD &nbsp;·&nbsp; Camden</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★☆☆☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★☆☆☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1085450" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Perth and Kinross">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Cardo Take Away</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, PH2 8PG &nbsp;·&nbsp; Perth and Kinross</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">Improvement Required</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">Pass</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">17 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1519720" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Manjal Restaurant, Bella Cosa</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E14 9FJ &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★★☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★★★★</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">14 April 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1215482" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Mowchi</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 4GG &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★☆☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★★★★</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">1 April 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1749905" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">The Jollof Man</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 6QL &nbsp;·&nbsp; Tower Hamlets</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★☆☆☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★★★★</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">15 April 2026</p>
+          <a href="https://ratings.food.gov.uk/business/1527702" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-positive" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Gunmakers</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, W1U 4AP &nbsp;·&nbsp; Westminster</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="rating-chip" style="background:#eee;color:#555;font-size:11px;padding:2px 8px;">★★☆☆☆</span><span style="color:#aaa;font-size:12px;">→</span>
+            <span class="rating-chip" style="background:#27ae60;color:#fff;font-size:11px;padding:2px 8px;">★★★☆☆</span>
+          </div>
+          <p style="font-size:11px;color:#aaa;margin:0 0 4px;">12 March 2026</p>
+          <a href="https://ratings.food.gov.uk/business/412302" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    
+    
+    <div class="section" id="section-new-establishments" data-section-cat="new">
+      <div style="display:flex;align-items:center;margin-bottom:16px;">
+        <span style="background:#2c3e50;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">New</span>
+        <span style="font-size:16px;font-weight:700;color:#1a1a1a;margin-left:10px;">New listings</span>
+        <span style="margin-left:auto;font-size:22px;font-weight:700;color:#2c3e50;" data-section-count>8</span>
+      </div>
+      
+      
+      <div class="est-card card-new" data-la="Southwark">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Malabar feast ltd</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Takeaway/sandwich shop</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, SE15 4LL &nbsp;·&nbsp; Southwark</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">4 July 2024</p>
+          <a href="https://ratings.food.gov.uk/business/1682936" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Pizza D&#39;Minas</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Other catering premises</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E14  &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">★★★★☆</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">30 July 2024</p>
+          <a href="https://ratings.food.gov.uk/business/1745077" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Injera</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Takeaway/sandwich shop</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 6QR &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">AwaitingInspection</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">1 January 1901</p>
+          <a href="https://ratings.food.gov.uk/business/1934697" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Just Pho</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Mobile caterer</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 6QR &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">AwaitingInspection</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">1 January 1901</p>
+          <a href="https://ratings.food.gov.uk/business/1934694" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Katsu Japanese Cuisine</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Takeaway/sandwich shop</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 6QR &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">AwaitingInspection</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">1 January 1901</p>
+          <a href="https://ratings.food.gov.uk/business/1934696" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Play N Plate</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Restaurant/Cafe/Canteen</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 2JY &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">AwaitingInspection</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">1 January 1901</p>
+          <a href="https://ratings.food.gov.uk/business/1934695" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Tower Hamlets">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Quintessential Bharat</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Takeaway/sandwich shop</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, E1 6QR &nbsp;·&nbsp; Tower Hamlets</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">AwaitingInspection</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">1 January 1901</p>
+          <a href="https://ratings.food.gov.uk/business/1934693" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+      <div class="est-card card-new" data-la="Westminster">
+        <div class="card-inner">
+          <p style="font-size:14px;font-weight:700;color:#1a1a1a;margin:0 0 2px;">Natural Fitness Food</p>
+          <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;">Restaurant/Cafe/Canteen</p>
+          <p style="font-size:12px;color:#555;margin:0 0 6px;">, W1U 2HU &nbsp;·&nbsp; Westminster</p>
+          <span class="rating-chip" style="background:#2c3e50;color:#fff;font-size:11px;padding:2px 8px;">★★★★★</span>
+          <p style="font-size:11px;color:#aaa;margin:5px 0 4px;">6 September 2024</p>
+          <a href="https://ratings.food.gov.uk/business/1743837" style="font-size:11px;color:#6352b9;font-weight:600;text-decoration:underline;">FSA listing →</a>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Empty state shown when filter returns no results -->
+    <div id="no-filter-results" style="display:none;padding:32px;text-align:center;">
+      <p style="font-size:14px;color:#999;margin:0;">No changes for this authority today.</p>
+    </div>
+
+    
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="email-footer">
+    <p style="font-size:13px;font-weight:700;color:#ffcb47;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;">PA ATOMIC</p>
+    <p style="font-size:12px;color:#999;line-height:1.5;margin:0;">
+      Automated food hygiene intelligence by PA Media Group.<br>
+      Data sourced from the
+      <a href="https://www.food.gov.uk/safety-hygiene/food-hygiene-rating-scheme"
+         style="color:#ffcb47;">Food Standards Agency FHRS/FHIS</a>.
+      This is a prototype — for testing only.
+    </p>
+  </div>
+
+</div>
+</div>
+
+<script>
+  var activeCategory = 'all';
+  var activeLa = '';
+
+  function setCategory(cat) {
+    activeCategory = cat;
+    document.querySelectorAll('.cat-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    applyFilters();
+  }
+
+  function filterByLA(value) {
+    activeLa = value;
+    applyFilters();
+  }
+
+  function applyFilters() {
+    var noResults = document.getElementById('no-filter-results');
+    var totalVisible = 0;
+
+    document.querySelectorAll('.section[data-section-cat]').forEach(function(section) {
+      var cat = section.dataset.sectionCat;
+
+      // Hide entire section if category filter doesn't match
+      if (activeCategory !== 'all' && activeCategory !== cat) {
+        section.style.display = 'none';
+        return;
+      }
+
+      // Filter cards within section by LA
+      var cards = section.querySelectorAll('.est-card[data-la]');
+      var sectionVisible = 0;
+      cards.forEach(function(card) {
+        var show = !activeLa || card.dataset.la === activeLa;
+        card.style.display = show ? '' : 'none';
+        if (show) { sectionVisible++; totalVisible++; }
+      });
+
+      section.style.display = sectionVisible === 0 ? 'none' : '';
+
+      var countEl = section.querySelector('[data-section-count]');
+      if (countEl) countEl.textContent = sectionVisible;
+    });
+
+    // Empty state
+    if (noResults) {
+      noResults.style.display =
+        (totalVisible === 0 && (activeCategory !== 'all' || activeLa)) ? '' : 'none';
+    }
+
+    // Result count label
+    var countEl = document.getElementById('filter-count');
+    if (countEl) {
+      var isFiltered = activeCategory !== 'all' || activeLa;
+      countEl.textContent = isFiltered
+        ? totalVisible + ' result' + (totalVisible !== 1 ? 's' : '')
+        : '';
+    }
+  }
+</script>
+</body>
+</html>
