@@ -29,8 +29,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Fetch full history so git push works cleanly
           fetch-depth: 1
+
+      - name: Restore database from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/fhrs.db
+          # Unique key per run so we always write a fresh entry;
+          # restore-keys prefix picks up the most recent saved DB.
+          key: fhrs-db-${{ github.run_id }}
+          restore-keys: fhrs-db-
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -56,13 +64,21 @@ jobs:
           [ "${{ github.event.inputs.dry_run }}" = "true" ]  && ARGS="$ARGS --dry-run"
           python run.py $ARGS --verbose
 
-      - name: Commit data and digest back to repo
+      - name: Save database to cache
+        # Always save — even if the pipeline step failed part-way through,
+        # we want to preserve whatever was written to the DB.
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/fhrs.db
+          key: fhrs-db-${{ github.run_id }}
+
+      - name: Commit digest and notifications back to repo
         run: |
           git config user.name  "PA ATOMIC Bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage the database, digest, and notifications page
-          git add data/fhrs.db
+          # Stage HTML outputs only — DB is in cache, not git
           git add output/digest_*.html
           git add output/notifications.html
 

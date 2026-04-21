@@ -14,6 +14,9 @@ env/
 # Large output files — regenerated each run, not worth storing in git
 output/change_log_*.json
 
+# Database — too large for git, stored in GitHub Actions cache between runs
+data/fhrs.db
+
 # Editor
 .vscode/
 *.swp
