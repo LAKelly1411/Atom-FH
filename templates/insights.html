@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Atomic | Insights</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body, p, h1, h2, h3 { margin: 0; padding: 0; }
+    a { text-decoration: none; }
+
+    body {
+      background: #f0eef8;
+      font-family: 'Greycliff CF', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 15px; color: #1a1a1a;
+    }
+    .page-wrapper { max-width: 820px; margin: 0 auto; padding: 0 0 64px; }
+
+    /* ── Header (matches notifications.html) ── */
+    .site-header {
+      background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
+      padding: 28px 32px 0;
+    }
+    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .atomic-badge {
+      background: #ffcb47; color: #1a1a1a; font-weight: 700; font-size: 11px;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+    }
+    .header-sub { color: rgba(255,255,255,0.75); font-size: 13px; }
+
+    .nav-tabs { display: flex; gap: 0; align-items: flex-end; }
+    .nav-tab {
+      display: inline-block;
+      padding: 10px 20px; font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      border-bottom: 3px solid transparent;
+      background: none; font-family: inherit; white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-tab:hover  { color: rgba(255,255,255,0.9); }
+    .nav-tab.active { color: #fff; border-bottom-color: #ffcb47; }
+    .back-link {
+      margin-left: auto; color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600;
+      padding: 10px 0; align-self: center;
+    }
+    .back-link:hover { color: #fff; }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      padding: 20px 32px;
+    }
+    .stat-card {
+      background: #fff; border-radius: 8px; padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .stat-num { font-size: 26px; font-weight: 800; color: #3d3677; line-height: 1; margin-bottom: 4px; }
+    .stat-num.danger { color: #c0392b; }
+    .stat-lbl { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.8px; }
+    .stat-sub { font-size: 11px; color: #bbb; margin-top: 3px; }
+
+    /* ── Insight sections ── */
+    .insight-section {
+      background: #fff; margin: 0 32px 14px; border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden;
+    }
+    .section-header {
+      padding: 15px 20px 12px; border-bottom: 1px solid #f0eef8;
+      display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    }
+    .section-title { font-size: 14px; font-weight: 700; color: #3d3677; }
+    .section-sub   { font-size: 12px; color: #aaa; }
+
+    /* ── Chart containers ── */
+    .chart-wrap  { padding: 16px 20px; position: relative; }
+    .chart-h200  { height: 200px; }
+    .chart-h260  { height: 260px; }
+    .chart-h280  { height: 280px; }
+    .chart-h340  { height: 340px; }
+
+    .chart-row { display: grid; grid-template-columns: 1fr 1fr; }
+    .chart-row .chart-wrap:first-child { border-right: 1px solid #f0eef8; }
+    .chart-section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 10px;
+    }
+
+    /* ── Authority table ── */
+    .la-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .la-table th {
+      text-align: left; font-size: 11px; font-weight: 700; color: #aaa;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      padding: 10px 20px; border-bottom: 1px solid #f0eef8; white-space: nowrap;
+    }
+    .la-table td { padding: 10px 20px; border-bottom: 1px solid #f8f7fc; vertical-align: middle; }
+    .la-table tr:last-child td { border-bottom: none; }
+    .la-table tbody tr:hover td { background: #fafafa; }
+    .la-name { font-weight: 600; color: #1a1a1a; }
+    .scheme-chip {
+      display: inline-block; font-size: 9px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px; margin-left: 6px; vertical-align: middle;
+    }
+    .chip-fhrs { background: #e8f4fd; color: #2980b9; }
+    .chip-fhis { background: #e8f8f0; color: #27ae60; }
+
+    .bar-cell { display: flex; align-items: center; gap: 8px; min-width: 120px; }
+    .mini-bar-track { flex: 1; height: 6px; background: #f0eef8; border-radius: 3px; overflow: hidden; }
+    .mini-bar-fill  { height: 100%; border-radius: 3px; transition: width 0.4s; }
+    .bar-val { font-size: 12px; font-weight: 700; color: #3d3677; white-space: nowrap; }
+    .bar-pct { font-weight: 400; color: #aaa; }
+
+    .rating-avg { font-weight: 700; color: #3d3677; }
+    .rating-stars { font-size: 12px; margin-left: 3px; color: #ffcb47; }
+    .rating-stars .empty { color: #e0ddf5; }
+
+    /* ── No-data fallback ── */
+    .no-data { padding: 32px; text-align: center; font-size: 13px; color: #aaa; }
+
+    @media (max-width: 600px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 16px; }
+      .insight-section { margin: 0 16px 12px; }
+      .chart-row { grid-template-columns: 1fr; }
+      .chart-row .chart-wrap:first-child { border-right: none; border-bottom: 1px solid #f0eef8; }
+      .site-header { padding: 20px 16px 0; }
+      .la-table th:nth-child(3), .la-table td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <div class="header-top">
+      <span class="atomic-badge">PA ATOMIC</span>
+      <span class="header-sub">Data Insights &nbsp;·&nbsp; as of {{ run_date }}</span>
+    </div>
+    <div class="nav-tabs">
+      <a href="notifications.html" class="nav-tab">Alert inbox</a>
+      <a href="notifications.html" class="nav-tab">Alert rules</a>
+      <span class="nav-tab active">Insights</span>
+      <a href="digest_{{ run_date }}.html" class="back-link">← Back to digest</a>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-num">{{ total_premises | commify }}</div>
+      <div class="stat-lbl">Premises monitored</div>
+      <div class="stat-sub">Across {{ total_las }} local authorities</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ inspections_30d | commify }}</div>
+      <div class="stat-lbl">Inspections (30d)</div>
+      <div class="stat-sub">Rating changes &amp; reinspections</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num danger">{{ total_low_rated | commify }}</div>
+      <div class="stat-lbl">Low-rated</div>
+      <div class="stat-sub">0–1 ★ or Improvement Required</div>
+    </div>
+    <div class="stat-card">
+      {% if first_date %}
+      <div class="stat-num" style="font-size:17px;padding-top:6px">{{ first_date[:10] }}</div>
+      {% else %}
+      <div class="stat-num">—</div>
+      {% endif %}
+      <div class="stat-lbl">Monitoring since</div>
+      <div class="stat-sub">First data pull</div>
+    </div>
+  </div>
+
+  <!-- SECTION: Rating Distribution -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-title">Rating Distribution</span>
+      <span class="section-sub">Current snapshot — all monitored premises</span>
+    </div>
+    <div class="chart-row">
+      <div class="chart-wrap">
+        <div class="chart-section-label" style="color:#2980b9">FHRS England — Stars 0–5</div>
+        <div class="chart-h200"><canvas id="chartFhrs"></canvas></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-section-label" style="color:#27ae60">FHIS Scotland — Pass / Fail</div>
+        <div class="chart-h200"><canvas id="chartFhis"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: Weekly Activity Trend -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-title">Weekly Inspection Activity</span>
+      <span class="section-sub">FHRS rating upgrades &amp; downgrades — past 13 weeks</span>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-h260"><canvas id="chartWeekly"></canvas></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Authority Leaderboard -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-title">Authority Leaderboard</span>
+      <span class="section-sub">Sorted by average FHRS rating (worst first)</span>
+    </div>
+    <table class="la-table">
+      <thead>
+        <tr>
+          <th>Authority</th>
+          <th style="text-align:right">Premises</th>
+          <th>Avg Rating</th>
+          <th>Low-rated</th>
+        </tr>
+      </thead>
+      <tbody id="laTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- SECTION: Business Type Risk -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-title">Business Type Risk</span>
+      <span class="section-sub">Top 15 categories by low-rated count (0–1 ★ or Improvement Required)</span>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-h340"><canvas id="chartBtype"></canvas></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Sub-score Breakdown (FHRS) -->
+  <div class="insight-section" id="sectionScores">
+    <div class="section-header">
+      <span class="section-title">Inspection Sub-scores</span>
+      <span class="section-sub">Average penalty scores by FHRS authority — lower is better (Hygiene max 25, Structural max 25, Management max 30)</span>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-h260"><canvas id="chartScores"></canvas></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Day of Week Pattern -->
+  <div class="insight-section">
+    <div class="section-header">
+      <span class="section-title">Inspection Day Patterns</span>
+      <span class="section-sub">When do rating changes and reinspections happen? (last 90 days)</span>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-h200"><canvas id="chartDow"></canvas></div>
+    </div>
+  </div>
+
+</div><!-- /.page-wrapper -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// ── Embedded data (server-rendered) ───────────────────────────────────────────
+const fhrsDist    = {{ fhrs_dist_json | safe }};
+const fhisDist    = {{ fhis_dist_json | safe }};
+const weekly      = {{ weekly_json | safe }};
+const dowData     = {{ dow_json | safe }};
+const authorities = {{ authorities_json | safe }};
+const btypeData   = {{ btype_json | safe }};
+const scoresData  = {{ scores_json | safe }};
+
+// ── Shared defaults ───────────────────────────────────────────────────────────
+Chart.defaults.font.family = "'Greycliff CF','Helvetica Neue',Helvetica,Arial,sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#666';
+
+const RATING_COLORS = ['#c0392b','#e74c3c','#e67e22','#f39c12','#27ae60','#1a7a4a'];
+const RATING_LABELS = ['0', '1 ★', '2 ★★', '3 ★★★', '4 ★★★★', '5 ★★★★★'];
+const PURPLE = '#6352b9';
+const GRID_COLOR = '#f0eef8';
+
+// ── 1. FHRS Rating Distribution ───────────────────────────────────────────────
+(function () {
+  const map   = Object.fromEntries(fhrsDist.map(d => [d.rating_value, d.count]));
+  const counts = ['0','1','2','3','4','5'].map(v => map[v] || 0);
+  new Chart(document.getElementById('chartFhrs'), {
+    type: 'bar',
+    data: {
+      labels: RATING_LABELS,
+      datasets: [{ data: counts, backgroundColor: RATING_COLORS, borderRadius: 4, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} premises` } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: GRID_COLOR }, ticks: { precision: 0 } }
+      }
+    }
+  });
+}());
+
+// ── 2. FHIS Distribution ──────────────────────────────────────────────────────
+(function () {
+  if (!fhisDist.length) return;
+  const labels = fhisDist.map(d => d.rating_value);
+  const counts = fhisDist.map(d => d.count);
+  const colors = labels.map(l =>
+    l === 'Pass' ? '#27ae60' : l === 'Improvement Required' ? '#c0392b' : '#aaa'
+  );
+  new Chart(document.getElementById('chartFhis'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data: counts, backgroundColor: colors, borderRadius: 4, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} premises` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: GRID_COLOR }, ticks: { precision: 0 } }
+      }
+    }
+  });
+}());
+
+// ── 3. Weekly activity trend ──────────────────────────────────────────────────
+(function () {
+  if (!weekly.length) return;
+  const labels = weekly.map(w => {
+    const d = new Date(w.week_start);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  });
+  new Chart(document.getElementById('chartWeekly'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Upgrades',
+          data: weekly.map(w => w.upgrades),
+          borderColor: '#27ae60', backgroundColor: 'rgba(39,174,96,0.1)',
+          tension: 0.3, pointRadius: 4, pointHoverRadius: 6, fill: true
+        },
+        {
+          label: 'Downgrades',
+          data: weekly.map(w => w.downgrades),
+          borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,0.08)',
+          tension: 0.3, pointRadius: 4, pointHoverRadius: 6, fill: true
+        },
+        {
+          label: 'Reinspections',
+          data: weekly.map(w => w.reinspections),
+          borderColor: '#aaa', backgroundColor: 'transparent',
+          tension: 0.3, pointRadius: 3, borderDash: [4, 3], fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top', align: 'end',
+          labels: { boxWidth: 12, usePointStyle: true, pointStyle: 'circle' }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: GRID_COLOR }, ticks: { precision: 0 }, beginAtZero: true }
+      }
+    }
+  });
+}());
+
+// ── 4. Authority leaderboard table ────────────────────────────────────────────
+(function () {
+  const tbody = document.getElementById('laTableBody');
+  if (!authorities.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="no-data">No authority data available</td></tr>';
+    return;
+  }
+  const maxLow = Math.max(...authorities.map(a => a.total ? a.low_rated / a.total : 0), 0.001);
+
+  authorities.forEach(a => {
+    const pct   = a.total ? ((a.low_rated / a.total) * 100).toFixed(1) : '0.0';
+    const barW  = a.total ? Math.round((a.low_rated / a.total) / maxLow * 100) : 0;
+    const rawPct = a.total ? (a.low_rated / a.total) : 0;
+    const barColor = rawPct > 0.08 ? '#c0392b' : rawPct > 0.03 ? '#e67e22' : '#27ae60';
+    const scheme = a.scheme_type || 'FHRS';
+
+    let ratingCell;
+    if (scheme === 'FHRS' && a.avg_rating != null) {
+      const stars   = Math.round(a.avg_rating);
+      const filled  = '★'.repeat(Math.max(0, Math.min(5, stars)));
+      const empty   = '<span class="empty">★</span>'.repeat(Math.max(0, 5 - stars));
+      ratingCell = `<span class="rating-avg">${(+a.avg_rating).toFixed(2)}</span>`
+                 + `<span class="rating-stars">${filled}${empty}</span>`;
+    } else {
+      ratingCell = '<span style="color:#888;font-size:12px">Pass/Fail</span>';
+    }
+
+    const chipClass = scheme === 'FHIS' ? 'chip-fhis' : 'chip-fhrs';
+
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td>
+          <span class="la-name">${a.local_authority_name}</span>
+          <span class="scheme-chip ${chipClass}">${scheme}</span>
+        </td>
+        <td style="text-align:right;color:#555;font-weight:600">${(+a.total).toLocaleString()}</td>
+        <td>${ratingCell}</td>
+        <td>
+          <div class="bar-cell">
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill" style="width:${barW}%;background:${barColor}"></div>
+            </div>
+            <span class="bar-val">${a.low_rated} <span class="bar-pct">(${pct}%)</span></span>
+          </div>
+        </td>
+      </tr>
+    `);
+  });
+}());
+
+// ── 5. Business type risk (horizontal stacked bar) ────────────────────────────
+(function () {
+  if (!btypeData.length) return;
+  const labels   = btypeData.map(b => b.business_type.length > 38 ? b.business_type.slice(0, 37) + '…' : b.business_type);
+  const lowVals  = btypeData.map(b => b.low_rated);
+  const restVals = btypeData.map(b => b.total - b.low_rated);
+
+  new Chart(document.getElementById('chartBtype'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Low-rated',
+          data: lowVals,
+          backgroundColor: '#e74c3c',
+          borderRadius: 3,
+          borderSkipped: false
+        },
+        {
+          label: 'Other',
+          data: restVals,
+          backgroundColor: '#e0ddf5',
+          borderRadius: 3,
+          borderSkipped: false
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top', align: 'end',
+          labels: { boxWidth: 10, usePointStyle: true, pointStyle: 'rect' }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.datasetIndex === 0) return ` ${ctx.parsed.x} low-rated`;
+              const total = btypeData[ctx.dataIndex].total;
+              return ` ${total} total`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { stacked: true, grid: { color: GRID_COLOR }, ticks: { precision: 0 } },
+        y: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+}());
+
+// ── 6. Sub-score breakdown (FHRS, grouped bar) ────────────────────────────────
+(function () {
+  if (!scoresData.length) {
+    document.getElementById('sectionScores').style.display = 'none';
+    return;
+  }
+  const labels = scoresData.map(s => s.local_authority_name);
+  new Chart(document.getElementById('chartScores'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Hygiene (max 25)',
+          data: scoresData.map(s => s.avg_hygiene),
+          backgroundColor: '#e74c3c',
+          borderRadius: 3
+        },
+        {
+          label: 'Structural (max 25)',
+          data: scoresData.map(s => s.avg_structural),
+          backgroundColor: '#e67e22',
+          borderRadius: 3
+        },
+        {
+          label: 'Management (max 30)',
+          data: scoresData.map(s => s.avg_management),
+          backgroundColor: PURPLE,
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top', align: 'end',
+          labels: { boxWidth: 10, usePointStyle: true, pointStyle: 'rect' }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ` avg ${(+ctx.parsed.y).toFixed(1)} (lower = better)` }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: {
+          grid: { color: GRID_COLOR }, beginAtZero: true,
+          title: { display: true, text: 'Avg penalty score (lower = better)', font: { size: 11 } }
+        }
+      }
+    }
+  });
+}());
+
+// ── 7. Day of week pattern ────────────────────────────────────────────────────
+(function () {
+  const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const map    = Object.fromEntries(dowData.map(d => [d.dow, d.total]));
+  const counts = [0,1,2,3,4,5,6].map(d => map[d] || 0);
+  const colors = [0,1,2,3,4,5,6].map(d => (d === 0 || d === 6) ? '#e0ddf5' : PURPLE);
+
+  new Chart(document.getElementById('chartDow'), {
+    type: 'bar',
+    data: {
+      labels: DAY_NAMES,
+      datasets: [{ data: counts, backgroundColor: colors, borderRadius: 4, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} inspections` } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: GRID_COLOR }, ticks: { precision: 0 }, beginAtZero: true }
+      }
+    }
+  });
+}());
+</script>
+</body>
+</html>

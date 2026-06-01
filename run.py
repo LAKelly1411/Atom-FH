@@ -26,6 +26,7 @@ from src.detect import run_change_detection, summarise_changes
 from src.feed import run_feed
 from src.alerts import run_alerts
 from src.notifications_feed import run_notifications_feed
+from src.insights import run_insights_feed
 
 
 def configure_logging(verbose: bool = False) -> None:
@@ -59,6 +60,8 @@ def main() -> None:
     parser.add_argument("--ingest-only", action="store_true")
     parser.add_argument("--detect-only", action="store_true")
     parser.add_argument("--feed-only", action="store_true")
+    parser.add_argument("--insights-only", action="store_true",
+                        help="Regenerate insights.html only (requires populated DB)")
     parser.add_argument("--date", type=str, default=None,
                         help="Override run date (YYYY-MM-DD)")
     parser.add_argument("--dry-run", action="store_true",
@@ -71,6 +74,12 @@ def main() -> None:
     run_date = args.date or date.today().isoformat()
 
     # ── Utility commands ──────────────────────────────────────────────────────
+
+    if args.insights_only:
+        logger.info("Regenerating insights page for %s", run_date)
+        insights_path = run_insights_feed(run_date=run_date)
+        logger.info("Insights page saved: %s", insights_path)
+        return
 
     if args.list_authorities:
         list_all_authority_names()
@@ -144,6 +153,12 @@ def main() -> None:
             logger.info("  [%s] %s", a["detector_name"], a["headline"])
         notifications_path = run_notifications_feed(run_date=run_date)
         logger.info("Notifications page saved: %s", notifications_path)
+
+    # Step 5: Insights
+    if not args.ingest_only and not args.detect_only:
+        logger.info("--- Step 5: Insights ---")
+        insights_path = run_insights_feed(run_date=run_date)
+        logger.info("Insights page saved: %s", insights_path)
 
     logger.info("=== PA ATOMIC pipeline complete ===")
 

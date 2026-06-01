@@ -81,6 +81,7 @@ jobs:
           # Stage HTML outputs only — DB is in cache, not git
           git add output/digest_*.html
           git add output/notifications.html
+          git add output/insights.html
 
           # Only commit if there's actually something new
           if git diff --staged --quiet; then
