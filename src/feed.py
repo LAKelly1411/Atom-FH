@@ -292,9 +292,14 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
     # Real totals before truncation (shown in section headers)
     section_totals = {k: len(v) for k, v in buckets.items()}
 
-    # Full authority list — built before truncation
+    # Authority list for today's filter dropdowns (only LAs with changes today)
     authorities = sorted({c.get("local_authority_name", "")
                           for c in changes if c.get("local_authority_name")})
+
+    # Coverage string — all monitored LAs from the current snapshot, not just today's
+    all_monitored = sorted({dict(r)["local_authority_name"] for r in current_rows
+                            if dict(r).get("local_authority_name")})
+    coverage = ", ".join(all_monitored) if all_monitored else "all monitored areas"
 
     # Truncate rendered buckets
     WINDOW_PAGE_SIZE = 300   # per section across 90-day window
@@ -303,7 +308,6 @@ def render_digest(changes: list[dict], run_date: str | None = None) -> str:
 
     # Date range for the calendar controls
     window_dates = sorted({c["change_date"] for c in window_changes})
-    coverage = ", ".join(authorities) if authorities else "all monitored areas"
 
     total_changes = sum(v for k, v in section_totals.items()
                         if k not in ("reinspections", "score_changes"))
