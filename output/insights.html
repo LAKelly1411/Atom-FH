@@ -134,25 +134,25 @@
   <div class="site-header">
     <div class="header-top">
       <span class="atomic-badge">PA ATOMIC</span>
-      <span class="header-sub">Data Insights &nbsp;·&nbsp; as of 2026-06-02</span>
+      <span class="header-sub">Data Insights &nbsp;·&nbsp; as of 2026-06-03</span>
     </div>
     <div class="nav-tabs">
       <a href="notifications.html" class="nav-tab">Alert inbox</a>
       <a href="notifications.html" class="nav-tab">Alert rules</a>
       <span class="nav-tab active">Insights</span>
-      <a href="digest_2026-06-02.html" class="back-link">← Back to digest</a>
+      <a href="digest_2026-06-03.html" class="back-link">← Back to digest</a>
     </div>
   </div>
 
   <!-- STATS STRIP -->
   <div class="stats-strip">
     <div class="stat-card">
-      <div class="stat-num">24,726</div>
+      <div class="stat-num">24,738</div>
       <div class="stat-lbl">Premises monitored</div>
       <div class="stat-sub">Across 8 local authorities</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">688</div>
+      <div class="stat-num">724</div>
       <div class="stat-lbl">Inspections (30d)</div>
       <div class="stat-sub">Rating changes &amp; reinspections</div>
     </div>
@@ -256,13 +256,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ── Embedded data (server-rendered) ───────────────────────────────────────────
-const fhrsDist    = [{"rating_value": "0", "count": 77}, {"rating_value": "1", "count": 279}, {"rating_value": "2", "count": 559}, {"rating_value": "3", "count": 1297}, {"rating_value": "4", "count": 2665}, {"rating_value": "5", "count": 11337}];
+const fhrsDist    = [{"rating_value": "0", "count": 77}, {"rating_value": "1", "count": 279}, {"rating_value": "2", "count": 561}, {"rating_value": "3", "count": 1297}, {"rating_value": "4", "count": 2671}, {"rating_value": "5", "count": 11350}];
 const fhisDist    = [{"rating_value": "Awaiting Inspection", "count": 640}, {"rating_value": "Exempt", "count": 110}, {"rating_value": "Improvement Required", "count": 249}, {"rating_value": "Pass", "count": 5427}, {"rating_value": "Pass and Eat Safe", "count": 4}];
-const weekly      = [{"week": "2026-W16", "week_start": "2026-04-21", "upgrades": 9, "downgrades": 13, "reinspections": 184}, {"week": "2026-W17", "week_start": "2026-04-27", "upgrades": 36, "downgrades": 28, "reinspections": 79}, {"week": "2026-W18", "week_start": "2026-05-04", "upgrades": 35, "downgrades": 11, "reinspections": 103}, {"week": "2026-W19", "week_start": "2026-05-11", "upgrades": 17, "downgrades": 6, "reinspections": 58}, {"week": "2026-W20", "week_start": "2026-05-18", "upgrades": 44, "downgrades": 25, "reinspections": 116}, {"week": "2026-W21", "week_start": "2026-05-26", "upgrades": 18, "downgrades": 26, "reinspections": 59}, {"week": "2026-W22", "week_start": "2026-06-01", "upgrades": 2, "downgrades": 3, "reinspections": 6}];
-const dowData     = [{"dow": 0, "total": 13}, {"dow": 1, "total": 55}, {"dow": 2, "total": 183}, {"dow": 3, "total": 105}, {"dow": 4, "total": 453}, {"dow": 5, "total": 131}, {"dow": 6, "total": 190}];
-const authorities = [{"local_authority_name": "Camden", "scheme_type": "FHRS", "total": 4381, "low_rated": 139, "avg_rating": 4.24}, {"local_authority_name": "Westminster", "scheme_type": "FHRS", "total": 5654, "low_rated": 113, "avg_rating": 4.45}, {"local_authority_name": "Tower Hamlets", "scheme_type": "FHRS", "total": 3185, "low_rated": 62, "avg_rating": 4.53}, {"local_authority_name": "Southwark", "scheme_type": "FHRS", "total": 3256, "low_rated": 24, "avg_rating": 4.58}, {"local_authority_name": "City of London Corporation", "scheme_type": "FHRS", "total": 1820, "low_rated": 18, "avg_rating": 4.79}, {"local_authority_name": "Dundee City", "scheme_type": "FHIS", "total": 1431, "low_rated": 99, "avg_rating": null}, {"local_authority_name": "Perth and Kinross", "scheme_type": "FHIS", "total": 3952, "low_rated": 89, "avg_rating": null}, {"local_authority_name": "Angus", "scheme_type": "FHIS", "total": 1047, "low_rated": 61, "avg_rating": null}];
-const btypeData   = [{"business_type": "Restaurant/Cafe/Canteen", "total": 9560, "low_rated": 253}, {"business_type": "Retailers - other", "total": 4290, "low_rated": 133}, {"business_type": "Takeaway/sandwich shop", "total": 2918, "low_rated": 100}, {"business_type": "Pub/bar/nightclub", "total": 1414, "low_rated": 53}, {"business_type": "Hotel/bed & breakfast/guest house", "total": 888, "low_rated": 20}, {"business_type": "Other catering premises", "total": 1811, "low_rated": 15}, {"business_type": "School/college/university", "total": 826, "low_rated": 8}, {"business_type": "Caring Premises", "total": 1224, "low_rated": 7}, {"business_type": "Retailers - supermarkets/hypermarkets", "total": 509, "low_rated": 5}, {"business_type": "Manufacturers/packers", "total": 529, "low_rated": 4}, {"business_type": "Mobile caterer", "total": 480, "low_rated": 4}, {"business_type": "Distributors/Transporters", "total": 161, "low_rated": 3}];
-const scoresData  = [{"local_authority_name": "Camden", "avg_hygiene": 4.6, "avg_structural": 5.6, "avg_management": 5.8, "total": 3401}, {"local_authority_name": "City of London Corporation", "avg_hygiene": 2.4, "avg_structural": 3.3, "avg_management": 2.5, "total": 1653}, {"local_authority_name": "Southwark", "avg_hygiene": 3.7, "avg_structural": 4.7, "avg_management": 4.2, "total": 3024}, {"local_authority_name": "Tower Hamlets", "avg_hygiene": 2.7, "avg_structural": 3.9, "avg_management": 4.0, "total": 2864}, {"local_authority_name": "Westminster", "avg_hygiene": 3.5, "avg_structural": 4.7, "avg_management": 4.3, "total": 5023}];
+const weekly      = [{"week": "2026-W16", "week_start": "2026-04-21", "upgrades": 9, "downgrades": 13, "reinspections": 184}, {"week": "2026-W17", "week_start": "2026-04-27", "upgrades": 36, "downgrades": 28, "reinspections": 79}, {"week": "2026-W18", "week_start": "2026-05-04", "upgrades": 35, "downgrades": 11, "reinspections": 103}, {"week": "2026-W19", "week_start": "2026-05-11", "upgrades": 17, "downgrades": 6, "reinspections": 58}, {"week": "2026-W20", "week_start": "2026-05-18", "upgrades": 44, "downgrades": 25, "reinspections": 116}, {"week": "2026-W21", "week_start": "2026-05-26", "upgrades": 18, "downgrades": 26, "reinspections": 59}, {"week": "2026-W22", "week_start": "2026-06-01", "upgrades": 6, "downgrades": 5, "reinspections": 22}];
+const dowData     = [{"dow": 0, "total": 13}, {"dow": 1, "total": 55}, {"dow": 2, "total": 183}, {"dow": 3, "total": 146}, {"dow": 4, "total": 453}, {"dow": 5, "total": 131}, {"dow": 6, "total": 190}];
+const authorities = [{"local_authority_name": "Camden", "scheme_type": "FHRS", "total": 4381, "low_rated": 140, "avg_rating": 4.23, "pass_pct": 0.0}, {"local_authority_name": "Westminster", "scheme_type": "FHRS", "total": 5654, "low_rated": 112, "avg_rating": 4.45, "pass_pct": 0.0}, {"local_authority_name": "Tower Hamlets", "scheme_type": "FHRS", "total": 3194, "low_rated": 62, "avg_rating": 4.53, "pass_pct": 0.0}, {"local_authority_name": "Southwark", "scheme_type": "FHRS", "total": 3256, "low_rated": 24, "avg_rating": 4.58, "pass_pct": 0.0}, {"local_authority_name": "City of London Corporation", "scheme_type": "FHRS", "total": 1823, "low_rated": 18, "avg_rating": 4.79, "pass_pct": 0.0}, {"local_authority_name": "Dundee City", "scheme_type": "FHIS", "total": 1431, "low_rated": 99, "avg_rating": null, "pass_pct": 86.2}, {"local_authority_name": "Perth and Kinross", "scheme_type": "FHIS", "total": 3952, "low_rated": 89, "avg_rating": null, "pass_pct": 84.1}, {"local_authority_name": "Angus", "scheme_type": "FHIS", "total": 1047, "low_rated": 61, "avg_rating": null, "pass_pct": 83.0}];
+const btypeData   = [{"business_type": "Restaurant/Cafe/Canteen", "total": 9567, "low_rated": 255}, {"business_type": "Retailers - other", "total": 4291, "low_rated": 132}, {"business_type": "Takeaway/sandwich shop", "total": 2919, "low_rated": 100}, {"business_type": "Pub/bar/nightclub", "total": 1414, "low_rated": 52}, {"business_type": "Hotel/bed & breakfast/guest house", "total": 888, "low_rated": 20}, {"business_type": "Other catering premises", "total": 1814, "low_rated": 15}, {"business_type": "School/college/university", "total": 826, "low_rated": 8}, {"business_type": "Caring Premises", "total": 1224, "low_rated": 7}, {"business_type": "Retailers - supermarkets/hypermarkets", "total": 509, "low_rated": 5}, {"business_type": "Manufacturers/packers", "total": 529, "low_rated": 4}, {"business_type": "Mobile caterer", "total": 480, "low_rated": 4}, {"business_type": "Distributors/Transporters", "total": 161, "low_rated": 3}];
+const scoresData  = [{"local_authority_name": "Camden", "avg_hygiene": 4.6, "avg_structural": 5.6, "avg_management": 5.8, "total": 3403}, {"local_authority_name": "City of London Corporation", "avg_hygiene": 2.4, "avg_structural": 3.3, "avg_management": 2.5, "total": 1654}, {"local_authority_name": "Southwark", "avg_hygiene": 3.7, "avg_structural": 4.7, "avg_management": 4.2, "total": 3026}, {"local_authority_name": "Tower Hamlets", "avg_hygiene": 2.7, "avg_structural": 3.9, "avg_management": 4.0, "total": 2880}, {"local_authority_name": "Westminster", "avg_hygiene": 3.5, "avg_structural": 4.7, "avg_management": 4.3, "total": 5023}];
 
 // ── Shared defaults ───────────────────────────────────────────────────────────
 Chart.defaults.font.family = "'Greycliff CF','Helvetica Neue',Helvetica,Arial,sans-serif";
@@ -381,27 +381,45 @@ const GRID_COLOR = '#f0eef8';
     tbody.innerHTML = '<tr><td colspan="4" class="no-data">No authority data available</td></tr>';
     return;
   }
-  const maxLow = Math.max(...authorities.map(a => a.total ? a.low_rated / a.total : 0), 0.001);
+  const fhrsOnly = authorities.filter(a => (a.scheme_type || 'FHRS') === 'FHRS');
+  const maxLow = Math.max(...fhrsOnly.map(a => a.total ? a.low_rated / a.total : 0), 0.001);
 
   authorities.forEach(a => {
-    const pct   = a.total ? ((a.low_rated / a.total) * 100).toFixed(1) : '0.0';
-    const barW  = a.total ? Math.round((a.low_rated / a.total) / maxLow * 100) : 0;
-    const rawPct = a.total ? (a.low_rated / a.total) : 0;
-    const barColor = rawPct > 0.08 ? '#c0392b' : rawPct > 0.03 ? '#e67e22' : '#27ae60';
-    const scheme = a.scheme_type || 'FHRS';
+    const scheme    = a.scheme_type || 'FHRS';
+    const chipClass = scheme === 'FHIS' ? 'chip-fhis' : 'chip-fhrs';
 
+    // Avg rating cell
     let ratingCell;
     if (scheme === 'FHRS' && a.avg_rating != null) {
-      const stars   = Math.round(a.avg_rating);
-      const filled  = '★'.repeat(Math.max(0, Math.min(5, stars)));
-      const empty   = '<span class="empty">★</span>'.repeat(Math.max(0, 5 - stars));
+      const stars  = Math.round(a.avg_rating);
+      const filled = '★'.repeat(Math.max(0, Math.min(5, stars)));
+      const empty  = '<span class="empty">★</span>'.repeat(Math.max(0, 5 - stars));
       ratingCell = `<span class="rating-avg">${(+a.avg_rating).toFixed(2)}</span>`
                  + `<span class="rating-stars">${filled}${empty}</span>`;
     } else {
-      ratingCell = '<span style="color:#888;font-size:12px">Pass/Fail</span>';
+      const pct = a.pass_pct != null ? (+a.pass_pct).toFixed(1) : '—';
+      ratingCell = `<span class="rating-avg">${pct}%</span>`
+                 + `<span style="color:#27ae60;font-size:12px;font-weight:600;margin-left:5px">Pass</span>`;
     }
 
-    const chipClass = scheme === 'FHIS' ? 'chip-fhis' : 'chip-fhrs';
+    // Low-rated cell — FHRS only
+    let lowCell;
+    if (scheme === 'FHRS') {
+      const pct    = a.total ? ((a.low_rated / a.total) * 100).toFixed(1) : '0.0';
+      const barW   = a.total ? Math.round((a.low_rated / a.total) / maxLow * 100) : 0;
+      const rawPct = a.total ? (a.low_rated / a.total) : 0;
+      const color  = rawPct > 0.08 ? '#c0392b' : rawPct > 0.03 ? '#e67e22' : '#27ae60';
+      lowCell = `<td>
+        <div class="bar-cell">
+          <div class="mini-bar-track">
+            <div class="mini-bar-fill" style="width:${barW}%;background:${color}"></div>
+          </div>
+          <span class="bar-val">${a.low_rated} <span class="bar-pct">(${pct}%)</span></span>
+        </div>
+      </td>`;
+    } else {
+      lowCell = '<td style="color:#ccc">—</td>';
+    }
 
     tbody.insertAdjacentHTML('beforeend', `
       <tr>
@@ -411,14 +429,7 @@ const GRID_COLOR = '#f0eef8';
         </td>
         <td style="text-align:right;color:#555;font-weight:600">${(+a.total).toLocaleString()}</td>
         <td>${ratingCell}</td>
-        <td>
-          <div class="bar-cell">
-            <div class="mini-bar-track">
-              <div class="mini-bar-fill" style="width:${barW}%;background:${barColor}"></div>
-            </div>
-            <span class="bar-val">${a.low_rated} <span class="bar-pct">(${pct}%)</span></span>
-          </div>
-        </td>
+        ${lowCell}
       </tr>
     `);
   });
