@@ -383,27 +383,45 @@ const GRID_COLOR = '#f0eef8';
     tbody.innerHTML = '<tr><td colspan="4" class="no-data">No authority data available</td></tr>';
     return;
   }
-  const maxLow = Math.max(...authorities.map(a => a.total ? a.low_rated / a.total : 0), 0.001);
+  const fhrsOnly = authorities.filter(a => (a.scheme_type || 'FHRS') === 'FHRS');
+  const maxLow = Math.max(...fhrsOnly.map(a => a.total ? a.low_rated / a.total : 0), 0.001);
 
   authorities.forEach(a => {
-    const pct   = a.total ? ((a.low_rated / a.total) * 100).toFixed(1) : '0.0';
-    const barW  = a.total ? Math.round((a.low_rated / a.total) / maxLow * 100) : 0;
-    const rawPct = a.total ? (a.low_rated / a.total) : 0;
-    const barColor = rawPct > 0.08 ? '#c0392b' : rawPct > 0.03 ? '#e67e22' : '#27ae60';
-    const scheme = a.scheme_type || 'FHRS';
+    const scheme    = a.scheme_type || 'FHRS';
+    const chipClass = scheme === 'FHIS' ? 'chip-fhis' : 'chip-fhrs';
 
+    // Avg rating cell
     let ratingCell;
     if (scheme === 'FHRS' && a.avg_rating != null) {
-      const stars   = Math.round(a.avg_rating);
-      const filled  = '★'.repeat(Math.max(0, Math.min(5, stars)));
-      const empty   = '<span class="empty">★</span>'.repeat(Math.max(0, 5 - stars));
+      const stars  = Math.round(a.avg_rating);
+      const filled = '★'.repeat(Math.max(0, Math.min(5, stars)));
+      const empty  = '<span class="empty">★</span>'.repeat(Math.max(0, 5 - stars));
       ratingCell = `<span class="rating-avg">${(+a.avg_rating).toFixed(2)}</span>`
                  + `<span class="rating-stars">${filled}${empty}</span>`;
     } else {
-      ratingCell = '<span style="color:#888;font-size:12px">Pass/Fail</span>';
+      const pct = a.pass_pct != null ? (+a.pass_pct).toFixed(1) : '—';
+      ratingCell = `<span class="rating-avg">${pct}%</span>`
+                 + `<span style="color:#27ae60;font-size:12px;font-weight:600;margin-left:5px">Pass</span>`;
     }
 
-    const chipClass = scheme === 'FHIS' ? 'chip-fhis' : 'chip-fhrs';
+    // Low-rated cell — FHRS only
+    let lowCell;
+    if (scheme === 'FHRS') {
+      const pct    = a.total ? ((a.low_rated / a.total) * 100).toFixed(1) : '0.0';
+      const barW   = a.total ? Math.round((a.low_rated / a.total) / maxLow * 100) : 0;
+      const rawPct = a.total ? (a.low_rated / a.total) : 0;
+      const color  = rawPct > 0.08 ? '#c0392b' : rawPct > 0.03 ? '#e67e22' : '#27ae60';
+      lowCell = `<td>
+        <div class="bar-cell">
+          <div class="mini-bar-track">
+            <div class="mini-bar-fill" style="width:${barW}%;background:${color}"></div>
+          </div>
+          <span class="bar-val">${a.low_rated} <span class="bar-pct">(${pct}%)</span></span>
+        </div>
+      </td>`;
+    } else {
+      lowCell = '<td style="color:#ccc">—</td>';
+    }
 
     tbody.insertAdjacentHTML('beforeend', `
       <tr>
@@ -413,14 +431,7 @@ const GRID_COLOR = '#f0eef8';
         </td>
         <td style="text-align:right;color:#555;font-weight:600">${(+a.total).toLocaleString()}</td>
         <td>${ratingCell}</td>
-        <td>
-          <div class="bar-cell">
-            <div class="mini-bar-track">
-              <div class="mini-bar-fill" style="width:${barW}%;background:${barColor}"></div>
-            </div>
-            <span class="bar-val">${a.low_rated} <span class="bar-pct">(${pct}%)</span></span>
-          </div>
-        </td>
+        ${lowCell}
       </tr>
     `);
   });

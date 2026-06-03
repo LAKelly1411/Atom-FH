@@ -97,7 +97,9 @@ def _compute(conn) -> dict:
                           OR rating_value = 'Improvement Required'
                      THEN 1 ELSE 0 END) AS low_rated,
             ROUND(AVG(CASE WHEN rating_value IN ('0','1','2','3','4','5')
-                           THEN CAST(rating_value AS REAL) END), 2) AS avg_rating
+                           THEN CAST(rating_value AS REAL) END), 2) AS avg_rating,
+            ROUND(100.0 * SUM(CASE WHEN rating_value = 'Pass' THEN 1 ELSE 0 END)
+                        / NULLIF(COUNT(*), 0), 1) AS pass_pct
         FROM snap
         GROUP BY local_authority_name
         ORDER BY avg_rating ASC NULLS LAST, low_rated DESC
