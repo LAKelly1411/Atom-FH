@@ -134,13 +134,13 @@
   <div class="site-header">
     <div class="header-top">
       <span class="atomic-badge">PA ATOMIC</span>
-      <span class="header-sub">Data Insights &nbsp;·&nbsp; as of 2026-06-06</span>
+      <span class="header-sub">Data Insights &nbsp;·&nbsp; as of 2026-06-07</span>
     </div>
     <div class="nav-tabs">
       <a href="notifications.html" class="nav-tab">Alert inbox</a>
       <a href="notifications.html" class="nav-tab">Alert rules</a>
       <span class="nav-tab active">Insights</span>
-      <a href="digest_2026-06-06.html" class="back-link">← Back to digest</a>
+      <a href="digest_2026-06-07.html" class="back-link">← Back to digest</a>
     </div>
   </div>
 
@@ -152,7 +152,7 @@
       <div class="stat-sub">Across 8 local authorities</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">819</div>
+      <div class="stat-num">733</div>
       <div class="stat-lbl">Inspections (30d)</div>
       <div class="stat-sub">Rating changes &amp; reinspections</div>
     </div>
@@ -256,10 +256,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ── Embedded data (server-rendered) ───────────────────────────────────────────
-const fhrsDist    = [{"rating_value": "0", "count": 78}, {"rating_value": "1", "count": 277}, {"rating_value": "2", "count": 556}, {"rating_value": "3", "count": 1297}, {"rating_value": "4", "count": 2663}, {"rating_value": "5", "count": 11388}];
+const fhrsDist    = [{"rating_value": "0", "count": 78}, {"rating_value": "1", "count": 277}, {"rating_value": "2", "count": 556}, {"rating_value": "3", "count": 1298}, {"rating_value": "4", "count": 2663}, {"rating_value": "5", "count": 11387}];
 const fhisDist    = [{"rating_value": "Awaiting Inspection", "count": 639}, {"rating_value": "Exempt", "count": 111}, {"rating_value": "Improvement Required", "count": 249}, {"rating_value": "Pass", "count": 5433}, {"rating_value": "Pass and Eat Safe", "count": 4}];
-const weekly      = [{"week": "2026-W16", "week_start": "2026-04-21", "upgrades": 9, "downgrades": 13, "reinspections": 184}, {"week": "2026-W17", "week_start": "2026-04-27", "upgrades": 36, "downgrades": 28, "reinspections": 79}, {"week": "2026-W18", "week_start": "2026-05-04", "upgrades": 35, "downgrades": 11, "reinspections": 103}, {"week": "2026-W19", "week_start": "2026-05-11", "upgrades": 17, "downgrades": 6, "reinspections": 58}, {"week": "2026-W20", "week_start": "2026-05-18", "upgrades": 44, "downgrades": 25, "reinspections": 116}, {"week": "2026-W21", "week_start": "2026-05-26", "upgrades": 18, "downgrades": 26, "reinspections": 59}, {"week": "2026-W22", "week_start": "2026-06-01", "upgrades": 30, "downgrades": 13, "reinspections": 105}];
-const dowData     = [{"dow": 0, "total": 13}, {"dow": 1, "total": 55}, {"dow": 2, "total": 183}, {"dow": 3, "total": 146}, {"dow": 4, "total": 526}, {"dow": 5, "total": 152}, {"dow": 6, "total": 238}];
+const weekly      = [{"week": "2026-W16", "week_start": "2026-04-21", "upgrades": 9, "downgrades": 13, "reinspections": 184}, {"week": "2026-W17", "week_start": "2026-04-27", "upgrades": 36, "downgrades": 28, "reinspections": 79}, {"week": "2026-W18", "week_start": "2026-05-04", "upgrades": 35, "downgrades": 11, "reinspections": 103}, {"week": "2026-W19", "week_start": "2026-05-11", "upgrades": 17, "downgrades": 6, "reinspections": 58}, {"week": "2026-W20", "week_start": "2026-05-18", "upgrades": 44, "downgrades": 25, "reinspections": 116}, {"week": "2026-W21", "week_start": "2026-05-26", "upgrades": 18, "downgrades": 26, "reinspections": 59}, {"week": "2026-W22", "week_start": "2026-06-01", "upgrades": 30, "downgrades": 14, "reinspections": 105}];
+const dowData     = [{"dow": 0, "total": 14}, {"dow": 1, "total": 55}, {"dow": 2, "total": 183}, {"dow": 3, "total": 146}, {"dow": 4, "total": 526}, {"dow": 5, "total": 152}, {"dow": 6, "total": 238}];
 const authorities = [{"local_authority_name": "Camden", "scheme_type": "FHRS", "total": 4381, "low_rated": 141, "avg_rating": 4.23, "pass_pct": 0.0}, {"local_authority_name": "Westminster", "scheme_type": "FHRS", "total": 5698, "low_rated": 110, "avg_rating": 4.46, "pass_pct": 0.0}, {"local_authority_name": "Tower Hamlets", "scheme_type": "FHRS", "total": 3201, "low_rated": 62, "avg_rating": 4.53, "pass_pct": 0.0}, {"local_authority_name": "Southwark", "scheme_type": "FHRS", "total": 3256, "low_rated": 24, "avg_rating": 4.58, "pass_pct": 0.0}, {"local_authority_name": "City of London Corporation", "scheme_type": "FHRS", "total": 1823, "low_rated": 18, "avg_rating": 4.79, "pass_pct": 0.0}, {"local_authority_name": "Dundee City", "scheme_type": "FHIS", "total": 1436, "low_rated": 99, "avg_rating": null, "pass_pct": 86.2}, {"local_authority_name": "Perth and Kinross", "scheme_type": "FHIS", "total": 3952, "low_rated": 89, "avg_rating": null, "pass_pct": 84.1}, {"local_authority_name": "Angus", "scheme_type": "FHIS", "total": 1048, "low_rated": 61, "avg_rating": null, "pass_pct": 83.1}];
 const btypeData   = [{"business_type": "Restaurant/Cafe/Canteen", "total": 9601, "low_rated": 253}, {"business_type": "Retailers - other", "total": 4294, "low_rated": 131}, {"business_type": "Takeaway/sandwich shop", "total": 2923, "low_rated": 101}, {"business_type": "Pub/bar/nightclub", "total": 1415, "low_rated": 53}, {"business_type": "Hotel/bed & breakfast/guest house", "total": 888, "low_rated": 21}, {"business_type": "Other catering premises", "total": 1822, "low_rated": 15}, {"business_type": "Caring Premises", "total": 1224, "low_rated": 7}, {"business_type": "School/college/university", "total": 826, "low_rated": 7}, {"business_type": "Retailers - supermarkets/hypermarkets", "total": 513, "low_rated": 5}, {"business_type": "Manufacturers/packers", "total": 529, "low_rated": 4}, {"business_type": "Mobile caterer", "total": 481, "low_rated": 4}, {"business_type": "Distributors/Transporters", "total": 162, "low_rated": 3}];
 const scoresData  = [{"local_authority_name": "Camden", "avg_hygiene": 4.6, "avg_structural": 5.6, "avg_management": 5.8, "total": 3403}, {"local_authority_name": "City of London Corporation", "avg_hygiene": 2.4, "avg_structural": 3.3, "avg_management": 2.5, "total": 1654}, {"local_authority_name": "Southwark", "avg_hygiene": 3.7, "avg_structural": 4.7, "avg_management": 4.2, "total": 3026}, {"local_authority_name": "Tower Hamlets", "avg_hygiene": 2.7, "avg_structural": 3.9, "avg_management": 4.0, "total": 2880}, {"local_authority_name": "Westminster", "avg_hygiene": 3.4, "avg_structural": 4.7, "avg_management": 4.2, "total": 5049}];
