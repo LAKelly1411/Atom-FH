@@ -114,6 +114,49 @@
     .rating-stars { font-size: 12px; margin-left: 3px; color: #ffcb47; }
     .rating-stars .empty { color: #e0ddf5; }
 
+    /* ── AI briefing section ── */
+    .ai-section {
+      margin: 0 32px 14px; border-radius: 8px; overflow: hidden;
+      border: 1.5px solid #ffcb47;
+      box-shadow: 0 1px 6px rgba(99,82,185,0.10);
+    }
+    .ai-section-header {
+      background: linear-gradient(135deg, #3d3677 0%, #6352b9 100%);
+      padding: 14px 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .ai-badge {
+      background: #ffcb47; color: #1a1a1a; font-size: 10px; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 9px; border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .ai-section-title { color: #fff; font-size: 14px; font-weight: 700; }
+    .ai-disclaimer {
+      margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.5);
+      font-style: italic; white-space: nowrap;
+    }
+    .ai-cards { background: #fff; display: flex; flex-direction: column; }
+    .ai-card {
+      padding: 16px 20px; border-bottom: 1px solid #f8f7fc;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .ai-card:last-child { border-bottom: none; }
+    .ai-card-accent {
+      width: 3px; border-radius: 2px; flex-shrink: 0; align-self: stretch; margin-top: 2px;
+    }
+    .ai-card-body { flex: 1; min-width: 0; }
+    .ai-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .ai-category {
+      font-size: 9px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 3px;
+    }
+    .cat-trend    { background: #e8f4fd; color: #2980b9; }
+    .cat-risk     { background: #fde8e8; color: #c0392b; }
+    .cat-anomaly  { background: #fff3e0; color: #e67e22; }
+    .cat-pattern  { background: #f0eef8; color: #6352b9; }
+    .cat-storylead { background: #e8f8f0; color: #27ae60; }
+    .ai-headline { font-size: 13px; font-weight: 700; color: #1a1a1a; line-height: 1.35; }
+    .ai-body { font-size: 12px; color: #555; line-height: 1.6; margin-top: 5px; }
+
     /* ── No-data fallback ── */
     .no-data { padding: 32px; text-align: center; font-size: 13px; color: #aaa; }
 
@@ -169,6 +212,73 @@
       {% endif %}
       <div class="stat-lbl">Monitoring since</div>
       <div class="stat-sub">First data pull</div>
+    </div>
+  </div>
+
+  <!-- SECTION: AI Intelligence Briefing -->
+  <div class="ai-section">
+    <div class="ai-section-header">
+      <span class="ai-badge">AI</span>
+      <span class="ai-section-title">Intelligence Briefing</span>
+      <span class="ai-disclaimer">Illustrative example · Generated from 45-day dataset</span>
+    </div>
+    <div class="ai-cards">
+
+      <div class="ai-card">
+        <div class="ai-card-accent" style="background:#c0392b"></div>
+        <div class="ai-card-body">
+          <div class="ai-card-top">
+            <span class="ai-category cat-risk">Risk</span>
+            <span class="ai-headline">Camden carries the highest concentration of low-rated premises in the monitored area</span>
+          </div>
+          <p class="ai-body">Camden's average FHRS rating of 4.24★ is the lowest of all five English authorities and 0.21 stars below Westminster. Its 139 low-rated premises represent 3.2% of the borough's total — driven primarily by restaurants, cafés and sandwich shops in the central and south Camden area. At current inspection rates, this cohort is unlikely to receive a re-inspection within 6 months without targeted enforcement activity.</p>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-accent" style="background:#e67e22"></div>
+        <div class="ai-card-body">
+          <div class="ai-card-top">
+            <span class="ai-category cat-anomaly">Anomaly</span>
+            <span class="ai-headline">Dundee City's failure rate is three times higher than its Scottish peers</span>
+          </div>
+          <p class="ai-body">Dundee City's Improvement Required rate of 6.9% compares unfavourably with Angus (5.8%) and Perth and Kinross (2.3%), despite all three operating under the same FHIS regulatory framework. The gap has remained stable across the full monitoring window, suggesting a structural difference rather than a short-term spike — possibly reflecting inspection frequency, geographic concentration of high-risk takeaway and late-night venues, or enforcement capacity within the council.</p>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-accent" style="background:#2980b9"></div>
+        <div class="ai-card-body">
+          <div class="ai-card-top">
+            <span class="ai-category cat-trend">Trend</span>
+            <span class="ai-headline">Upgrades have outpaced downgrades across London boroughs over the past four weeks</span>
+          </div>
+          <p class="ai-body">FHRS rating upgrades have exceeded downgrades at approximately a 3:2 ratio across the five monitored London authorities in the most recent four-week period. If sustained, this trajectory would reduce Camden's low-rated count from 139 to below 110 within a quarter. Westminster shows the sharpest improvement curve. However, the trend is sensitive to inspection scheduling — a burst of enforcement activity in a single borough can reverse it quickly.</p>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-accent" style="background:#6352b9"></div>
+        <div class="ai-card-body">
+          <div class="ai-card-top">
+            <span class="ai-category cat-pattern">Pattern</span>
+            <span class="ai-headline">Fewer than 2% of inspections occur at weekends — creating a blind spot for weekend-only operators</span>
+          </div>
+          <p class="ai-body">Across all 8 monitored authorities, inspection activity drops sharply on Saturdays and Sundays, with Tuesday consistently the busiest day. This creates a structural gap in oversight for premises that trade primarily or exclusively at weekends — late-night venues, street food markets, pop-ups and event caterers. These operators may carry significantly different risk profiles than their last weekday inspection reflects.</p>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-accent" style="background:#27ae60"></div>
+        <div class="ai-card-body">
+          <div class="ai-card-top">
+            <span class="ai-category cat-storylead">Story Lead</span>
+            <span class="ai-headline">City of London outperforms every other monitored area — corporate catering culture may explain the gap</span>
+          </div>
+          <p class="ai-body">With an average rating of 4.79★ and only 18 low-rated premises across 1,820 establishments, the City of London Corporation achieves the highest compliance rate in the dataset. The square mile's food scene is dominated by corporate canteens, chain restaurants and hotel dining — operators who typically maintain rigorous internal compliance frameworks and are subject to greater brand and reputational scrutiny than independent traders. The contrast with Camden (4.24★) raises a question worth investigating: how much does business type, rather than council enforcement, drive ratings outcomes?</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
